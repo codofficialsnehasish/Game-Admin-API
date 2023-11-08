@@ -156,18 +156,18 @@
                 </div>
             </header>
             <script>
-                function logout() {
-                    Swal.fire({
-                        title: "Are you sure?",
-                        text: "You won't be able to revert this!",
-                        icon: "question",
-                        showCancelButton: !0,
-                        confirmButtonColor: "#34c38f",
-                        cancelButtonColor: "#f46a6a",
-                        confirmButtonText: "Yes, delete it!"
-                    }).then(function(t) {
-                        t.value && Swal.fire("Deleted!", "Your file has been deleted.", "success")
-                        return true
-                    })
-                });
+                // function logout() {
+                //     Swal.fire({
+                //         title: "Are you sure?",
+                //         text: "You won't be able to revert this!",
+                //         icon: "question",
+                //         showCancelButton: !0,
+                //         confirmButtonColor: "#34c38f",
+                //         cancelButtonColor: "#f46a6a",
+                //         confirmButtonText: "Yes, delete it!"
+                //     }).then(function(t) {
+                //         t.value && Swal.fire("Deleted!", "Your file has been deleted.", "success")
+                //         return true
+                //     })
+                // });
             </script>

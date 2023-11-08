@@ -65,7 +65,7 @@
                         <span>Game Result</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{url('/payment')}}">Add Result</a></li>
+                        <li><a href="{{url('/add_result')}}">Add Result</a></li>
                         <li><a href="{{url('/show_payments')}}">All Resultes</a></li>
                     </ul>
                 </li>

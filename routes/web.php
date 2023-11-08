@@ -6,6 +6,7 @@ use App\Http\Controllers\Sliders;
 use App\Http\Controllers\Catagory;
 use App\Http\Controllers\Sub_catagory;
 use App\Http\Controllers\Game;
+use App\Http\Controllers\Result;
 use App\Http\Controllers\Wallet;
 
 
@@ -91,3 +92,10 @@ Route::get("/add_money",[Wallet::class,"add_money"]);
 Route::get("/get_balance/{id}",[Wallet::class,"get_balance"]); 
 Route::post("/post_wallet",[Wallet::class,"post_wallet"]); 
 Route::get("/show_wallet",[Wallet::class,"show_wallet"]); 
+
+
+//============================ Result Routes ========================
+
+Route::get("/add_result",[Result::class,"add_result"]); 
+Route::get("/get_baji/{id}",[Result::class,"get_baji"]); 
+
