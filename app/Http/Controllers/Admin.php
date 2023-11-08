@@ -244,6 +244,9 @@ class Admin extends Controller
         $obj->google_pay_no = $r->gpay ? $r->gpay : $obj->google_pay_no;
         $obj->paytm_no = $r->paytm ? $r->paytm : $obj->paytm_no;
         $obj->email = $r->email ? $r->email : $obj->email;
+        $obj->bank_name = $r->bank_name ? $r->bank_name : $obj->bank_name;
+        $obj->ifsc_code = $r->ifsc_code ? $r->ifsc_code : $obj->ifsc_code;
+        $obj->account_number = $r->account_number ? $r->account_number : $obj->account_number;
         // $customer->adding_mode = $r->mode;
         $res = $obj->update();
         if($r->is('api/*')){
