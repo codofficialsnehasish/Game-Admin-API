@@ -10,7 +10,6 @@ use App\Models\Slider;
 use App\Models\Catagory;
 use App\Models\On_Game;
 
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -72,18 +71,15 @@ class Admin extends Controller
 
     // ===================== API login functions =================
 
-    public function app_login(Request $r){
+    public static function app_login(Request $r){
         $phone = $r->phone;
         $pass = $r->password;
         $m_pin = $r->m_pin;
-        $ongame = new On_Game();
         if($phone != "" && $pass != "" && $m_pin == ""){
             if(Customer::where("mobile","=",$r->phone)->count() > 0){
                 $obj = Customer::where("mobile","=",$r->phone)->get();
                 // $hashed = Hash::make($pass, ['rounds' => 15,]);
                 if(Hash::check($pass, $obj[0]->password)) {
-                    $ongame->customer_id = $obj[0]->id;
-                    $ongame->save();
                     return ["status"=>"true","data"=>$obj[0]];
                 } else {
                     return ["status"=>"false",'error' => "Invalid Password"];
@@ -96,8 +92,6 @@ class Admin extends Controller
             if(Customer::where("mobile","=",$r->phone)->count() > 0){
                 $obj = Customer::where("mobile","=",$r->phone)->get();
                 if($m_pin == $obj[0]->m_pin) {
-                    $ongame->customer_id = $obj[0]->id;
-                    $ongame->save();
                     return ["status"=>"true","data"=>$obj[0]];
                 } else {
                     return ["status"=>"false",'error' => "Invalid M-pin"];

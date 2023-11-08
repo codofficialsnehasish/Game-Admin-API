@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Games;
 use App\Models\Times;
 use App\Models\On_Game;
-use App\Models\Catagory;
+use App\Models\Catagorys;
 
 class Game extends Controller
 {
@@ -61,27 +61,34 @@ class Game extends Controller
         $obj = Games::all();
         $time = Times::all();
         if( $r->is('api/*')){
-            // return $obj;
-            return ["status"=>"true",'games' => $obj, 'timings'=>$time];
+            $games_time = Games::join("timing","games.id","timing.game_id")
+            ->get(["games.game_name","timing.id as time_id","timing.game_id","timing.start_time","timing.end_time"]);
+            // return ["status"=>"true",'games' => $obj, 'timings'=>$time];
+            return ["status"=>"true",'games' => $games_time];
         }else{
             return view("game/all_games/show_game")->with(['game'=>$obj,'time'=>$time]);
         }
     }
-    public function show_timing(Request $r){
-        $ongame = On_Game::find();
-        if($r->id != ""){
-            if(Times::where("game_id","=",$r->id)->count() > 0){
-                $ongame->game_id = $r->id;
-                $ongame->update();
-                $time = Times::where("game_id","=",$r->id)->get();
-                return ["status"=>"true",'data' => $time];
-            }else{
-                return ["status"=>"false","error"=>"Not Avaliable"];
-            }
-        }else{
-            return ["status"=>"false","error"=>"Please put game id in url"];
-        }
-    }
+
+    // public function show_timing(Request $r){
+    //     $cs = CSession::find(1);
+    //     $ongame = On_Game::where("customer_id","=",$cs->customer_id)
+    //     ->where("date","=",date("Y-d-m"))  
+    //     ->get();
+    //     return $ongame;
+    //     if($r->id != ""){
+    //         if(Times::where("game_id","=",$r->id)->count() > 0){
+    //             $ongame->game_id = $r->id;
+    //             $ongame->update();
+    //             $time = Times::where("game_id","=",$r->id)->get();
+    //             return ["status"=>"true",'data' => $time];
+    //         }else{
+    //             return ["status"=>"false","error"=>"Not Avaliable"];
+    //         }
+    //     }else{
+    //         return ["status"=>"false","error"=>"Please put game id in url"];
+    //     }
+    // }
 
     public function del_game(Request $r){
         $game = Games::find($r->id);
@@ -92,8 +99,25 @@ class Game extends Controller
         return redirect()->back();
     }
 
-    public function show_catagory($id=null){
-        $obj = Catagory::all();
-        return $obj;
+    public function show_catagory(){
+        // $obj = Catagory::all();
+        return ["status"=>"true",'data' => Catagorys::all()];
+    }
+
+
+    public function get_user_play_details(Request $r){
+        $obj = new On_Game();
+        $obj->customer_id = $r->customer_id;
+        $obj->time_id = $r->time_id;
+        // return Times::find($r->time_id)->game_id;
+        $obj->game_id = Times::find($r->time_id)->game_id;
+        $obj->catagory_id = $r->catagory_id;
+        $res = $obj->save();
+        if($res){
+            return ["status"=>"True","success"=>"Data inserted successfully"];
+        }else{
+            return ["status"=>"False","success"=>"Data can't inserted"];
+
+        }
     }
 }

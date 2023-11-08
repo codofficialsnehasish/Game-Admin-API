@@ -72,5 +72,6 @@ Route::get("/subcatagory",[Sub_catagory::class,"show_sub_catagory"]);
 
 
 Route::get("/games",[Game::class,"show_game"]);
-Route::get("/baji/{id?}",[Game::class,"show_timing"]);
-Route::get("/catagory/{id?}",[Game::class,"show_catagory"]);
+// Route::get("/baji/{id?}",[Game::class,"show_timing"]);
+Route::get("/catagory",[Game::class,"show_catagory"]);
+Route::post("/play_details",[Game::class,"get_user_play_details"]);
