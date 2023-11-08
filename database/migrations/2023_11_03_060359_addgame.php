@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create("games", function(Blueprint $table){
             $table->id("id");
             $table->string("game_name")->nullable();
+            $table->string("min_entry_fee")->nullable();
+            $table->string("max_entry_fee")->nullable();
             $table->timestamps();
         });
     }

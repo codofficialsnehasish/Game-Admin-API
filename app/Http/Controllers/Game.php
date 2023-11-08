@@ -18,8 +18,9 @@ class Game extends Controller
     public function get_game(Request $r){
         $game = new Games();
         $game->game_name = $r->outer_group[0]['name'];
+        $game->min_entry_fee = $r->outer_group[0]['min_entry'];
+        $game->max_entry_fee = $r->outer_group[0]['max_entry'];
         $game->save();
-        // echo $game->id;
         for($i=0;$i<count($r->outer_group[0]['inner_group']); $i++){
             $time = new Times();
             $time->game_id = $game->id;
@@ -27,7 +28,7 @@ class Game extends Controller
             $time->end_time = self::convert12($r->outer_group[0]['inner_group'][$i]['et']);
             $time->save();
         }
-        // print_r($r->outer_group[0]['inner_group'][0]);
+        // print_r($r->outer_group[0]);
         return redirect(url('/show_game'));
     }
 

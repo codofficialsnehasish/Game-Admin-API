@@ -23,8 +23,8 @@
                                     <h6 class="page-title">Add Game</h6>
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Home</a></li>
-                                        <li class="breadcrumb-item"><a href="{{url('/show_catagory')}}">Catagory</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Add New Catagory</li>
+                                        <li class="breadcrumb-item"><a href="{{url('/show_game')}}">Games</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Add New Game</li>
                                     </ol>
                                 </div>
                                 <div class="col-md-4">
@@ -48,14 +48,14 @@
                                         <div class="card">
                                             <div class="card-header bg-primary text-light">Add New Game</div>
                                             <div class="card-body">
-                                                <form class="outer-repeater" action="{{url('/post_game')}}" method="post">
+                                                <form class="outer-repeater custom-validation" action="{{url('/post_game')}}" method="post">
                                                     @csrf
                                                     <!-- <input type="text" value="value", name="val"> -->
                                                     <div data-repeater-list="outer_group" class="outer">
                                                         <div data-repeater-item class="outer">
                                                             <div class="mb-3">
                                                                 <label class="form-label" for="formname">Game Name:</label>
-                                                                <input type="text" name="name" class="form-control" id="formname" placeholder="Enter your Name...">
+                                                                <input type="text" name="name" class="form-control" id="formname" placeholder="Enter Game Name..." required>
                                                             </div>
                 
                                                             <div class="inner-repeater mb-4">
@@ -64,11 +64,11 @@
                                                                     <div class="col-md-5"><label class="form-label">End Time :</label></div>
                                                                     <div data-repeater-item class="inner mb-3 row">
                                                                         <div class="col-md-5 col-sm-8">
-                                                                            <input type="time" name="st" id="timeInput" class="inner form-control" placeholder="Enter your phone no..."/>
+                                                                            <input type="time" name="st" id="timeInput" class="inner form-control" required/>
                                                                             
                                                                         </div>
                                                                         <div class="col-md-5 col-sm-8">
-                                                                            <input type="time" name="et" class="inner form-control" placeholder="Enter your phone no..."/>
+                                                                            <input type="time" name="et" class="inner form-control" required/>
                                                                         </div>
                                                                         <div class="col-md-2 col-sm-4">
                                                                             <div class="d-grid">
@@ -79,6 +79,14 @@
                                                                     </div>
                                                                 </div>
                                                                 <input data-repeater-create type="button" class="btn btn-success inner" value="Add Time"/>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label class="form-label" for="formname">Minimum Entry Fee:</label>
+                                                                <input type="text" name="min_entry" class="form-control" id="formname" placeholder="Minimum Entry Fee" required>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label class="form-label" for="formname">Maximum Entry Fee:</label>
+                                                                <input type="text" name="max_entry" class="form-control" id="formname" placeholder="Maximum Entry Fee (Optional)">
                                                             </div>
                                                             <button type="submit" class="btn btn-primary">Submit</button>
                                                         </div>

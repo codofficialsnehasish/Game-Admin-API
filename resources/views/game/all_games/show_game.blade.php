@@ -20,7 +20,7 @@
                         <div class="page-title-box">
                             <div class="row align-items-center">
                                 <div class="col-md-8">
-                                    <h6 class="page-title">Catagory</h6>
+                                    <h6 class="page-title">Games</h6>
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Home</a></li>
                                         <li class="breadcrumb-item active" aria-current="page">All Games</li>
@@ -50,6 +50,8 @@
                                                     <td>Sl No.</td>
                                                     <th>Name</th>
                                                     <th>Timing</th>
+                                                    <th>Minimum Entry Fee</th>
+                                                    <th>Maximum Entry Fee</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -69,6 +71,8 @@
                                                         @endif
                                                     @endforeach
                                                     </td>
+                                                    <td>{{$d->min_entry_fee}}</td>
+                                                    <td>{{$d->max_entry_fee}}</td>
                                                     <td>
                                                         <!-- <a class="btn btn-success" href="#" alt="edit"><i class="ti-check-box"></i></a> -->
                                                         <a class="btn btn-danger" onclick="return confirm('Are you sure?')" href="{{url('/del_game')}}/{{$d->id}}"><i class="ti-trash"></i></a>
