@@ -35,7 +35,7 @@ Route::post("/register",[Admin::class,"addcustomer"]);
 
 Route::get("/showcustomer/{id?}",[Admin::class,"showcustomer"]);
 Route::get("/customerdel/{id}",[Admin::class,"customerdel"]);
-
+Route::post("/update_customer",[Admin::class,"update_customer"]);
 
 
 Route::post("/login",[Admin::class,"app_login"]);

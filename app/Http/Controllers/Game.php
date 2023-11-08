@@ -8,6 +8,7 @@ use App\Models\Games;
 use App\Models\Times;
 use App\Models\On_Game;
 use App\Models\Catagorys;
+use App\Models\Customer;
 
 class Game extends Controller
 {
@@ -110,14 +111,27 @@ class Game extends Controller
         $obj = new On_Game();
         $obj->customer_id = $r->customer_id;
         $obj->time_id = $r->time_id;
-        // return Times::find($r->time_id)->game_id;
-        $obj->game_id = Times::find($r->time_id)->game_id;
+        $game_id = Times::find($r->time_id)->game_id;
+        $obj->game_id = $game_id;
         $obj->catagory_id = $r->catagory_id;
+        $obj->box_number = $r->box_number;
+        $game = Games::find($game_id);
+        $customer = Customer::find($r->customer_id);
+        if($game->min_entry_fee != "" && $r->amount == "" || $game->min_entry_fee > $r->amount){
+            return ["status"=>"False","error"=>"Mininum entry fee is $game->min_entry_fee"];
+        }
+        elseif($customer->wallet_balance == "" || $customer->wallet_balance < $r->amount){
+            return ["status"=>"False","error"=>"Your Wallet balance is too low"];
+        }else{
+            $obj->amount = $r->amount;
+            $customer->wallet_balance -= $r->amount;
+            $customer->update();
+        }
         $res = $obj->save();
         if($res){
             return ["status"=>"True","success"=>"Data inserted successfully"];
         }else{
-            return ["status"=>"False","success"=>"Data can't inserted"];
+            return ["status"=>"False","error"=>"Data can't inserted"];
 
         }
     }

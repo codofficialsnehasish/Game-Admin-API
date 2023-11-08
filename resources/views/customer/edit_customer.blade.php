@@ -55,7 +55,7 @@
                                             <div class="card-body">
                                                 <form class="custom-validation" action="{{url('/update_customer')}}" method="post">
                                                     @csrf
-                                                    <input type="hidden" name="id" value="{{$customer->id}}" id="">
+                                                    <input type="hidden" name="customer_id" value="{{$customer->id}}" id="">
                                                     <div class="mb-3">
                                                         <label class="form-label" for="name">Name</label>
                                                         <input type="text" class="form-control" value="{{$customer->beneficiary_name}}" name="name" id="name" placeholder="Enter name" required>

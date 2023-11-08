@@ -218,7 +218,12 @@ class Admin extends Controller
     public function showcustomer(Request $request,$id = null){
         // $id = $request->id ? ;
         if( $request->is('api/*')){
-            return $id? Customer::find($id) : Customer::all();
+            $data = $id? Customer::find($id) : Customer::all();
+            if(count($data) > 0){
+                return ["status"=>"true",'data'=>$data];
+            }else{
+                return ["status"=>"false",'error'=>'No customer found'];
+            }
         }else{
             $c = Customer::all();
             return view("customer/showcustomer")->with(["customer"=>$c]);
@@ -231,17 +236,25 @@ class Admin extends Controller
     }
 
     public function update_customer(Request $r){
-        $obj = Customer::find($r->id);
+        $obj = Customer::find($r->customer_id);
         // $customer->reg_date = $r->date;
-        $obj->beneficiary_name = $r->name;
-        $obj->mobile = $r->phone;
-        $obj->wallet_balance = $r->balance;
-        $obj->google_pay_no = $r->gpay;
-        $obj->paytm_no = $r->paytm;
-        $obj->email = $r->email;
+        $obj->beneficiary_name = $r->name ? $r->name : $obj->beneficiary_name;
+        $obj->mobile = $r->phone ? $r->phone : $obj->mobile;
+        $obj->wallet_balance = $r->balance ? $r->balance : $obj->wallet_balance;
+        $obj->google_pay_no = $r->gpay ? $r->gpay : $obj->google_pay_no;
+        $obj->paytm_no = $r->paytm ? $r->paytm : $obj->paytm_no;
+        $obj->email = $r->email ? $r->email : $obj->email;
         // $customer->adding_mode = $r->mode;
-        $obj->update();
-        return redirect(url('/showcustomer'));
+        $res = $obj->update();
+        if($r->is('api/*')){
+            if($res){
+                return ["status"=>"true",'massage'=>'Customer Updated'];
+            }else{
+                return ["status"=>"false",'massage'=>'Update Failed'];
+            }
+        }else{
+            return redirect(url('/showcustomer'));
+        }
     }
 
     public function customerdel(Request $r){
