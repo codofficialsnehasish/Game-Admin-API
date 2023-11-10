@@ -9,6 +9,8 @@ use App\Models\Customer;
 use App\Models\Slider;
 use App\Models\Catagory;
 use App\Models\On_Game;
+use App\Models\Games;
+use App\Models\Requestt;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -130,7 +132,10 @@ class Admin extends Controller
 
     public function dashboard(){
         $customer = Customer::all()->count();
-        return view("dashboard")->with(["customer"=>$customer]);;
+        $games = Games::all()->count();
+        $req = Requestt::all()->count();
+        $slider = Slider::all()->count();
+        return view("dashboard")->with(["customer"=>$customer,"games"=>$games,"requests"=>$req,"slider"=>$slider]);;
     }
 
     //==========xxxxxxx=======End of Dashboard===========xxxxxx=======

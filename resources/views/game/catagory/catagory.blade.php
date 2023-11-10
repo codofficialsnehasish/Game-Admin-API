@@ -20,7 +20,7 @@
                         <div class="page-title-box">
                             <div class="row align-items-center">
                                 <div class="col-md-8">
-                                    <h6 class="page-title">Add Catagory</h6>
+                                    <h6 class="page-title">Catagory</h6>
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Home</a></li>
                                         <li class="breadcrumb-item"><a href="{{url('/show_catagory')}}">Catagory</a></li>

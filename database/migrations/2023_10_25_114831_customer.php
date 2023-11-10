@@ -22,7 +22,11 @@ return new class extends Migration
             $table->string("email")->nullable();
             $table->string("password");
             $table->string("m_pin");
+            $table->string("bank_name")->nullable();
+            $table->string("ifsc_code")->nullable();
+            $table->string("account_number")->nullable();
             $table->string("adding_mode")->nullable();
+            $table->integer("is_winner");
             $table->timestamps();
         });
     }

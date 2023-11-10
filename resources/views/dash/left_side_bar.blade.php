@@ -66,7 +66,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{url('/add_result')}}">Add Result</a></li>
-                        <li><a href="{{url('/show_payments')}}">All Resultes</a></li>
+                        <li><a href="{{url('/show_result')}}">All Resultes</a></li>
                     </ul>
                 </li>
                 <li>
@@ -88,6 +88,13 @@
                         <li><a href="{{url('/add_money')}}">Add Money</a></li>
                         <li><a href="{{url('/show_wallet')}}">All Wallet</a></li>
                     </ul>
+                </li>
+                <li>
+                    <a href="{{url('/show_requests')}}" class="waves-effect">
+                        <i class="mdi mdi-frequently-asked-questions"></i>
+                        @if(\App\Models\Requestt::all()->count()!=0)<span class="badge rounded-pill bg-danger float-end">{{ \App\Models\Requestt::all()->count() }}</span>@endif
+                        <span>Requests</span>
+                    </a>
                 </li>
             </ul>
         </div>

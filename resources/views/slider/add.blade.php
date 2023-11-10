@@ -22,7 +22,7 @@
                                 <div class="col-md-8">
                                     <h6 class="page-title">Slider</h6>
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Supersathi</a></li>
+                                        <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Home</a></li>
                                         <li class="breadcrumb-item"><a href="{{url('/slider')}}">Slider</a></li>
                                         <li class="breadcrumb-item active" aria-current="page">Add New Slider</li>
                                     </ol>

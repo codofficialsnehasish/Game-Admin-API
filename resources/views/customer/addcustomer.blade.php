@@ -20,9 +20,9 @@
                         <div class="page-title-box">
                             <div class="row align-items-center">
                                 <div class="col-md-8">
-                                    <h6 class="page-title">Add Customer</h6>
+                                    <h6 class="page-title">Customer</h6>
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Supersathi</a></li>
+                                        <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Home</a></li>
                                         <li class="breadcrumb-item"><a href="{{url('/showcustomer')}}">Customer</a></li>
                                         <li class="breadcrumb-item active" aria-current="page">Add New Customer</li>
                                     </ol>

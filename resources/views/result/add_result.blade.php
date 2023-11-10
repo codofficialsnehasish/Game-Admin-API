@@ -30,7 +30,7 @@
                                 <div class="col-md-4">
                                     <div class="float-end d-none d-md-block">
                                         <div class="dropdown">
-                                            <a href="{{url('/showcustomer')}}" class="btn btn-primary  dropdown-toggle" aria-expanded="false">
+                                            <a href="{{url('/show_result')}}" class="btn btn-primary  dropdown-toggle" aria-expanded="false">
                                                 <i class="fas fa-arrow-left me-2"></i> Back
                                             </a>
                                         </div>
@@ -53,7 +53,7 @@
                                         <div class="card">
                                             <div class="card-header bg-primary text-light">Add New Result</div>
                                             <div class="card-body">
-                                                <form class="custom-validation" action="{{url('/addcustomer')}}" method="post">
+                                                <form class="custom-validation" action="{{url('/post_result')}}" method="post">
                                                     @csrf
                                                     <div class="md-3">
                                                         <label for="custo" class="form-label">Games</label>
@@ -68,12 +68,24 @@
                                                         <label for="baji" class="form-label">Baji</label>
                                                         <select class="form-select" id="baji" name="baji" required>
                                                             <option selected disabled value="">Choose Baji</option>
-                                                            
                                                         </select>
+                                                    </div>
+                                                    <div class="md-3 mt-3" style="display:none;" id="cata">
+                                                        <label for="catagory" class="form-label">Catagory</label>
+                                                        <select class="form-select" id="catagory" name="catagory" onChange="boxnumber()" required>
+                                                            <option selected disabled value="">Choose catagory</option>
+                                                            @foreach($catagory as $c)
+                                                            <option value="{{$c->id}}">{{$c->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3 mt-3" id="boxnumber" style="display:none;">
+                                                        <label class="form-label" for="boxnum">Box Number</label>
+                                                        <input type="number" class="form-control" name="boxnum" id="boxnum" placeholder="Choose box number" required>
                                                     </div>
                                                     <div class="mb-0 mt-3">
                                                         <div>
-                                                            <button type="submit" class="btn btn-primary waves-effect waves-light me-1">Add Customer</button>
+                                                            <button type="submit" class="btn btn-primary waves-effect waves-light me-1">Make Result</button>
                                                             <!-- <button type="reset" class="btn btn-secondary waves-effect">Cancel</button> -->
                                                         </div>
                                                     </div>
@@ -95,6 +107,7 @@
                 <script>
                     function reqs(id){
                         // alert(id);
+                        $("#baji").html('');
                         $.ajax({
                             url:'/get_baji/'+id,
                             type:'GET',
@@ -105,10 +118,18 @@
                                 // console.log(resp[0]);
                                 $(resp).each(function(i,j) {
                                     console.log(j);
-                                    $("#baji").append("<option value="+j.id+">"+j.start_time +"-"+ j.end_time+"</option>");
+                                    $("#baji").append("<option value="+j.id+">"+j.baji+" &nbsp;&nbsp;&nbsp;&nbsp;"+j.start_time +" - "+ j.end_time+"</option>");
                                 });
+                                che();
                             }
                         });
+                    }
+
+                    function che(){
+                        document.getElementById("cata").style.display="block";
+                    }
+                    function boxnumber(){
+                        document.getElementById("boxnumber").style.display="block";
                     }
                 </script>
 

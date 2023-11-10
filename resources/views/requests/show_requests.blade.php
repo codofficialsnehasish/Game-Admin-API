@@ -20,21 +20,21 @@
                         <div class="page-title-box">
                             <div class="row align-items-center">
                                 <div class="col-md-8">
-                                    <h6 class="page-title">Games</h6>
+                                    <h6 class="page-title">Request</h6>
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Home</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">All Games</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Requests</li>
                                     </ol>
                                 </div>
-                                <div class="col-md-4">
+                                <!-- <div class="col-md-4">
                                     <div class="float-end d-none d-md-block">
                                         <div class="dropdown">
-                                        <a href="{{url('/add_game')}}" class="btn btn-primary  dropdown-toggle" aria-expanded="false">
+                                        <a href="{{url('/add_result')}}" class="btn btn-primary  dropdown-toggle" aria-expanded="false">
                                         <i class="fas fa-plus me-2"></i> Add New
                                         </a>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <!-- end page title -->
@@ -48,33 +48,25 @@
                                             <thead>
                                                 <tr>
                                                     <td>Sl No.</td>
-                                                    <th>Name</th>
-                                                    <th>Timing</th>
-                                                    <th>Minimum Entry Fee</th>
-                                                    <th>Maximum Entry Fee</th>
+                                                    <td>Date</td>
+                                                    <th>Customer Name</th>
+                                                    <th>Mobile Number</th>
+                                                    <th>M-Pin</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @php $i = 1 @endphp
-                                                @foreach($game as $d)
+                                                @foreach($data as $d)
                                                 <tr>
                                                     <td>@php echo $i++ @endphp</td>
-                                                    <td>{{$d->game_name}}</td>
-                                                    <td>
-                                                        @foreach($time as $t)
-                                                            @if($t->game_id == $d->id)
-                                                                <b class="text-info pr-3">{{$t->baji}}</b>&nbsp;{{$t->start_time}} - {{$t->end_time}}<br>
-                                                            @else
-                                                                @php continue @endphp
-                                                            @endif
-                                                        @endforeach
-                                                    </td>
-                                                    <td>{{$d->min_entry_fee}}</td>
-                                                    <td>{{$d->max_entry_fee}}</td>
-                                                    <td>
-                                                        <!-- <a class="btn btn-success" href="#" alt="edit"><i class="ti-check-box"></i></a> -->
-                                                        <a class="btn btn-danger" onclick="return confirm('Are you sure?')" href="{{url('/del_game')}}/{{$d->id}}"><i class="ti-trash"></i></a>
+                                                    <td>{{$d->date}}</td>
+                                                    <td>{{$d->cname}}</td>
+                                                    <td>{{$d->phone}}</td>
+                                                    <td>{{$d->pin}}</td>
+                                                    <td style="display:flex;justify-content:center;">
+                                                        <!-- <a class="btn btn-success" href="{{url('/edit_catagory')}}/{{$d->id}}" alt="edit"><i class="ti-check-box"></i></a> -->
+                                                        <a class="btn btn-danger" onclick="return confirm('Are you sure?')" href="{{url('/clear_requests')}}/{{$d->id}}">Clear <i class="ti-trash"></i></a>
                                                     </td>
                                                 </tr>
                                                 @endforeach

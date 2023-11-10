@@ -20,9 +20,9 @@
                         <div class="page-title-box">
                             <div class="row align-items-center">
                                 <div class="col-md-8">
-                                    <h6 class="page-title">Customers</h6>
+                                    <h6 class="page-title">Customer</h6>
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Supersathi</a></li>
+                                        <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Home</a></li>
                                         <li class="breadcrumb-item active" aria-current="page">All Customers</li>
                                     </ol>
                                 </div>
@@ -57,6 +57,7 @@
                                                     <th>Bank Name</th>
                                                     <th>IFSC Code</th>
                                                     <th>Acount Number</th>
+                                                    <th>M-Pin</th>
                                                     <th>Adding Mode</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -75,6 +76,7 @@
                                                     <td>{{$c->bank_name}}</td>
                                                     <td>{{$c->ifsc_code}}</td>
                                                     <td>{{$c->account_number}}</td>
+                                                    <td>{{$c->m_pin}}</td>
                                                     <td>{{$c->adding_mode}}</td>
                                                     <td>
                                                         <a class="btn btn-success" href="{{url('/editcustomer')}}/{{$c->id}}" alt="edit"><i class="ti-check-box"></i></a>

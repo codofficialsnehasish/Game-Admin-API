@@ -9,6 +9,7 @@ use App\Http\Controllers\Sliders;
 use App\Http\Controllers\Catagory;
 use App\Http\Controllers\Sub_catagory;
 use App\Http\Controllers\Game;
+use App\Http\Controllers\Requests;
 
 
 
@@ -71,7 +72,20 @@ Route::get("/subcatagory",[Sub_catagory::class,"show_sub_catagory"]);
 //==========XXXX============ End of Sub Catagory API Routes ============XXXX============
 
 
+//============================ Games API Routes ==============================
+
 Route::get("/games",[Game::class,"show_game"]);
 // Route::get("/baji/{id?}",[Game::class,"show_timing"]);
 Route::get("/catagory",[Game::class,"show_catagory"]);
 Route::post("/play_details",[Game::class,"get_user_play_details"]);
+Route::get("/bid_history/{id?}",[Game::class,"bid_history"]);
+Route::get("/win_history/{id?}",[Game::class,"win_history"]);
+
+//==========XXXX============ End of Games API Routes ============XXXX============
+
+
+//============================ Request API Routes ==============================
+
+Route::post("/get_request",[Requests::class,"get_request"]);
+
+//==========XXXX============ End of Request API Routes ============XXXX============

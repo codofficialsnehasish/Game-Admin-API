@@ -25,6 +25,7 @@ class Game extends Controller
         for($i=0;$i<count($r->outer_group[0]['inner_group']); $i++){
             $time = new Times();
             $time->game_id = $game->id;
+            $time->baji = "Baji ".$r->outer_group[0]['inner_group'][$i]['baji'];
             $time->start_time = self::convert12($r->outer_group[0]['inner_group'][$i]['st']);
             $time->end_time = self::convert12($r->outer_group[0]['inner_group'][$i]['et']);
             $time->save();
@@ -133,6 +134,48 @@ class Game extends Controller
         }else{
             return ["status"=>"False","error"=>"Data can't inserted"];
 
+        }
+    }
+
+    public function bid_history(Request $r){
+        if($r->id == null){
+            return ["status"=>"False","error"=>"Please provide the customer id"];
+        }else{
+            // $obj = On_Game::where("customer_id","=",$r->id)
+            // ->where("date","=",date("Y-m-d"))
+            // ->get();
+            $obj = On_Game::leftJoin("games","on_game.game_id","games.id")
+            ->leftJoin("timing","on_game.time_id","timing.id")
+            ->leftJoin("catagory","on_game.catagory_id","catagory.id")
+            ->where("on_game.date","=",date("Y-m-d"))
+            ->get(["on_game.id","on_game.date","on_game.amount","on_game.customer_id","games.game_name as game_name","timing.baji as baji","timing.start_time", "timing.end_time","catagory.name as catagory_name"]);
+            if(count($obj) > 0){
+                return ["status"=>"True","data"=>$obj];
+            }else{
+                return ["status"=>"False","error"=>"data not found"];
+            }
+        }
+    }
+
+    public function win_history(Request $r){
+        if($r->id == null){
+            return ["status"=>"False","error"=>"Please provide the customer id"];
+        }else{
+            // $obj = On_Game::where("customer_id","=",$r->id)
+            // ->where("date","=",date("Y-m-d"))
+            // ->get();
+            $obj = On_Game::leftJoin("games","on_game.game_id","games.id")
+            ->leftJoin("timing","on_game.time_id","timing.id")
+            ->leftJoin("catagory","on_game.catagory_id","catagory.id")
+            ->where("on_game.date","=",date("Y-m-d"))
+            ->where("is_winner","=",1)
+            ->where("customer_id","=",$r->id)
+            ->get(["on_game.id","on_game.date","on_game.amount","on_game.customer_id","on_game.is_winner","games.game_name as game_name","timing.baji as baji","timing.start_time", "timing.end_time","catagory.name as catagory_name"]);
+            if(count($obj) > 0){
+                return ["status"=>"True","data"=>$obj];
+            }else{
+                return ["status"=>"False","error"=>"data not found"];
+            }
         }
     }
 }

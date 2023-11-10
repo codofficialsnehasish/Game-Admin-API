@@ -22,7 +22,7 @@
                                 <div class="col-md-8">
                                     <h6 class="page-title">Change Password</h6>
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">WVS</a></li>
+                                        <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Home</a></li>
                                         <!-- <li class="breadcrumb-item"><a href="{{url('/showcustomer')}}">Profile</a></li> -->
                                         <li class="breadcrumb-item active" aria-current="page">Change Password</li>
                                     </ol>

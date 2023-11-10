@@ -20,7 +20,7 @@
                         <div class="page-title-box">
                             <div class="row align-items-center">
                                 <div class="col-md-8">
-                                    <h6 class="page-title">Add Game</h6>
+                                    <h6 class="page-title">Games</h6>
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Home</a></li>
                                         <li class="breadcrumb-item"><a href="{{url('/show_game')}}">Games</a></li>
@@ -60,14 +60,23 @@
                 
                                                             <div class="inner-repeater mb-4">
                                                                 <div data-repeater-list="inner_group" class="inner mb-3 row">
-                                                                    <div class="col-md-5"><label class="form-label">Start Time :</label></div>
-                                                                    <div class="col-md-5"><label class="form-label">End Time :</label></div>
+                                                                    <div class="col-md-1"><label class="form-label"></label></div>
+                                                                    <div class="col-md-3"><label class="form-label">Baji Number:</label></div>
+                                                                    <div class="col-md-3"><label class="form-label">Start Time :</label></div>
+                                                                    <div class="col-md-3"><label class="form-label">End Time :</label></div>
                                                                     <div data-repeater-item class="inner mb-3 row">
-                                                                        <div class="col-md-5 col-sm-8">
-                                                                            <input type="time" name="st" id="timeInput" class="inner form-control" required/>
-                                                                            
+                                                                        <div class="col-md-1 col-sm-2">
+                                                                            <div class="d-grid">
+                                                                                <input type="text" value="Baji" style="border:none;" class="form-control inner mt-2 mt-sm-0" readonly/>
+                                                                            </div>    
                                                                         </div>
-                                                                        <div class="col-md-5 col-sm-8">
+                                                                        <div class="col-md-3 col-sm-8 d-flex">
+                                                                            <input type="number" name="baji" id="timeInput" class="inner form-control" placeholder="Enetr baji number" required/>
+                                                                        </div>
+                                                                        <div class="col-md-3 col-sm-8">
+                                                                            <input type="time" name="st" id="timeInput" class="inner form-control" required/>
+                                                                        </div>
+                                                                        <div class="col-md-3 col-sm-8">
                                                                             <input type="time" name="et" class="inner form-control" required/>
                                                                         </div>
                                                                         <div class="col-md-2 col-sm-4">

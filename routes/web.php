@@ -8,6 +8,7 @@ use App\Http\Controllers\Sub_catagory;
 use App\Http\Controllers\Game;
 use App\Http\Controllers\Result;
 use App\Http\Controllers\Wallet;
+use App\Http\Controllers\Requests;
 
 
 //======================= Login Routes =====================
@@ -98,4 +99,14 @@ Route::get("/show_wallet",[Wallet::class,"show_wallet"]);
 
 Route::get("/add_result",[Result::class,"add_result"]); 
 Route::get("/get_baji/{id}",[Result::class,"get_baji"]); 
+Route::post("/post_result",[Result::class,"post_result"]); 
+Route::get("/show_result",[Result::class,"show_result"]); 
+Route::get("/del_result/{id}",[Result::class,"del_result"]); 
+
+
+//============================ Requests Routes ========================
+
+Route::get("/show_requests",[Requests::class,"show_requests"]);
+Route::get("/clear_requests/{id}",[Requests::class,"clear_requests"]);
+
 
