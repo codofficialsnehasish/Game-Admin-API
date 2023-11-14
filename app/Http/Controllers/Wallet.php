@@ -21,7 +21,7 @@ class Wallet extends Controller
         $obj = new Wallets();
         $custo = Customer::find($r->customer);
         $custo->wallet_balance += $r->amount;
-        $obj->date = date('Y-d-m');
+        $obj->date = date('Y-m-d');
         $obj->customer_id = $r->customer;
         $obj->amount = $r->amount;
         $custo->update();
