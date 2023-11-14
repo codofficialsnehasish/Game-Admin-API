@@ -28,28 +28,78 @@ class Result extends Controller
         $obj->date = date("d-m-Y");
         $obj->game_id = $r->game;
         $obj->time_id = $r->baji;
-        $obj->catagory_id = $r->catagory;
-        $obj->box_number = $r->boxnum;
+        // $obj->catagory_id = $r->catagory;
+        // $obj->box_number = $r->boxnum;
+        $obj->patti_number = $r->pattinum;
         $obj->save();
         $res = On_Game::where("game_id","=",$r->game)
         ->where("time_id","=",$r->baji)
-        ->where("catagory_id","=",$r->catagory)
-        ->where("box_number","=",$r->boxnum)
+        // ->where("catagory_id","=",$r->catagory)
+        // ->where("box_number","=",$r->boxnum)
         ->where("is_completed","=",0)
+        ->where("date","=",date("Y-m-d"))
         ->get();
-        // return $res;
+        // echo $res;
         foreach($res as $result){
             $custo = Customer::find($result->customer_id);
-            $custo->is_winner = 1;
-            $custo->wallet_balance += $result->amount * 9;
-            $custo->update();
-            $ongame = On_Game::find($result->id);
-            $ongame->is_completed = 1;
-            $ongame->is_winner = 1;
-            $ongame->update();
+            $digit = explode(",",$result->box_number);
+            if($result->catagory_id == 1){
+                $cata = Catagorys::find($result->catagory_id);
+                $ongame = On_Game::find($result->id);
+                $single_res = abs($this->sum($r->pattinum) % 10);
+                foreach($digit as $d){
+                    if($d == $single_res){
+                        $custo->is_winner = 1;
+                        $custo->wallet_balance += $result->amount * $cata->payment;
+                        $custo->update();
+                        $ongame->is_completed = 1;
+                        $ongame->is_winner = 1;
+                        $ongame->update();
+                    }
+                }
+            }elseif($result->catagory_id == 3){
+                
+            }
+            // if(strlen($digit[0]) >3)
+            // $str = "2345";
+            // $arr = str_split($str);
+            // $n = sizeof($arr);
+            // printCombination($arr, $n, 3);
+            
+            // $custo->is_winner = 1;
+            // $custo->wallet_balance += $result->amount * 9;
+            // $custo->update();
+            // $ongame = On_Game::find($result->id);
+            // $ongame->is_completed = 1;
+            // $ongame->is_winner = 1;
+            // $ongame->update();
         }
 
         return redirect(url('/show_result'));
+    }
+    public function sum($num) { 
+        $sum = 0; 
+        for ($i = 0; $i < strlen($num); $i++){ 
+            $sum += $num[$i]; 
+        } 
+        return $sum; 
+    }
+    public function printCombination($arr, $n, $r){
+        $data = Array();
+        combinationUtil($arr, $n, $r, 0, $data, 0);
+    }
+    public function combinationUtil($arr, $n, $r, $index, $data, $i){
+        if ($index == $r){
+            for ($j = 0; $j < $r; $j++){
+                echo $data[$j], " ";
+            }
+            echo "<br>";
+            return;
+        }
+        if ($i >= $n) return;
+        $data[$index] = $arr[$i];
+        combinationUtil($arr, $n, $r, $index + 1, $data, $i + 1);
+        combinationUtil($arr, $n, $r, $index, $data, $i + 1);
     }
 
     public function show_result(Request $r){

@@ -51,8 +51,9 @@
                                                     <td>Date</td>
                                                     <th>Game</th>
                                                     <th>Baji</th>
-                                                    <th>Catagory</th>
-                                                    <th>Box Number</th>
+                                                    <th>Patti Number</th>
+                                                    <!-- <th>Catagory</th>
+                                                    <th>Box Number</th> -->
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -64,8 +65,9 @@
                                                     <td>{{$d->date}}</td>
                                                     <td>{{$d->gname}}</td>
                                                     <td>{{$d->baji}}&nbsp;&nbsp;&nbsp;&nbsp;{{$d->start_time}} - {{$d->end_time}}</td>
-                                                    <td>{{$d->cname}}</td>
-                                                    <td>{{$d->box_number}}</td>
+                                                    <td>{{$d->patti_number}}</td>
+                                                    <!-- <td>{{$d->cname}}</td>
+                                                    <td>{{$d->box_number}}</td> -->
                                                     <td style="display:flex;justify-content:center;">
                                                         <!-- <a class="btn btn-success" href="{{url('/edit_catagory')}}/{{$d->id}}" alt="edit"><i class="ti-check-box"></i></a> -->
                                                         <a class="btn btn-danger" onclick="return confirm('Are you sure?')" href="{{url('/del_result')}}/{{$d->id}}"><i class="ti-trash"></i></a>

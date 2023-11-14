@@ -17,6 +17,7 @@ class Catagory extends Controller
     public function addcatagory(Request $r){
         $m = new Catagorys();
         $m->name = $r->catagory;
+        $m->payment = $r->payment;
         $m->save();
         return redirect(url('/show_catagory'));
     }
@@ -44,6 +45,7 @@ class Catagory extends Controller
     public function update_catagory(Request $r){
         $obj = Catagorys::find($r->id);
         $obj->name = $r->catagory;
+        $obj->payment = $r->payment;
         $obj->update();
         return redirect(url('/show_catagory'));
     }

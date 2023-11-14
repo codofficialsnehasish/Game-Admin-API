@@ -70,7 +70,7 @@
                                                             <option selected disabled value="">Choose Baji</option>
                                                         </select>
                                                     </div>
-                                                    <div class="md-3 mt-3" style="display:none;" id="cata">
+                                                    <!-- <div class="md-3 mt-3" style="display:none;" id="cata">
                                                         <label for="catagory" class="form-label">Catagory</label>
                                                         <select class="form-select" id="catagory" name="catagory" onChange="boxnumber()" required>
                                                             <option selected disabled value="">Choose catagory</option>
@@ -78,10 +78,14 @@
                                                             <option value="{{$c->id}}">{{$c->name}}</option>
                                                             @endforeach
                                                         </select>
-                                                    </div>
-                                                    <div class="mb-3 mt-3" id="boxnumber" style="display:none;">
+                                                    </div> -->
+                                                    <!-- <div class="mb-3 mt-3" id="boxnumber" style="display:none;">
                                                         <label class="form-label" for="boxnum">Box Number</label>
                                                         <input type="number" class="form-control" name="boxnum" id="boxnum" placeholder="Choose box number" required>
+                                                    </div> -->
+                                                    <div class="mb-3 mt-3">
+                                                        <label class="form-label" for="pattinum">Enter Patti Number</label>
+                                                        <input type="number" class="form-control" name="pattinum" id="pattinum" placeholder="Enter Patti number" required>
                                                     </div>
                                                     <div class="mb-0 mt-3">
                                                         <div>

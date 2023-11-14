@@ -107,6 +107,15 @@ class Game extends Controller
         return ["status"=>"true",'data' => Catagorys::all()];
     }
 
+    public function show_on_game(){
+        $obj = On_Game::leftJoin("customer","on_game.customer_id","customer.id")
+        ->leftJoin("games","on_game.game_id","games.id")
+        ->leftJoin("timing","on_game.time_id","timing.id")
+        ->leftJoin("catagory","on_game.catagory_id","catagory.id")
+        ->get(["on_game.*","customer.beneficiary_name as cname","games.game_name as gname","timing.baji","timing.start_time","timing.end_time","catagory.name as cata_name"]);
+        return view("play_details/show_play_details")->with(['data' => $obj]);
+    }
+
 
     public function get_user_play_details(Request $r){
         $obj = new On_Game();
@@ -115,7 +124,7 @@ class Game extends Controller
         $game_id = Times::find($r->time_id)->game_id;
         $obj->game_id = $game_id;
         $obj->catagory_id = $r->catagory_id;
-        $obj->box_number = $r->box_number;
+        $obj->box_number = $r->digits;
         $game = Games::find($game_id);
         $customer = Customer::find($r->customer_id);
         if($game->min_entry_fee != "" && $r->amount == "" || $game->min_entry_fee > $r->amount){
@@ -124,8 +133,13 @@ class Game extends Controller
         elseif($customer->wallet_balance == "" || $customer->wallet_balance < $r->amount){
             return ["status"=>"False","error"=>"Your Wallet balance is too low"];
         }else{
+            $numlength = 0;
+            $arr = explode(",",$r->digits);
+            foreach($arr as $a){
+                $numlength += strlen((string)$a);
+            }
             $obj->amount = $r->amount;
-            $customer->wallet_balance -= $r->amount;
+            $customer->wallet_balance -= $numlength * $r->amount;
             $customer->update();
         }
         $res = $obj->save();
@@ -133,7 +147,6 @@ class Game extends Controller
             return ["status"=>"True","success"=>"Data inserted successfully"];
         }else{
             return ["status"=>"False","error"=>"Data can't inserted"];
-
         }
     }
 

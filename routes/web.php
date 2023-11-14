@@ -84,6 +84,7 @@ Route::get("/add_game",[Game::class,"games"]);
 Route::post("/post_game",[Game::class,"get_game"]); 
 Route::get("/show_game",[Game::class,"show_game"]); 
 Route::get("/del_game/{id}",[Game::class,"del_game"]); 
+Route::get("/show_on_game",[Game::class,"show_on_game"]); 
 
 
 

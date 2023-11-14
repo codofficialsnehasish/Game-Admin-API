@@ -55,6 +55,10 @@
                                                         <label class="form-label" for="catagory">Catagory</label>
                                                         <input type="text" class="form-control" value="{{$data->name}}" name="catagory" id="catagory" placeholder="Enter catagory" required>
                                                     </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="payment">Payment</label>
+                                                        <input type="number" class="form-control" name="payment" value="{{$data->payment}}" id="payment" placeholder="Ex. 9x" required>
+                                                    </div>
                                                     <div class="mb-0">
                                                         <div>
                                                             <button type="submit" class="btn btn-primary waves-effect waves-light me-1">Update Catagory</button>

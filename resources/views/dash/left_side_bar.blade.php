@@ -90,6 +90,12 @@
                     </ul>
                 </li>
                 <li>
+                    <a href="{{url('/show_on_game')}}" class="waves-effect">
+                        <i class="mdi mdi-cards-playing-outline"></i>
+                        <span>Play Details</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{url('/show_requests')}}" class="waves-effect">
                         <i class="mdi mdi-frequently-asked-questions"></i>
                         @if(\App\Models\Requestt::all()->count()!=0)<span class="badge rounded-pill bg-danger float-end">{{ \App\Models\Requestt::all()->count() }}</span>@endif
