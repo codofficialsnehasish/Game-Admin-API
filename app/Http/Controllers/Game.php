@@ -117,32 +117,186 @@ class Game extends Controller
     }
 
 
-    public function get_user_play_details(Request $r){
-        $obj = new On_Game();
-        $obj->customer_id = $r->customer_id;
-        $obj->time_id = $r->time_id;
-        $game_id = Times::find($r->time_id)->game_id;
-        $obj->game_id = $game_id;
-        $obj->catagory_id = $r->catagory_id;
-        $obj->box_number = $r->digits;
-        $game = Games::find($game_id);
-        $customer = Customer::find($r->customer_id);
-        if($game->min_entry_fee != "" && $r->amount == "" || $game->min_entry_fee > $r->amount){
-            return ["status"=>"False","error"=>"Mininum entry fee is $game->min_entry_fee"];
-        }
-        elseif($customer->wallet_balance == "" || $customer->wallet_balance < $r->amount){
-            return ["status"=>"False","error"=>"Your Wallet balance is too low"];
-        }else{
-            $numlength = 0;
-            $arr = explode(",",$r->digits);
-            foreach($arr as $a){
-                $numlength += strlen((string)$a);
+    public function check_have_balance($amount, $customer){
+        $flag = false;
+        $amo = explode(",",$amount);
+        foreach($amo as $a){
+            if($customer->wallet_balance < $a){
+                $flag = true;
             }
-            $obj->amount = $r->amount;
-            $customer->wallet_balance -= $numlength * $r->amount;
-            $customer->update();
         }
-        $res = $obj->save();
+        return $flag;
+    }
+    public function check_min_balance($amount, $game){
+        $flag = false;
+        $amo = explode(",",$amount);
+        foreach($amo as $a){
+            if($game->min_entry_fee > $a){
+                $flag = true;
+            }
+        }
+        return $flag;
+    }
+    public function isAscending($digits) {
+        $num = explode(",",$digits);
+        $flag = true;
+        foreach($num as $number){
+            $numberStr = (string)$number;
+            $length = strlen($numberStr);
+            for ($i = 0; $i < $length - 1; $i++) {
+                // echo "numberStr[i] = ".$numberStr[$i]."> numberStr[i + 1] = ".$numberStr[$i + 1]." <br>";
+                if ($numberStr[$i] > $numberStr[$i + 1]){
+                    $flag = false; 
+                    break;
+                }else{ $flag = true;}
+            }
+            if($flag == false) break;
+        }
+        return $flag;
+    }
+    // $exampleNumber = 12445;
+    // if (isAscending($exampleNumber)) {
+    //     echo "$exampleNumber is ascending.";
+    // } else {
+    //     echo "$exampleNumber is not ascending.";
+    // }
+    public function get_user_play_details(Request $r){
+        $res = 0;
+        if($r->catagory_id == 1){ //for single catagory
+            $obj = new On_Game();
+            $game_id = Times::find($r->time_id)->game_id;
+            $game = Games::find($game_id);
+            $customer = Customer::find($r->customer_id);
+            if($game->min_entry_fee != "" && $r->amount == "" || $this->check_min_balance($r->amount, $game)){
+                return ["status"=>"False","error"=>"Mininum entry fee is $game->min_entry_fee"];
+            }
+            elseif($customer->wallet_balance == "" || $this->check_have_balance($r->amount,$customer)){
+                return ["status"=>"False","error"=>"Your Wallet balance is too low"];
+            }
+            else{
+                $obj->customer_id = $r->customer_id;
+                $obj->time_id = $r->time_id;
+                $obj->game_id = $game_id;
+                $obj->catagory_id = $r->catagory_id;
+                // $c = count(explode(",",$r->digits));
+                $obj->box_number = $r->digits;
+                $sum_amount = abs(array_sum(explode(",",$r->amount)));
+                $obj->amount = $r->amount;
+                // $customer->wallet_balance -= $c * $r->amount;
+                $customer->wallet_balance -= $sum_amount;
+                $customer->update();
+                $res = $obj->save();
+            }
+        }elseif($r->catagory_id == 2){ //for jodi catagory
+            $obj = new On_Game();
+            $game_id = Times::find($r->time_id)->game_id;
+            $game = Games::find($game_id);
+            $customer = Customer::find($r->customer_id);
+            if($game->min_entry_fee != "" && $r->amount == "" || $this->check_min_balance($r->amount, $game)){
+                return ["status"=>"False","error"=>"Mininum entry fee is $game->min_entry_fee"];
+            }
+            elseif($customer->wallet_balance == "" || $this->check_have_balance($r->amount,$customer)){
+                return ["status"=>"False","error"=>"Your Wallet balance is too low"];
+            }
+            else{
+                $obj->customer_id = $r->customer_id;
+                $obj->time_id = $r->time_id;
+                $obj->game_id = $game_id;
+                $obj->catagory_id = $r->catagory_id;
+                $c = count(explode(",",$r->digits));
+                $obj->box_number = $r->digits;
+                // $sum_amount = abs(array_sum(explode(",",$r->amount)));
+                $obj->amount = $r->amount;
+                $customer->wallet_balance -= $c * $r->amount;
+                // $customer->wallet_balance -= $sum_amount;
+                $customer->update();
+                $res = $obj->save();
+            }
+        }elseif($r->catagory_id == 3){ //for patti catagory
+            $obj = new On_Game();
+            $game_id = Times::find($r->time_id)->game_id;
+            $game = Games::find($game_id);
+            $customer = Customer::find($r->customer_id);
+            if($game->min_entry_fee != "" && $r->amount == "" || $this->check_min_balance($r->amount, $game)){
+                return ["status"=>"False","error"=>"Mininum entry fee is $game->min_entry_fee"];
+            }
+            elseif(!$this->isAscending($r->digits))    {
+                return ["status"=>"False","error"=>"Digit not accepted"];
+            }
+            elseif($customer->wallet_balance == "" || $this->check_have_balance($r->amount,$customer)){
+                return ["status"=>"False","error"=>"Your Wallet balance is too low"];
+            }
+            else{
+                $obj->customer_id = $r->customer_id;
+                $obj->time_id = $r->time_id;
+                $obj->game_id = $game_id;
+                $obj->catagory_id = $r->catagory_id;
+                $c = count(explode(",",$r->digits));
+                $obj->box_number = $r->digits;
+                // $sum_amount = abs(array_sum(explode(",",$r->amount)));
+                $obj->amount = $r->amount;
+                $customer->wallet_balance -= $c * $r->amount;
+                // $customer->wallet_balance -= $sum_amount;
+                $customer->update();
+                $res = $obj->save();
+            }
+        }elseif($r->catagory_id == 4){ //for 4 digit cp catagory
+            $obj = new On_Game();
+            $game_id = Times::find($r->time_id)->game_id;
+            $game = Games::find($game_id);
+            $customer = Customer::find($r->customer_id);
+            if($game->min_entry_fee != "" && $r->amount == "" || $this->check_min_balance($r->amount, $game)){
+                return ["status"=>"False","error"=>"Mininum entry fee is $game->min_entry_fee"];
+            }
+            elseif(!$this->isAscending($r->digits))    {
+                return ["status"=>"False","error"=>"Digit not accepted"];
+            }
+            elseif($customer->wallet_balance == "" || $this->check_have_balance($r->amount,$customer)){
+                return ["status"=>"False","error"=>"Your Wallet balance is too low"];
+            }
+            else{
+                $obj->customer_id = $r->customer_id;
+                $obj->time_id = $r->time_id;
+                $obj->game_id = $game_id;
+                $obj->catagory_id = $r->catagory_id;
+                $c = count(explode(",",$r->digits));
+                $obj->box_number = $r->digits;
+                // $sum_amount = abs(array_sum(explode(",",$r->amount)));
+                $obj->amount = $r->amount;
+                $customer->wallet_balance -= $c * $r->amount;
+                // $customer->wallet_balance -= $sum_amount;
+                $customer->update();
+                $res = $obj->save();
+            }
+        }elseif($r->catagory_id == 5){ //for 5 digit cp catagory
+            $obj = new On_Game();
+            $game_id = Times::find($r->time_id)->game_id;
+            $game = Games::find($game_id);
+            $customer = Customer::find($r->customer_id);
+            if($game->min_entry_fee != "" && $r->amount == "" || $this->check_min_balance($r->amount, $game)){
+                return ["status"=>"False","error"=>"Mininum entry fee is $game->min_entry_fee"];
+            }
+            elseif(!$this->isAscending($r->digits))    {
+                return ["status"=>"False","error"=>"Digit not accepted"];
+            }
+            elseif($customer->wallet_balance == "" || $this->check_have_balance($r->amount,$customer)){
+                return ["status"=>"False","error"=>"Your Wallet balance is too low"];
+            }
+            else{
+                $obj->customer_id = $r->customer_id;
+                $obj->time_id = $r->time_id;
+                $obj->game_id = $game_id;
+                $obj->catagory_id = $r->catagory_id;
+                $c = count(explode(",",$r->digits));
+                $obj->box_number = $r->digits;
+                // $sum_amount = abs(array_sum(explode(",",$r->amount)));
+                $obj->amount = $r->amount;
+                $customer->wallet_balance -= $c * $r->amount;
+                // $customer->wallet_balance -= $sum_amount;
+                $customer->update();
+                $res = $obj->save();
+            }
+        }
         if($res){
             return ["status"=>"True","success"=>"Data inserted successfully"];
         }else{

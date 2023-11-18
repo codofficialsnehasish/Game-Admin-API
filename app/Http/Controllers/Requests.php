@@ -19,7 +19,7 @@ class Requests extends Controller
         $req->phone = $r->phone;
         $res = $req->save();
         if($res){
-            return ["status"=>"True","error"=>"Request Accepted"];
+            return ["status"=>"True","massage"=>"Request Accepted"];
         }else{
             return ["status"=>"False","error"=>"Request Not Accepted"];
         }

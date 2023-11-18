@@ -156,7 +156,7 @@ class Admin extends Controller
             }
         }
         $customer = new Customer();
-        $customer->reg_date = date('Y-d-m');
+        $customer->reg_date = date('d-m-Y');
         $customer->beneficiary_name = $r->name;
         if(preg_match('/^[0-9]{10}+$/', $r->phone)){
             $customer->mobile = $r->phone;
@@ -224,7 +224,7 @@ class Admin extends Controller
         // $id = $request->id ? ;
         if( $request->is('api/*')){
             $data = $id? Customer::find($id) : Customer::all();
-            if(count($data) > 0){
+            if($data){
                 return ["status"=>"true",'data'=>$data];
             }else{
                 return ["status"=>"false",'error'=>'No customer found'];
