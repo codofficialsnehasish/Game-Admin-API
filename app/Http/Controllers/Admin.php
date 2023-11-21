@@ -246,6 +246,12 @@ class Admin extends Controller
                 return ["status"=>"false",'error'=>'No customer found'];
             }
         }else{
+            $ids = Customer::where("seen","=",0)->get("id");
+            foreach($ids as $i){
+                $custo = Customer::find($i->id);
+                $custo->seen = 1;
+                $custo->update();
+            }
             $c = Customer::all();
             return view("customer/showcustomer")->with(["customer"=>$c]);
         }

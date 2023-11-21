@@ -39,6 +39,7 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ti-user"></i>
+                        @if(\App\Models\Customer::where("seen","=",0)->count()!=0)<span class="badge rounded-pill bg-danger float-end">{{ \App\Models\Customer::where("seen","=",0)->count() }}</span>@endif
                         <span>Customer</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -100,6 +101,13 @@
                         <i class="mdi mdi-frequently-asked-questions"></i>
                         @if(\App\Models\Requestt::all()->count()!=0)<span class="badge rounded-pill bg-danger float-end">{{ \App\Models\Requestt::all()->count() }}</span>@endif
                         <span>Requests</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{url('/show_requests')}}" class="waves-effect">
+                        <i class="mdi mdi-frequently-asked-questions"></i>
+                        @if(\App\Models\Requestt::all()->count()!=0)<span class="badge rounded-pill bg-danger float-end">{{ \App\Models\Requestt::all()->count() }}</span>@endif
+                        <span>Notification</span>
                     </a>
                 </li>
                 <li>

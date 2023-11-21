@@ -83,5 +83,38 @@
 
         <!-- form wizard init -->
         <script src="{{ url('dashboard_assets/js/pages/form-wizard.init.js') }}"></script>
+        <script>
+            // function checkForEvent() {
+            //     var eventExists = document.getElementById('yourEventId');
+            //     if (!eventExists) { location.reload(); }
+            // }
+            // setInterval(checkForEvent, 5000);
+
+            // if (somethingIsNotWorking) {
+            //     setTimeout(function() {
+            //         location.reload();
+            //     }, 5000);
+            // }
+
+            let activityDetected = false;
+            function resetActivity() {
+                activityDetected = true;
+                clearTimeout(inactivityTimer);
+                inactivityTimer = setTimeout(checkInactivity, 5000);
+            }
+            function checkInactivity() {
+                if (!activityDetected) {
+                    location.reload();
+                } else {
+                    activityDetected = false;
+                    clearTimeout(inactivityTimer);
+                    inactivityTimer = setTimeout(checkInactivity, 5000);
+                }
+            }
+            document.addEventListener('mousemove', resetActivity);
+            document.addEventListener('click', resetActivity);
+            document.addEventListener('keypress', resetActivity);
+            let inactivityTimer = setTimeout(checkInactivity, 10000);
+        </script>
     </body>
 
