@@ -58,6 +58,7 @@
                                                     <th>IFSC Code</th>
                                                     <th>Acount Number</th>
                                                     <th>M-Pin</th>
+                                                    <th>Password</th>
                                                     <th>Adding Mode</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -77,6 +78,7 @@
                                                     <td>{{$c->ifsc_code}}</td>
                                                     <td>{{$c->account_number}}</td>
                                                     <td>{{$c->m_pin}}</td>
+                                                    <td>{{$c->password}}</td>
                                                     <td>{{$c->adding_mode}}</td>
                                                     <td>
                                                         <a class="btn btn-success" href="{{url('/editcustomer')}}/{{$c->id}}" alt="edit"><i class="ti-check-box"></i></a>

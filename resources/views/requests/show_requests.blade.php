@@ -52,6 +52,7 @@
                                                     <th>Customer Name</th>
                                                     <th>Mobile Number</th>
                                                     <th>M-Pin</th>
+                                                    <th>Password</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -64,6 +65,7 @@
                                                     <td>{{$d->cname}}</td>
                                                     <td>{{$d->phone}}</td>
                                                     <td>{{$d->pin}}</td>
+                                                    <td>{{$d->password}}</td>
                                                     <td style="display:flex;justify-content:center;">
                                                         <!-- <a class="btn btn-success" href="{{url('/edit_catagory')}}/{{$d->id}}" alt="edit"><i class="ti-check-box"></i></a> -->
                                                         <a class="btn btn-danger" onclick="return confirm('Are you sure?')" href="{{url('/clear_requests')}}/{{$d->id}}">Clear <i class="ti-trash"></i></a>
