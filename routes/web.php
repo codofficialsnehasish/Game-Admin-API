@@ -8,6 +8,8 @@ use App\Http\Controllers\Sub_catagory;
 use App\Http\Controllers\Game;
 use App\Http\Controllers\Result;
 use App\Http\Controllers\Wallet;
+use App\Http\Controllers\Customer_History;
+use App\Http\Controllers\Game_Report;
 use App\Http\Controllers\Requests;
 
 
@@ -85,6 +87,7 @@ Route::post("/post_game",[Game::class,"get_game"]);
 Route::get("/show_game",[Game::class,"show_game"]); 
 Route::get("/del_game/{id}",[Game::class,"del_game"]); 
 Route::get("/show_on_game",[Game::class,"show_on_game"]); 
+Route::get("/del_playdetails/{id}",[Game::class,"del_playdetails"]); 
 
 
 
@@ -111,3 +114,12 @@ Route::get("/show_requests",[Requests::class,"show_requests"]);
 Route::get("/clear_requests/{id}",[Requests::class,"clear_requests"]);
 
 
+//============================ Customer History ========================
+
+Route::get("/customer_history",[Customer_History::class,"customer_history"]);
+Route::post("/fromcus",[Customer_History::class,"fromcus"]);
+
+
+Route::get("/kolkataff",[Game_Report::class,"kolkataff"]);
+Route::get("/cmmmimbai",[Game_Report::class,"cmmmimbai"]);
+Route::get("/del_kolkataff/{id}",[Game_Report::class,"del_kolkataff"]);

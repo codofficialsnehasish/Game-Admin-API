@@ -102,6 +102,23 @@
                         <span>Requests</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{url('/customer_history')}}" class="waves-effect">
+                        <i class="mdi mdi-microsoft-onenote"></i>
+                        <span>Customer History</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{url('/kolkataff')}}" class="waves-effect">
+                        <i class="ti-bookmark-alt"></i>
+                        <span>KOLKATA FF</span>
+                    </a>
+                </li><li>
+                    <a href="{{url('/cmmmimbai')}}" class="waves-effect">
+                        <i class="ti-bookmark-alt"></i>
+                        <span>CMM Mumbai</span>
+                    </a>
+                </li>
             </ul>
         </div>
         <!-- Sidebar -->

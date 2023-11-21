@@ -17,7 +17,7 @@
                         <select class="form-select" id="customer" name="customer" required>
                             <option selected disabled value="">Choose Customer Name</option>
                             @foreach($customer as $c)
-                            <option value="{{$c->cid}}">{{$c->cname}}</option>
+                            <option value="{{$c->id}}">{{$c->beneficiary_name}}</option>
                             @endforeach
                         </select>
                         <div class="invalid-feedback">Please select a valid state.</div>

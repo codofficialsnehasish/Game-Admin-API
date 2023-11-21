@@ -9,6 +9,7 @@ use App\Models\Catagorys;
 use App\Models\Results;
 use App\Models\On_Game;
 use App\Models\Customer;
+use App\Models\History;
 
 class Result extends Controller
 {
@@ -44,6 +45,14 @@ class Result extends Controller
         $this->generateCombinations($arr, $data, 0, $n - 1, 0, $result);
         return $result;
     }
+    function hasNoRepeatedCharacters($str) {
+        $chars = str_split($str);
+        $charCount = array_count_values($chars);
+        foreach ($charCount as $count) {
+            if ($count > 1) { return false; }
+        }
+        return true;
+    }
 
     public function post_result(Request $r){
         $obj = new Results();
@@ -61,11 +70,63 @@ class Result extends Controller
         ->where("is_completed","=",0)
         ->where("date","=",date("Y-m-d"))
         ->get();
-        // echo $res;
+        // print_r($res);
+
+        //================== for jodi ==================
+
+        $cata = Catagorys::find(2);
+        // $ongame = On_Game::find($result->id);
+        $jodi = On_Game::where("game_id","=",$r->game)
+            ->where("catagory_id","=",2)
+            ->where("is_completed","=",0)
+            ->where("date","=",date("Y-m-d"))
+            ->where("previous_win","=",1)
+            ->get();
+            // print_r($jodi);
+            if(count($jodi) > 0){
+                foreach($jodi as $j){
+                $custo = Customer::find($j->customer_id);
+                $digit = explode(",",$j->box_number);
+                $jodi = On_Game::find($j->id);
+                $box = explode(",",$j->box_number);
+                foreach($box as $b){
+                    // print($b);
+                    $sp_data = str_split($b);
+                    if($sp_data[1] == abs($this->sum($r->pattinum) % 10)){
+                        $custo->wallet_balance += $jodi->amount * $cata->payment;
+                        $custo->update();
+                        $jodi->winn_amount = $jodi->amount * $cata->payment;
+                        $jodi->is_completed = 1;
+                        $jodi->is_winner = 1;
+                        $jodi->update();
+                        
+                        $data = History::where("customer_id","=",$j->customer_id)
+                        ->where("date","=",date("Y-m-d"))
+                        ->where("game_id","=",$r->game)
+                        ->get("id");
+                        $objs = History::find($data[0]->id);
+                        $objs->winamount += $jodi->amount * $cata->payment;
+                        $objs->update();
+                    }else{
+                        $jodi->is_completed = 1;
+                        $jodi->is_winner = 0;
+                        $jodi->previous_win = 0;
+                        $jodi->update();
+                    }
+                }
+            }
+        }
+
+        //================== for jodi ==================
+
         foreach($res as $result){
             $custo = Customer::find($result->customer_id);
             $digit = explode(",",$result->box_number);
             // print_r($digit);
+            
+
+            
+            
             if($result->catagory_id == 1){
                 $cata = Catagorys::find($result->catagory_id);
                 $ongame = On_Game::find($result->id);
@@ -75,45 +136,25 @@ class Result extends Controller
                     if($digit[$i] == $single_res){
                         $custo->wallet_balance += $pay[$i] * $cata->payment;
                         $custo->update();
+                        $ongame->winn_amount = $pay[$i] * $cata->payment;
                         $ongame->is_completed = 1;
                         $ongame->is_winner = 1;
                         $ongame->update();
+
+                        $data = History::where("customer_id","=",$result->customer_id)
+                        ->where("date","=",date("Y-m-d"))
+                        ->where("game_id","=",$r->game)
+                        ->get("id");
+                        $objs = History::find($data[0]->id);
+                        $objs->winamount += $pay[$i] * $cata->payment;
+                        $objs->update();
                     }
                 }
             }elseif($result->catagory_id == 2){
-                $cata = Catagorys::find($result->catagory_id);
-                // $ongame = On_Game::find($result->id);
-                $jodi = On_Game::where("game_id","=",$r->game)
-                    ->where("catagory_id","=",2)
-                    ->where("is_completed","=",0)
-                    ->where("date","=",date("Y-m-d"))
-                    ->where("previous_win","=",1)
-                    ->get();
-                if(count($jodi) > 0){
-                    // print_r($jodi);
-                    foreach($jodi as $j){
-                        $jodi = On_Game::find($j->id);
-                        $box = explode(",",$j->box_number);
-                        foreach($box as $b){
-                            $sp_data = str_split($b);
-                            if($sp_data[1] == abs($this->sum($r->pattinum) % 10)){
-                                $custo->wallet_balance += $jodi->amount * $cata->payment;
-                                $custo->update();
-                                $jodi->is_completed = 1;
-                                $jodi->is_winner = 1;
-                                $jodi->update();
-                            }else{
-                                $jodi->is_completed = 1;
-                                $jodi->is_winner = 0;
-                                $jodi->previous_win = 0;
-                                $jodi->update();
-                            }
-                        }
-                    }
-                }
+                
                 $jodi2 = On_Game::where("game_id","=",$r->game)
                     ->where("time_id","=",$r->baji)
-                    // ->where("catagory_id","=",$r->catagory)
+                    ->where("catagory_id","=",2)
                     // ->where("box_number","=",$r->boxnum)
                     // ->where("catagory_id","=",2)
                     ->where("is_completed","=",0)
@@ -149,53 +190,104 @@ class Result extends Controller
                 $ongame = On_Game::find($result->id);
                 // $patti_num = abs($this->sum($r->pattinum) % 10);
                 // $pay = explode(",",$ongame->amount);
+                $flag = false;
                 for($i=0;$i<count($digit);$i++){
                     if($digit[$i] == $r->pattinum){
                         $custo->wallet_balance += $ongame->amount * $cata->payment;
                         $custo->update();
+                        $ongame->winn_amount = $ongame->amount * $cata->payment;
                         $ongame->is_completed = 1;
                         $ongame->is_winner = 1;
+                        $flag = true;
                         $ongame->update();
+                        
+                        $data = History::where("customer_id","=",$result->customer_id)
+                        ->where("date","=",date("Y-m-d"))
+                        ->where("game_id","=",$r->game)
+                        ->get("id");
+                        $objs = History::find($data[0]->id);
+                        $objs->winamount += $ongame->amount * $cata->payment;
+                        $objs->update();
                     }
+                }
+                if(!$flag){
+                    $ongame->is_completed = 1;
+                    $ongame->update();
                 }
             }
             elseif($result->catagory_id == 4){
                 $cata = Catagorys::find($result->catagory_id);
                 $ongame = On_Game::find($result->id);
-                // $patti_num = abs($this->sum($r->pattinum) % 10);
-                // $pay = explode(",",$ongame->amount);
-                $num = str_split($digit[0]);
-                $result = $this->combinations($num, 3);
-                $c = 0;
-                foreach($result as $res){
-                    if($res == $r->pattinum){
-                        $c++;
+                $p = (string)$r->pattinum;
+                if (hasNoRepeatedCharacters($p)) {
+                    // $patti_num = abs($this->sum($r->pattinum) % 10);
+                    // $pay = explode(",",$ongame->amount);
+                    $num = str_split($digit[0]);
+                    $result = $this->combinations($num, 3);
+                    $c = 0;
+                    foreach($result as $res){
+                        if($res == $r->pattinum){
+                            $c++;
+                        }
                     }
-                }
-                if($c>0){
-                    $custo->wallet_balance += (($ongame->amount * $c) * $cata->payment);
-                    $custo->update();
+                    if($c>0){
+                        $custo->wallet_balance += (($ongame->amount * $c) * $cata->payment);
+                        $custo->update();
+                        $ongame->winn_amount = (($ongame->amount * $c) * $cata->payment);
+                        $ongame->is_completed = 1;
+                        $ongame->is_winner = 1;
+                        $ongame->update();
+                        $data = History::where("customer_id","=",$result->customer_id)
+                            ->where("date","=",date("Y-m-d"))
+                            ->where("game_id","=",$r->game)
+                            ->get("id");
+                        $objs = History::find($data[0]->id);
+                        $objs->winamount += (($ongame->amount * $c) * $cata->payment);
+                        $objs->update();
+                    }else{
+                        $ongame->is_completed = 1;
+                        $ongame->update();
+                    }
+                } else {
                     $ongame->is_completed = 1;
-                    $ongame->is_winner = 1;
                     $ongame->update();
                 }
+                
             }
             elseif($result->catagory_id == 5){
                 $cata = Catagorys::find($result->catagory_id);
                 $ongame = On_Game::find($result->id);
-                $num = str_split($digit[0]);
-                $result = $this->combinations($num, 3);
-                $c = 0;
-                foreach($result as $res){
-                    if($res == $r->pattinum){
-                        $c++;
+                $p = (string)$r->pattinum;
+                if (hasNoRepeatedCharacters($p)) {
+                    $num = str_split($digit[0]);
+                    $result = $this->combinations($num, 3);
+                    $c = 0;
+                    foreach($result as $res){
+                        if($res == $r->pattinum){
+                            $c++;
+                        }
                     }
-                }
-                if($c>0){
-                    $custo->wallet_balance += (($ongame->amount * $c) * $cata->payment);
-                    $custo->update();
+                    if($c>0){
+                        $custo->wallet_balance += (($ongame->amount * $c) * $cata->payment);
+                        $custo->update();
+                        $ongame->winn_amount = (($ongame->amount * $c) * $cata->payment);
+                        $ongame->is_completed = 1;
+                        $ongame->is_winner = 1;
+                        $ongame->update();
+
+                        $data = History::where("customer_id","=",$result->customer_id)
+                            ->where("date","=",date("Y-m-d"))
+                            ->where("game_id","=",$r->game)
+                            ->get("id");
+                        $objs = History::find($data[0]->id);
+                        $objs->winamount += (($ongame->amount * $c) * $cata->payment);
+                        $objs->update();
+                    }else{
+                        $ongame->is_completed = 1;
+                        $ongame->update();
+                    }
+                }else{
                     $ongame->is_completed = 1;
-                    $ongame->is_winner = 1;
                     $ongame->update();
                 }
             }

@@ -11,6 +11,7 @@ use App\Models\Catagory;
 use App\Models\On_Game;
 use App\Models\Games;
 use App\Models\Requestt;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -135,7 +136,22 @@ class Admin extends Controller
         $games = Games::all()->count();
         $req = Requestt::all()->count();
         $slider = Slider::all()->count();
-        return view("dashboard")->with(["customer"=>$customer,"games"=>$games,"requests"=>$req,"slider"=>$slider]);;
+        // $payments = DB::table('on_game')
+        // ->select('date','on_game.id as gid', 'timing.baji', 'games.game_name', DB::raw('SUM(cutting_amount) as sum_paying_cash'), DB::raw('SUM(winn_amount) as sum_winning_cash'))
+        // ->leftJoin('timing','on_game.time_id','=','timing.id')
+        // ->leftJoin('games','on_game.game_id','=','games.id')
+        // ->where('on_game.game_id', "=", 1)
+        // ->groupBy('time_id')
+        // ->get();
+        $payingCash = DB::table('on_game')
+        ->select(DB::raw('time_id'), DB::raw('SUM(cutting_amount) as sum_paying_cash'))
+        ->groupBy('time_id')
+        ->get();
+        $winCash = DB::table('on_game')
+        ->select(DB::raw('time_id'), DB::raw('SUM(winn_amount) as sum_winning_cash'))
+        ->groupBy('time_id')
+        ->get();
+        return view("dashboard")->with(["customer"=>$customer,"games"=>$games,"requests"=>$req,"slider"=>$slider,"payingCash"=>$payingCash,"winCash"=>$winCash]);
     }
 
     //==========xxxxxxx=======End of Dashboard===========xxxxxx=======

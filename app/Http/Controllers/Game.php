@@ -9,6 +9,7 @@ use App\Models\Times;
 use App\Models\On_Game;
 use App\Models\Catagorys;
 use App\Models\Customer;
+use App\Models\History;
 
 class Game extends Controller
 {
@@ -116,6 +117,12 @@ class Game extends Controller
         return view("play_details/show_play_details")->with(['data' => $obj]);
     }
 
+    public function del_playdetails(Request $r){
+        $obj = On_Game::find($r->id);
+        $obj->delete();
+        return redirect(url('/show_on_game'));
+    }
+
 
     public function check_have_balance($amount, $customer){
         $flag = false;
@@ -144,11 +151,10 @@ class Game extends Controller
             $numberStr = (string)$number;
             $length = strlen($numberStr);
             for ($i = 0; $i < $length - 1; $i++) {
-                // echo "numberStr[i] = ".$numberStr[$i]."> numberStr[i + 1] = ".$numberStr[$i + 1]." <br>";
-                if ($numberStr[$i] > $numberStr[$i + 1]){
-                    $flag = false; 
-                    break;
-                }else{ $flag = true;}
+                //echo "numberStr[$i] = ".$numberStr[$i]."< numberStr[$i + 1] = ".$numberStr[$i + 1]." <br>";
+                if ($numberStr[$i] < $numberStr[$i + 1] || ($i == $length - 2 && $numberStr[$length - 1] == 0)){
+                    $flag = true;
+                }else{ $flag = false;break;}
             }
             if($flag == false) break;
         }
@@ -160,6 +166,29 @@ class Game extends Controller
     // } else {
     //     echo "$exampleNumber is not ascending.";
     // }
+
+    public function generateCombinations($arr, $data, $start, $end, $index, &$result) {
+        if ($index == count($data)) {
+            $str = "";
+            foreach($data as $d){
+                $str .= (string)$d;
+            }
+            $result[] = $str;
+            return;
+        }
+        for ($i = $start; $i <= $end && $end - $i + 1 >= count($data) - $index; $i++) {
+            $data[$index] = $arr[$i];
+            $this->generateCombinations($arr, $data, $i + 1, $end, $index + 1, $result);
+        }
+    }
+    public function combinations($arr, $r) {
+        $result = [];
+        $n = count($arr);
+        $data = array_fill(0, $r, 0);
+        $this->generateCombinations($arr, $data, 0, $n - 1, 0, $result);
+        return $result;
+    }
+
     public function get_user_play_details(Request $r){
         $res = 0;
         if($r->catagory_id == 1){ //for single catagory
@@ -173,7 +202,7 @@ class Game extends Controller
             elseif($customer->wallet_balance == "" || $this->check_have_balance($r->amount,$customer)){
                 return ["status"=>"False","error"=>"Your Wallet balance is too low"];
             }
-            else{
+            else{ 
                 $obj->customer_id = $r->customer_id;
                 $obj->time_id = $r->time_id;
                 $obj->game_id = $game_id;
@@ -184,8 +213,28 @@ class Game extends Controller
                 $obj->amount = $r->amount;
                 // $customer->wallet_balance -= $c * $r->amount;
                 $customer->wallet_balance -= $sum_amount;
+                $obj->cutting_amount = $sum_amount;
                 $customer->update();
                 $res = $obj->save();
+                $history = History::where("customer_id","=",$r->customer_id)
+                ->where("date","=",date("Y-m-d"))
+                ->where("game_id","=",Times::find($r->time_id)->game_id)
+                ->count();
+                if($history > 0){
+                    $data = History::where("customer_id","=",$r->customer_id)
+                    ->where("date","=",date("Y-m-d"))
+                    ->where("game_id","=",Times::find($r->time_id)->game_id)
+                    ->get("id");
+                    $objs = History::find($data[0]->id);
+                    $objs->payon += $sum_amount;
+                    $objs->update();
+                }else{
+                    $objs = new History();
+                    $objs->customer_id = $r->customer_id;
+                    $objs->game_id = $game_id;
+                    $objs->payon += $sum_amount;
+                    $objs->save();
+                }
             }
         }elseif($r->catagory_id == 2){ //for jodi catagory
             $obj = new On_Game();
@@ -208,9 +257,29 @@ class Game extends Controller
                 // $sum_amount = abs(array_sum(explode(",",$r->amount)));
                 $obj->amount = $r->amount;
                 $customer->wallet_balance -= $c * $r->amount;
+                $obj->cutting_amount = $c * $r->amount;
                 // $customer->wallet_balance -= $sum_amount;
                 $customer->update();
                 $res = $obj->save();
+                $history = History::where("customer_id","=",$r->customer_id)
+                ->where("date","=",date("Y-m-d"))
+                ->where("game_id","=",Times::find($r->time_id)->game_id)
+                ->count();
+                if($history > 0){
+                    $data = History::where("customer_id","=",$r->customer_id)
+                    ->where("date","=",date("Y-m-d"))
+                    ->where("game_id","=",Times::find($r->time_id)->game_id)
+                    ->get("id");
+                    $objs = History::find($data[0]->id);
+                    $objs->payon += $c * $r->amount;
+                    $objs->update();
+                }else{
+                    $objs = new History();
+                    $objs->customer_id = $r->customer_id;
+                    $objs->game_id = $game_id;
+                    $objs->payon += $c * $r->amount;
+                    $objs->save();
+                }
             }
         }elseif($r->catagory_id == 3){ //for patti catagory
             $obj = new On_Game();
@@ -236,9 +305,29 @@ class Game extends Controller
                 // $sum_amount = abs(array_sum(explode(",",$r->amount)));
                 $obj->amount = $r->amount;
                 $customer->wallet_balance -= $c * $r->amount;
+                $obj->cutting_amount = $c * $r->amount;
                 // $customer->wallet_balance -= $sum_amount;
                 $customer->update();
                 $res = $obj->save();
+                $history = History::where("customer_id","=",$r->customer_id)
+                ->where("date","=",date("Y-m-d"))
+                ->where("game_id","=",Times::find($r->time_id)->game_id)
+                ->count();
+                if($history > 0){
+                    $data = History::where("customer_id","=",$r->customer_id)
+                    ->where("date","=",date("Y-m-d"))
+                    ->where("game_id","=",Times::find($r->time_id)->game_id)
+                    ->get("id");
+                    $objs = History::find($data[0]->id);
+                    $objs->payon += $c * $r->amount;
+                    $objs->update();
+                }else{
+                    $objs = new History();
+                    $objs->customer_id = $r->customer_id;
+                    $objs->game_id = $game_id;
+                    $objs->payon += $c * $r->amount;
+                    $objs->save();
+                }
             }
         }elseif($r->catagory_id == 4){ //for 4 digit cp catagory
             $obj = new On_Game();
@@ -255,18 +344,42 @@ class Game extends Controller
                 return ["status"=>"False","error"=>"Your Wallet balance is too low"];
             }
             else{
-                $obj->customer_id = $r->customer_id;
-                $obj->time_id = $r->time_id;
-                $obj->game_id = $game_id;
-                $obj->catagory_id = $r->catagory_id;
-                $c = count(explode(",",$r->digits));
-                $obj->box_number = $r->digits;
-                // $sum_amount = abs(array_sum(explode(",",$r->amount)));
-                $obj->amount = $r->amount;
-                $customer->wallet_balance -= $c * $r->amount;
-                // $customer->wallet_balance -= $sum_amount;
-                $customer->update();
-                $res = $obj->save();
+                $num = str_split($r->digits);
+                if(count($num) == 4){
+                    $obj->customer_id = $r->customer_id;
+                    $obj->time_id = $r->time_id;
+                    $obj->game_id = $game_id;
+                    $obj->catagory_id = $r->catagory_id;
+                    // $c = count($this->combinations($num, 3));
+                    $obj->box_number = $r->digits;
+                    // $sum_amount = abs(array_sum(explode(",",$r->amount)));
+                    $obj->amount = $r->amount;
+                    $customer->wallet_balance -= 4 * $r->amount;
+                    $obj->cutting_amount = 4 * $r->amount;
+                    $customer->update();
+                    $res = $obj->save();
+                    $history = History::where("customer_id","=",$r->customer_id)
+                ->where("date","=",date("Y-m-d"))
+                ->where("game_id","=",Times::find($r->time_id)->game_id)
+                ->count();
+                if($history > 0){
+                    $data = History::where("customer_id","=",$r->customer_id)
+                    ->where("date","=",date("Y-m-d"))
+                    ->where("game_id","=",Times::find($r->time_id)->game_id)
+                    ->get("id");
+                    $objs = History::find($data[0]->id);
+                    $objs->payon += 4 * $r->amount;
+                    $objs->update();
+                }else{
+                    $objs = new History();
+                    $objs->customer_id = $r->customer_id;
+                    $objs->game_id = $game_id;
+                    $objs->payon += 4 * $r->amount;
+                    $objs->save();
+                }
+                }else{
+                    return ["error"=>"Wrong Entry, Check digit length"];
+                }
             }
         }elseif($r->catagory_id == 5){ //for 5 digit cp catagory
             $obj = new On_Game();
@@ -283,18 +396,42 @@ class Game extends Controller
                 return ["status"=>"False","error"=>"Your Wallet balance is too low"];
             }
             else{
-                $obj->customer_id = $r->customer_id;
-                $obj->time_id = $r->time_id;
-                $obj->game_id = $game_id;
-                $obj->catagory_id = $r->catagory_id;
-                $c = count(explode(",",$r->digits));
-                $obj->box_number = $r->digits;
-                // $sum_amount = abs(array_sum(explode(",",$r->amount)));
-                $obj->amount = $r->amount;
-                $customer->wallet_balance -= $c * $r->amount;
-                // $customer->wallet_balance -= $sum_amount;
-                $customer->update();
-                $res = $obj->save();
+                $num = str_split($r->digits);
+                if(count($num) == 5){
+                    $obj->customer_id = $r->customer_id;
+                    $obj->time_id = $r->time_id;
+                    $obj->game_id = $game_id;
+                    $obj->catagory_id = $r->catagory_id;
+                    $obj->box_number = $r->digits;
+                    // $sum_amount = abs(array_sum(explode(",",$r->amount)));
+                    $obj->amount = $r->amount;
+                    $customer->wallet_balance -= 10 * $r->amount;
+                    $obj->cutting_amount = 10 * $r->amount;
+                    // $customer->wallet_balance -= $sum_amount;
+                    $customer->update();
+                    $res = $obj->save();
+                    $history = History::where("customer_id","=",$r->customer_id)
+                ->where("date","=",date("Y-m-d"))
+                ->where("game_id","=",Times::find($r->time_id)->game_id)
+                ->count();
+                if($history > 0){
+                    $data = History::where("customer_id","=",$r->customer_id)
+                    ->where("date","=",date("Y-m-d"))
+                    ->where("game_id","=",Times::find($r->time_id)->game_id)
+                    ->get("id");
+                    $objs = History::find($data[0]->id);
+                    $objs->payon += 10 * $r->amount;
+                    $objs->update();
+                }else{
+                    $objs = new History();
+                    $objs->customer_id = $r->customer_id;
+                    $objs->game_id = $game_id;
+                    $objs->payon += 10 * $r->amount;
+                    $objs->save();
+                }
+                }else{
+                    return ["error"=>"Wrong Entry, Check digit length"];
+                }
             }
         }
         if($res){

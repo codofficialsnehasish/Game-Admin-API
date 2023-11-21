@@ -20,10 +20,10 @@
                         <div class="page-title-box">
                             <div class="row align-items-center">
                                 <div class="col-md-8">
-                                    <h6 class="page-title">Play Details</h6>
+                                    <h6 class="page-title">Kolkata FF Report</h6>
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Home</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Play Details</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Report</li>
                                     </ol>
                                 </div>
                                 <!-- <div class="col-md-4">
@@ -49,13 +49,10 @@
                                                 <tr>
                                                     <td>Sl No.</td>
                                                     <td>Date</td>
-                                                    <th>Customer Name</th>
-                                                    <th>Game Name</th>
-                                                    <th>Time</th>
-                                                    <th>Catagory</th>
-                                                    <th>Digits</th>
-                                                    <th>Amount</th>
-                                                    <th>Is Winner</th>
+                                                    <th>Baji</th>
+                                                    <th>Game</th>
+                                                    <th>Total Paying Cash</th>
+                                                    <th>Total Winning Cash</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -64,17 +61,13 @@
                                                 @foreach($data as $d)
                                                 <tr>
                                                     <td>@php echo $i++ @endphp</td>
-                                                    <td>@php echo date("d-m-Y",strtotime($d->date)) @endphp</td>
-                                                    <td>{{$d->cname}}</td>
-                                                    <td>{{$d->gname}}</td>
-                                                    <td>{{$d->baji}}&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;{{$d->start_time}}{{$d->end_time}}</td>
-                                                    <td>{{$d->cata_name}}</td>
-                                                    <td>{{$d->box_number}}</td>
-                                                    <td>{{$d->amount}}</td>
-                                                    <td>@if($d->is_winner == 1) Winner @else Not Win @endif</td>
+                                                    <td>{{$d->date}}</td>
+                                                    <td>{{$d->baji}}</td>
+                                                    <td>{{$d->game_name}}</td>
+                                                    <td>{{$d->sum_paying_cash}}</td>
+                                                    <td>{{$d->sum_winning_cash}}</td>
                                                     <td style="display:flex;justify-content:center;">
-                                                        <!-- <a class="btn btn-success" href="{{url('/edit_catagory')}}/{{$d->id}}" alt="edit"><i class="ti-check-box"></i></a> -->
-                                                        <a class="btn btn-danger" onclick="return confirm('Are you sure?')" href="{{url('/del_playdetails')}}/{{$d->id}}"><i class="ti-trash"></i></a>
+                                                        <a class="btn btn-danger" onclick="return confirm('Are you sure?')" href="{{url('/del_kolkataff')}}/{{$d->gid}}">Clear <i class="ti-trash"></i></a>
                                                     </td>
                                                 </tr>
                                                 @endforeach
