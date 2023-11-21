@@ -10,6 +10,7 @@ use App\Http\Controllers\Result;
 use App\Http\Controllers\Wallet;
 use App\Http\Controllers\Customer_History;
 use App\Http\Controllers\Game_Report;
+use App\Http\Controllers\Notification;
 use App\Http\Controllers\Requests;
 
 
@@ -123,3 +124,10 @@ Route::post("/fromcus",[Customer_History::class,"fromcus"]);
 Route::get("/kolkataff",[Game_Report::class,"kolkataff"]);
 Route::get("/cmmmimbai",[Game_Report::class,"cmmmimbai"]);
 Route::get("/del_kolkataff/{id}",[Game_Report::class,"del_kolkataff"]);
+
+
+Route::get("/show_notification",[Notification::class,"show_notification"]);
+Route::get("/approve_add_fund/{id}",[Notification::class,"approve_add_fund"]);
+Route::get("/cancel_add_fund/{id}",[Notification::class,"cancel_add_fund"]);
+Route::get("/withdraw_fund/{id}",[Notification::class,"withdraw_fund"]);
+Route::get("/cancel_withdraw_fund/{id}",[Notification::class,"cancel_withdraw_fund"]);

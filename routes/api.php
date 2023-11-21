@@ -10,6 +10,7 @@ use App\Http\Controllers\Catagory;
 use App\Http\Controllers\Sub_catagory;
 use App\Http\Controllers\Game;
 use App\Http\Controllers\Requests;
+use App\Http\Controllers\Notification;
 
 
 
@@ -89,3 +90,10 @@ Route::get("/win_history/{id?}",[Game::class,"win_history"]);
 Route::post("/get_request",[Requests::class,"get_request"]);
 
 //==========XXXX============ End of Request API Routes ============XXXX============
+
+
+//============================ Notification API Routes ==============================
+
+Route::post("/add_fund",[Notification::class,"add_fund"]);
+
+//==========XXXX============ End of Notification API Routes ============XXXX============

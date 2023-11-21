@@ -104,9 +104,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{url('/show_requests')}}" class="waves-effect">
+                    <a href="{{url('/show_notification')}}" class="waves-effect">
                         <i class="mdi mdi-frequently-asked-questions"></i>
-                        @if(\App\Models\Requestt::all()->count()!=0)<span class="badge rounded-pill bg-danger float-end">{{ \App\Models\Requestt::all()->count() }}</span>@endif
+                        @if(\App\Models\Notifications::where("seen","=",0)->count()!=0)<span class="badge rounded-pill bg-danger float-end">{{ \App\Models\Notifications::where("seen","=",0)->count() }}</span>@endif
                         <span>Notification</span>
                     </a>
                 </li>

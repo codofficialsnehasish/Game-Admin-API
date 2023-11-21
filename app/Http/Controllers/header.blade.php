@@ -7,29 +7,29 @@
         <meta content="Designed by Code of Dolphins" name="description">
         <meta content="Themesbrand" name="author">
         <!-- App favicon -->
-        <link rel="shortcut icon" href="{{ url('dashboard_assets/images/logo_2.png') }}">
+        <link rel="shortcut icon" href="{{ url('public/dashboard_assets/images/logo_2.png') }}">
     
-        <link href="{{ url('dashboard_assets/libs/chartist/chartist.min.css') }}" rel="stylesheet">
+        <link href="{{ url('public/dashboard_assets/libs/chartist/chartist.min.css') }}" rel="stylesheet">
     
         <!-- Bootstrap Css -->
-        <link href="{{ url('dashboard_assets/css/bootstrap.min.css') }}" id="bootstrap-ssstyle" rel="stylesheet" type="text/css">
+        <link href="{{ url('public/dashboard_assets/css/bootstrap.min.css') }}" id="bootstrap-ssstyle" rel="stylesheet" type="text/css">
         <!-- Icons Css -->
-        <link href="{{ url('dashboard_assets/css/icons.min.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ url('public/dashboard_assets/css/icons.min.css') }}" rel="stylesheet" type="text/css">
         <!-- App Css-->
-        <link href="{{ url('dashboard_assets/css/app.min.css') }}" id="app-ddstyle" rel="stylesheet" type="text/css">
+        <link href="{{ url('public/dashboard_assets/css/app.min.css') }}" id="app-ddstyle" rel="stylesheet" type="text/css">
 
         <!-- DataTables -->
-        <link href="{{ url('dashboard_assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css">
-        <link href="{{ url('dashboard_assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ url('public/dashboard_assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ url('public/dashboard_assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css">
 
-        <link href="{{ url('dashboard_assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
-        <link href="{{ url('dashboard_assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ url('public/dashboard_assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
+        <link href="{{ url('public/dashboard_assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css">
 
-        <link href="{{ url('dashboard_assets/libs/spectrum-colorpicker2/spectrum.min.css') }}" rel="stylesheet" type="text/css">
-        <link href="{{ url('dashboard_assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css') }}" rel="stylesheet">
+        <link href="{{ url('public/dashboard_assets/libs/spectrum-colorpicker2/spectrum.min.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ url('public/dashboard_assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css') }}" rel="stylesheet">
 
         <!-- Sweet Alert-->
-        <link href="{{ url('dashboard_assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ url('public/dashboard_assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
     </head>
 
     <body data-sidebar="dark">
@@ -46,22 +46,22 @@
                             <a href="{{url('/dashboard')}}" class="logo logo-dark">
                                 <span class="logo-sm">
                                     <!-- WVS -->
-                                    <img src="{{ url('dashboard_assets/images/logo_2.png') }}" alt="" height="22">
+                                    <img src="{{ url('public/dashboard_assets/images/logo_2.png') }}" alt="" height="22">
                                 </span>
                                 <span class="logo-lg">
                                     <!-- WVS -->
-                                    <img src="{{ url('dashboard_assets/images/logo_2.png') }}" alt="" height="17">
+                                    <img src="{{ url('public/dashboard_assets/images/logo_2.png') }}" alt="" height="17">
                                 </span>
                             </a>
 
                             <a href="{{url('/dashboard')}}" class="logo logo-light">
                                 <span class="logo-sm">
                                     <!-- WVS -->
-                                    <img src="{{ url('dashboard_assets/images/logo_2.png') }}" alt="" height="22">
+                                    <img src="{{ url('public/dashboard_assets/images/logo_2.png') }}" alt="" height="22">
                                 </span>
                                 <span class="logo-lg">
                                     <!-- <h1>WVS</h1> -->
-                                    <img src="{{ url('dashboard_assets/images/logo_2.png') }}" alt="" height="70" style="padding-top: 5px;">
+                                    <img src="{{ url('public/dashboard_assets/images/logo_2.png') }}" alt="" height="70" style="padding-top: 5px;">
                                 </span>
                             </a>
                         </div>
@@ -129,19 +129,35 @@
                             <button type="button" class="btn header-item noti-icon waves-effect" id="page-header-notifications-dropdown"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="mdi mdi-bell-outline"></i>
-                                @if(\App\Models\Notifications::where("seen","=",0)->count()!=0)<span class="badge bg-danger rounded-pill">{{ \App\Models\Notifications::where("seen","=",0)->count() }}</span>@endif
+                                <span class="badge bg-danger rounded-pill">3</span>
                             </button>
                             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" aria-labelledby="page-header-notifications-dropdown">
-                                @if(\App\Models\Notifications::where("seen","=",0)->count()!=0)
                                 <div class="p-3">
                                     <div class="row align-items-center">
                                         <div class="col">
-                                            <h5 class="m-0 font-size-16"> Notifications ({{ \App\Models\Notifications::where("seen","=",0)->count() }}) </h5>
+                                            <h5 class="m-0 font-size-16"> Notifications (258) </h5>
                                         </div>
                                     </div>
                                 </div>
                                 <div data-simplebar style="max-height: 230px;">
-                                    @if(\App\Models\Notifications::where("seen","=",0)->where("which_for","=","add_fund")->count()!=0)
+                                    <a href="" class="text-reset notification-item">
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0 me-3">
+                                                <div class="avatar-xs">
+                                                    <span class="avatar-title bg-success rounded-circle font-size-16">
+                                                        <i class="mdi mdi-cart-outline"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="mb-1">Your order is placed</h6>
+                                                <div class="font-size-12 text-muted">
+                                                    <p class="mb-1">Dummy text of the printing and typesetting industry.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                        
                                     <a href="" class="text-reset notification-item">
                                         <div class="d-flex">
                                             <div class="flex-shrink-0 me-3">
@@ -152,15 +168,50 @@
                                                 </div>
                                             </div>
                                             <div class="flex-grow-1">
-                                                <h6 class="mb-1">New Add Fund Request Recived</h6>
+                                                <h6 class="mb-1">New Message received</h6>
                                                 <div class="font-size-12 text-muted">
-                                                    <p class="mb-1">You have {{ \App\Models\Notifications::where("seen","=",0)->count() }} unread messages</p>
+                                                    <p class="mb-1">You have 87 unread messages</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </a>
-                                    @endif
-                                    @if(\App\Models\Notifications::where("seen","=",0)->where("which_for","=","fund_withdraw")->count()!=0)
+
+                                    <a href="" class="text-reset notification-item">
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0 me-3">
+                                                <div class="avatar-xs">
+                                                    <span class="avatar-title bg-info rounded-circle font-size-16">
+                                                        <i class="mdi mdi-glass-cocktail"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="mb-1">Your item is shipped</h6>
+                                                <div class="font-size-12 text-muted">
+                                                    <p class="mb-1">It is a long established fact that a reader will</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                    <a href="" class="text-reset notification-item">
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0 me-3">
+                                                <div class="avatar-xs">
+                                                    <span class="avatar-title bg-primary rounded-circle font-size-16">
+                                                        <i class="mdi mdi-cart-outline"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="mb-1">Your order is placed</h6>
+                                                <div class="font-size-12 text-muted">
+                                                    <p class="mb-1">Dummy text of the printing and typesetting industry.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+
                                     <a href="" class="text-reset notification-item">
                                         <div class="d-flex">
                                             <div class="flex-shrink-0 me-3">
@@ -171,14 +222,13 @@
                                                 </div>
                                             </div>
                                             <div class="flex-grow-1">
-                                                <h6 class="mb-1">New Withdraw Fund Request Recived</h6>
+                                                <h6 class="mb-1">New Message received</h6>
                                                 <div class="font-size-12 text-muted">
-                                                    <p class="mb-1">You have {{ \App\Models\Notifications::where("seen","=",0)->count() }} unread messages</p>
+                                                    <p class="mb-1">You have 87 unread messages</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </a>
-                                    @endif
                                 </div>
                                 <div class="p-2 border-top">
                                     <div class="d-grid">
@@ -187,16 +237,13 @@
                                         </a>
                                     </div>
                                 </div>
-                                @else
-                                <h5 class="m-0 font-size-16"> No Notification </h5>
-                                @endif
                             </div>
                         </div>
 
                         <div class="dropdown d-inline-block">
                             <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img class="rounded-circle header-profile-user" src="{{ url('dashboard_assets/images/users/user-11.jpg') }}"
+                                <img class="rounded-circle header-profile-user" src="{{ url('public/dashboard_assets/images/users/user-11.jpg') }}"
                                     alt="Header Avatar">
                             </button>
                             <div class="dropdown-menu dropdown-menu-end">
@@ -221,3 +268,19 @@
                     </div>
                 </div>
             </header>
+            <script>
+                // function logout() {
+                //     Swal.fire({
+                //         title: "Are you sure?",
+                //         text: "You won't be able to revert this!",
+                //         icon: "question",
+                //         showCancelButton: !0,
+                //         confirmButtonColor: "#34c38f",
+                //         cancelButtonColor: "#f46a6a",
+                //         confirmButtonText: "Yes, delete it!"
+                //     }).then(function(t) {
+                //         t.value && Swal.fire("Deleted!", "Your file has been deleted.", "success")
+                //         return true
+                //     })
+                // });
+            </script>
