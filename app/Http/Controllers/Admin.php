@@ -82,11 +82,16 @@ class Admin extends Controller
             if(Customer::where("mobile","=",$r->phone)->count() > 0){
                 $obj = Customer::where("mobile","=",$r->phone)->get();
                 // $hashed = Hash::make($pass, ['rounds' => 15,]);
-                if(Hash::check($pass, $obj[0]->password)) {
+                if($obj[0]->password == $pass){
                     return ["status"=>"true","data"=>$obj[0]];
-                } else {
+                }else{
                     return ["status"=>"false",'error' => "Invalid Password"];
                 }
+                // if(Hash::check($pass, $obj[0]->password)) {
+                //     return ["status"=>"true","data"=>$obj[0]];
+                // } else {
+                //     return ["status"=>"false",'error' => "Invalid Password"];
+                // }
                 // return $obj[0];
             }else{ 
                 return ["status"=>"false",'error' => "Phone number is not avaliable"];
@@ -205,7 +210,8 @@ class Admin extends Controller
                     return redirect()->back()->with('error', 'Password Must Contain At Least 8 Characters!.');
                 }
             }else{
-                $customer->password = bcrypt($r->password);
+                // $customer->password = bcrypt($r->password);
+                $customer->password = $r->password;
             }
         }else{
             if( $r->is('api/*')){
