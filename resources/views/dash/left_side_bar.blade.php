@@ -100,7 +100,7 @@
                     <a href="{{url('/show_requests')}}" class="waves-effect">
                         <i class="mdi mdi-frequently-asked-questions"></i>
                         @if(\App\Models\Requestt::all()->count()!=0)<span class="badge rounded-pill bg-danger float-end">{{ \App\Models\Requestt::all()->count() }}</span>@endif
-                        <span>Requests</span>
+                        <span>Forgot Password Requests</span>
                     </a>
                 </li>
                 <li>

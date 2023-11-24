@@ -92,7 +92,7 @@
                             </div>
                             <div class="col-xl-4 col-md-6">
                                 <div class="card mini-stat bg-primary text-white">
-                                    <a href="{{url('/slider')}}">
+                                    <a href="{{url('/kolkataff')}}">
                                         <div class="card-body">
                                             <div class="mb-4">
                                                 <div class="float-start mini-stat-img me-4">
@@ -107,7 +107,7 @@
                             </div>
                             <div class="col-xl-5 col-md-8">
                                 <div class="card mini-stat bg-primary text-white">
-                                    <a href="{{url('/slider')}}">
+                                    <a href="{{url('/kolkataff')}}">
                                         <div class="card-body">
                                             <div class="mb-4">
                                                 <div class="float-start mini-stat-img me-4">
