@@ -141,21 +141,27 @@ class Admin extends Controller
         $games = Games::all()->count();
         $req = Requestt::all()->count();
         $slider = Slider::all()->count();
-        // $payments = DB::table('on_game')
-        // ->select('date','on_game.id as gid', 'timing.baji', 'games.game_name', DB::raw('SUM(cutting_amount) as sum_paying_cash'), DB::raw('SUM(winn_amount) as sum_winning_cash'))
-        // ->leftJoin('timing','on_game.time_id','=','timing.id')
-        // ->leftJoin('games','on_game.game_id','=','games.id')
-        // ->where('on_game.game_id', "=", 1)
+
+        // $payingCash = DB::table('on_game')
+        // ->select(DB::raw('time_id'), DB::raw('SUM(cutting_amount) as sum_paying_cash'))
+        // // ->where('date', "=", date("Y-m-d"))
         // ->groupBy('time_id')
         // ->get();
-        $payingCash = DB::table('on_game')
-        ->select(DB::raw('time_id'), DB::raw('SUM(cutting_amount) as sum_paying_cash'))
-        ->groupBy('time_id')
-        ->get();
-        $winCash = DB::table('on_game')
-        ->select(DB::raw('time_id'), DB::raw('SUM(winn_amount) as sum_winning_cash'))
-        ->groupBy('time_id')
-        ->get();
+
+        $payingCash = On_Game::where('game_id', 1)
+        ->where('date',"=", date("Y-m-d"))
+        ->sum('cutting_amount');
+
+        // $winCash = DB::table('on_game')
+        // ->select(DB::raw('time_id'), DB::raw('SUM(winn_amount) as sum_winning_cash'))
+        // // ->where('on_game.date', "=", date("Y-m-d"))
+        // ->groupBy('time_id')
+        // ->get();
+
+        $winCash = On_Game::where('game_id', 1)
+        ->where('date',"=", date("Y-m-d"))
+        ->sum('winn_amount');
+
         return view("dashboard")->with(["customer"=>$customer,"games"=>$games,"requests"=>$req,"slider"=>$slider,"payingCash"=>$payingCash,"winCash"=>$winCash]);
     }
 

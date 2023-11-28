@@ -99,7 +99,7 @@
                                                     <img src="{{ url('dashboard_assets/images/services-icon/13.jpg') }}" alt="">
                                                 </div>
                                                 <h5 class="font-size-16 text-uppercase text-white-50">Kolkata FF Paying Cash</h5>
-                                                <h4 class="fw-medium font-size-24" style="color:white;">{{$payingCash[0]->sum_paying_cash}} <i class="mdi mdi-arrow-up text-success ms-2"></i></h4>
+                                                <h4 class="fw-medium font-size-24" style="color:white;">{{$payingCash}} <i class="mdi mdi-arrow-up text-success ms-2"></i></h4>
                                             </div>
                                         </div>
                                     </a>
@@ -114,7 +114,7 @@
                                                     <img src="{{ url('dashboard_assets/images/services-icon/14.jpg') }}" alt="">
                                                 </div>
                                                 <h5 class="font-size-16 text-uppercase text-white-50">Kolkata FF Winning Cash</h5>
-                                                <h4 class="fw-medium font-size-24" style="color:white;">{{$winCash[0]->sum_winning_cash}} <i class="mdi mdi-arrow-up text-success ms-2"></i></h4>
+                                                <h4 class="fw-medium font-size-24" style="color:white;">{{$winCash}} <i class="mdi mdi-arrow-up text-success ms-2"></i></h4>
                                             </div>
                                         </div>
                                     </a>

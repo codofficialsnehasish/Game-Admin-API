@@ -14,6 +14,7 @@ class Game_Report extends Controller
         ->leftJoin('timing','on_game.time_id','=','timing.id')
         ->leftJoin('games','on_game.game_id','=','games.id')
         ->where('on_game.game_id', "=", 1)
+        ->where('on_game.date', "=", date("Y-m-d"))
         ->groupBy('time_id')
         ->get();
 
@@ -31,6 +32,7 @@ class Game_Report extends Controller
         ->leftJoin('timing','on_game.time_id','=','timing.id')
         ->leftJoin('games','on_game.game_id','=','games.id')
         ->where('on_game.game_id', "=", 3)
+        ->where('on_game.date', "=", date("Y-m-d"))
         ->groupBy('time_id')
         ->get();
 
