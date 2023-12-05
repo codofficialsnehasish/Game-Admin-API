@@ -24,7 +24,7 @@
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Home</a></li>
                                         <li class="breadcrumb-item"><a href="{{url('/show_wallet')}}">Wallet</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Credit Money</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Debit Money</li>
                                     </ol>
                                 </div>
                                 <div class="col-md-4">
@@ -46,11 +46,11 @@
                                 <div class="row justify-content-center">
                                     <div class="col-md-8 col-lg-12">
                                         <div class="card">
-                                            <div class="card-header bg-primary text-light">Credit Money</div>
+                                            <div class="card-header bg-primary text-light">Debit Money</div>
                                             <div class="card-body">
                                                 <form class="custom-validation" action="{{url('/post_wallet')}}" method="post">
                                                     @csrf
-                                                    <input type="hidden" name="action" value="add_money">
+                                                    <input type="hidden" name="action" value="cut_money">
                                                     <div class="md-3" style="display: flex;flex-direction: column;">
                                                         <label for="customer" class="form-label">Choose Customer</label>
                                                         <select class="form-select select2" id="customer" name="customer" required onchange="req(this.value)">
@@ -69,7 +69,7 @@
                                                     </div>
                                                     <div class="mb-0">
                                                         <div>
-                                                            <button type="submit" class="btn btn-primary waves-effect waves-light me-1">Credit Money</button>
+                                                            <button type="submit" class="btn btn-primary waves-effect waves-light me-1">Debit Money</button>
                                                             <!-- <button type="reset" class="btn btn-secondary waves-effect">Cancel</button> -->
                                                         </div>
                                                     </div>

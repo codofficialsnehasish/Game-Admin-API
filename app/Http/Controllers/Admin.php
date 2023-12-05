@@ -9,6 +9,7 @@ use App\Models\Customer;
 use App\Models\Slider;
 use App\Models\Catagory;
 use App\Models\On_Game;
+use App\Models\Notifications;
 use App\Models\Games;
 use App\Models\Requestt;
 use Illuminate\Support\Facades\DB;
@@ -314,4 +315,28 @@ class Admin extends Controller
     }
 
     //==========xxxxxxx======= End of Customer ===========xxxxxx=======
+
+
+    //===================== Notification =========================
+    
+    public function get_notification(){
+        $custo = Customer::where("seen","=",0)->count();
+        if($custo > 0){
+            return $custo;
+        }
+    }
+
+    public function get_request(){
+        $req = Requestt::all()->count();
+        if($req > 0){
+            return $req;
+        }
+    }
+
+    public function get_notifi(){
+        $not = Notifications::where("seen","=",0)->count();
+        if($not > 0){
+            return $not;
+        }
+    }
 }

@@ -63,9 +63,8 @@
         <script src="{{ url('dashboard_assets/js/pages/form-editor.init.js') }}"></script>
 
         <script src="{{ url('dashboard_assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
-        <script src="{{ url('dashboard_assets/js/pages/form-advanced.init.js') }}"></script>
         <script src="{{ url('dashboard_assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"></script>
-
+        
         <!-- form repeater js -->
         <script src="{{ url('dashboard_assets/libs/jquery.repeater/jquery.repeater.min.js') }}"></script>
         <script src="{{ url('dashboard_assets/js/pages/form-repeater.int.js') }}"></script>
@@ -80,9 +79,14 @@
 
         <!-- form wizard -->
         <script src="{{ url('dashboard_assets/libs/jquery-steps/build/jquery.steps.min.js') }}"></script>
-
+        
         <!-- form wizard init -->
         <script src="{{ url('dashboard_assets/js/pages/form-wizard.init.js') }}"></script>
+        
+        <script src="{{ url('dashboard_assets/libs/select2/js/select2.full.min.js') }}"></script>
+        <script src="{{ url('dashboard_assets/libs/spectrum-colorpicker2/spectrum.min.js') }}"></script>
+        <script src="{{ url('dashboard_assets/js/pages/form-advanced.init.js') }}"></script>
+
         <script>
             // function checkForEvent() {
             //     var eventExists = document.getElementById('yourEventId');
@@ -96,25 +100,25 @@
             //     }, 5000);
             // }
 
-            let activityDetected = false;
-            function resetActivity() {
-                activityDetected = true;
-                clearTimeout(inactivityTimer);
-                inactivityTimer = setTimeout(checkInactivity, 5000);
-            }
-            function checkInactivity() {
-                if (!activityDetected) {
-                    location.reload();
-                } else {
-                    activityDetected = false;
-                    clearTimeout(inactivityTimer);
-                    inactivityTimer = setTimeout(checkInactivity, 5000);
-                }
-            }
-            document.addEventListener('mousemove', resetActivity);
-            document.addEventListener('click', resetActivity);
-            document.addEventListener('keypress', resetActivity);
-            let inactivityTimer = setTimeout(checkInactivity, 10000);
+            // let activityDetected = false;
+            // function resetActivity() {
+            //     activityDetected = true;
+            //     clearTimeout(inactivityTimer);
+            //     inactivityTimer = setTimeout(checkInactivity, 5000);
+            // }
+            // function checkInactivity() {
+            //     if (!activityDetected) {
+            //         location.reload();
+            //     } else {
+            //         activityDetected = false;
+            //         clearTimeout(inactivityTimer);
+            //         inactivityTimer = setTimeout(checkInactivity, 5000);
+            //     }
+            // }
+            // document.addEventListener('mousemove', resetActivity);
+            // document.addEventListener('click', resetActivity);
+            // document.addEventListener('keypress', resetActivity);
+            // let inactivityTimer = setTimeout(checkInactivity, 10000);
         </script>
     </body>
 

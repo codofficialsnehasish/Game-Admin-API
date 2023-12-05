@@ -30,6 +30,7 @@
 
         <!-- Sweet Alert-->
         <link href="{{ url('dashboard_assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
+
     </head>
 
     <body data-sidebar="dark">

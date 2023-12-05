@@ -39,10 +39,16 @@
                             </div>
                         </div>
                         <!-- end page title -->
-                        @if(Session::has("error"))
+                        @if(Session::has("msgg"))
                         <div class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            <strong>Error!</strong> {{Session::get("error")}}
+                            <strong>Error!</strong> {{Session::get("msgg")}}
+                        </div>
+                        @endif
+                        @if(Session::has("msg"))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <strong>Well done!</strong> {{Session::get("msg")}}
                         </div>
                         @endif
                         <!-- register -->

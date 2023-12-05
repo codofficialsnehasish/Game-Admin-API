@@ -17,17 +17,29 @@ class Wallet extends Controller
         $obj = Customer::where("id","=",$r->id)->get("wallet_balance");
         return response()->json($obj);
     }
+    public function cut_money(){
+        $obj = Customer::all();
+        return view("wallet/cut_money")->with(['customer'=>$obj]);
+    }
     public function post_wallet(Request $r){
         $obj = new Wallets();
         $custo = Customer::find($r->customer);
-        $custo->wallet_balance += $r->amount;
+        if($r->action == "cut_money"){
+            $custo->wallet_balance -= $r->amount;
+            $obj->status = "Debited";
+        }
+        if($r->action == "add_money"){
+            $custo->wallet_balance += $r->amount; 
+            $obj->status = "Credited";
+        }
         $obj->date = date('d-m-Y');
         $obj->customer_id = $r->customer;
-        $obj->amount = $r->amount;
+        $obj->amount = $r->amount; 
         $custo->update();
         $obj->save();
         return redirect(url('/show_wallet'));
     }
+
     public function show_wallet(){
         $obj = Wallets::leftJoin('customer','wallet.customer_id','customer.id')
         ->get(["wallet.*","customer.beneficiary_name as name"]);

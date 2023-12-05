@@ -20,28 +20,25 @@
                         <div class="page-title-box">
                             <div class="row align-items-center">
                                 <div class="col-md-8">
-                                    <h6 class="page-title">Wallet</h6>
+                                    <h6 class="page-title">Game Result</h6>
                                     <ol class="breadcrumb m-0">
                                         <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Home</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Wallet</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Game Result</li>
                                     </ol>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="float-end d-none d-md-block">
                                         <div class="dropdown">
-                                            <a href="{{url('/add_money')}}" class="btn btn-primary  dropdown-toggle" aria-expanded="false">
-                                                <i class="fas fa-plus me-2"></i> Credit
-                                            </a>
-                                            <a href="{{url('/cut_money')}}" class="btn btn-primary  dropdown-toggle" aria-expanded="false">
-                                                <i class="fas fa-minus me-2"></i> Debit
-                                            </a>
+                                        <a href="{{url('/add_result')}}" class="btn btn-primary  dropdown-toggle" aria-expanded="false">
+                                        <i class="fas fa-plus me-2"></i> Add New
+                                        </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <!-- end page title -->
-                        
+                        @include("dash_cut/result_form")
                         <!-- show data -->
                         <div class="row">
                             <div class="col-12">
@@ -52,9 +49,12 @@
                                                 <tr>
                                                     <td>Sl No.</td>
                                                     <td>Date</td>
-                                                    <th>Name</th>
-                                                    <th>Amount</th>
-                                                    <th>Status</th>
+                                                    <th>Game</th>
+                                                    <th>Baji</th>
+                                                    <th>Result</th>
+                                                    <!-- <th>Catagory</th>
+                                                    <th>Box Number</th> -->
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -63,13 +63,15 @@
                                                 <tr>
                                                     <td>@php echo $i++ @endphp</td>
                                                     <td>{{$d->date}}</td>
-                                                    <td>{{$d->name}}</td>
-                                                    <td>{{$d->amount}}</td>
-                                                    <td @if($d->status == "Credited")style="color:green;" @else style="color:red;" @endif>{{$d->status}}</td>
-                                                    <!-- <td>
-                                                        <a class="btn btn-success" href="{{url('/edit_catagory')}}/{{$d->id}}" alt="edit"><i class="ti-check-box"></i></a>
-                                                        <a class="btn btn-danger" onclick="return confirm('Are you sure?')" href="{{url('/del_catagory')}}/{{$d->id}}"><i class="ti-trash"></i></a>
-                                                    </td> -->
+                                                    <td>{{$d->gname}}</td>
+                                                    <td>{{$d->baji}}&nbsp;&nbsp;&nbsp;&nbsp;{{$d->start_time}} - {{$d->end_time}}</td>
+                                                    <td>{{$d->patti_number}} - {{$d->single}}</td>
+                                                    <!-- <td>{{$d->cname}}</td>
+                                                    <td>{{$d->box_number}}</td> -->
+                                                    <td style="display:flex;justify-content:center;">
+                                                        <!-- <a class="btn btn-success" href="{{url('/edit_catagory')}}/{{$d->id}}" alt="edit"><i class="ti-check-box"></i></a> -->
+                                                        <a class="btn btn-danger" onclick="return confirm('Are you sure?')" href="{{url('/del_result')}}/{{$d->id}}"><i class="ti-trash"></i></a>
+                                                    </td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
@@ -83,7 +85,6 @@
                     </div> <!-- container-fluid -->
                 </div>
                 <!-- End Page-content -->
-
 
                 
                 @include("dash/footer")

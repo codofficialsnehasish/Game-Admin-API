@@ -39,7 +39,7 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ti-user"></i>
-                        @if(\App\Models\Customer::where("seen","=",0)->count()!=0)<span class="badge rounded-pill bg-danger float-end">{{ \App\Models\Customer::where("seen","=",0)->count() }}</span>@endif
+                        <span class="badge rounded-pill bg-danger float-end" id="custo"></span>
                         <span>Customer</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -86,8 +86,9 @@
                         <span>Wallet</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{url('/add_money')}}">Add Money</a></li>
-                        <li><a href="{{url('/show_wallet')}}">All Wallet</a></li>
+                        <li><a href="{{url('/add_money')}}">Credit Money (add)</a></li>
+                        <li><a href="{{url('/cut_money')}}">Debit Money (cut)</a></li>
+                        <li><a href="{{url('/show_wallet')}}">Wallet History</a></li>
                     </ul>
                 </li>
                 <li>
@@ -99,14 +100,14 @@
                 <li>
                     <a href="{{url('/show_requests')}}" class="waves-effect">
                         <i class="mdi mdi-frequently-asked-questions"></i>
-                        @if(\App\Models\Requestt::all()->count()!=0)<span class="badge rounded-pill bg-danger float-end">{{ \App\Models\Requestt::all()->count() }}</span>@endif
+                        <span class="badge rounded-pill bg-danger float-end" id="req"></span>
                         <span>Forgot Password Requests</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{url('/show_notification')}}" class="waves-effect">
                         <i class="mdi mdi-frequently-asked-questions"></i>
-                        @if(\App\Models\Notifications::where("seen","=",0)->count()!=0)<span class="badge rounded-pill bg-danger float-end">{{ \App\Models\Notifications::where("seen","=",0)->count() }}</span>@endif
+                        <span class="badge rounded-pill bg-danger float-end" id="npot"></span>
                         <span>Notification</span>
                     </a>
                 </li>
@@ -132,3 +133,39 @@
         <!-- Sidebar -->
     </div>
 </div>
+
+<script>
+    function notification(){
+        $.ajax({
+            url:'/get_noti',
+            type:'GET',
+            data:{},
+            success:function(resp){
+                // alert(resp);
+                // console.log(resp);
+                $("#custo").html(resp);
+            }
+        });
+        $.ajax({
+            url:'/get_req',
+            type:'GET',
+            data:{},
+            success:function(resp){
+                // alert(resp);
+                // console.log(resp);
+                $("#req").html(resp);
+            }
+        });
+        $.ajax({
+            url:'/notifi',
+            type:'GET',
+            data:{},
+            success:function(resp){
+                // alert(resp);
+                // console.log(resp);
+                $("#npot").html(resp);
+            }
+        });
+    }
+    setInterval(notification, 10000);
+</script>

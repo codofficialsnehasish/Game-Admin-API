@@ -95,6 +95,7 @@ Route::get("/del_playdetails/{id}",[Game::class,"del_playdetails"]);
 //============================ Wallet Routes ========================
 
 Route::get("/add_money",[Wallet::class,"add_money"]); 
+Route::get("/cut_money",[Wallet::class,"cut_money"]); 
 Route::get("/get_balance/{id}",[Wallet::class,"get_balance"]); 
 Route::post("/post_wallet",[Wallet::class,"post_wallet"]); 
 Route::get("/show_wallet",[Wallet::class,"show_wallet"]); 
@@ -107,6 +108,7 @@ Route::get("/get_baji/{id}",[Result::class,"get_baji"]);
 Route::post("/post_result",[Result::class,"post_result"]); 
 Route::get("/show_result",[Result::class,"show_result"]); 
 Route::get("/del_result/{id}",[Result::class,"del_result"]); 
+Route::post("/get_res",[Result::class,"get_res"]); 
 
 
 //============================ Requests Routes ========================
@@ -131,3 +133,10 @@ Route::get("/approve_add_fund/{id}",[Notification::class,"approve_add_fund"]);
 Route::get("/cancel_add_fund/{id}",[Notification::class,"cancel_add_fund"]);
 Route::get("/withdraw_fund/{id}",[Notification::class,"withdraw_fund"]);
 Route::get("/cancel_withdraw_fund/{id}",[Notification::class,"cancel_withdraw_fund"]);
+
+
+//============================ Notification ========================
+
+Route::get("/get_noti",[Admin::class,"get_notification"]);
+Route::get("/get_req",[Admin::class,"get_request"]);
+Route::get("/notifi",[Admin::class,"get_notifi"]);

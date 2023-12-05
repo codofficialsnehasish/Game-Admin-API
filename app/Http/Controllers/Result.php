@@ -54,6 +54,18 @@ class Result extends Controller
         return true;
     }
 
+    function sumOfDigits($number) {
+        $sum = 0;
+    
+        while ($number > 0) {
+            $digit = $number % 10; // Get the last digit
+            $sum += $digit;        // Add the digit to the sum
+            $number = (int)($number / 10); // Remove the last digit
+        }
+    
+        return $sum;
+    }
+
     public function post_result(Request $r){
         $obj = new Results();
         $obj->date = date("d-m-Y");
@@ -62,6 +74,7 @@ class Result extends Controller
         // $obj->catagory_id = $r->catagory;
         // $obj->box_number = $r->boxnum;
         $obj->patti_number = $r->pattinum;
+        $obj->single = $this->sumOfDigits($r->pattinum);
         
         $res = On_Game::where("game_id","=",$r->game)
         ->where("time_id","=",$r->baji)
@@ -292,8 +305,12 @@ class Result extends Controller
                 }
             }
         }
-        $obj->save();
-        return redirect(url('/show_result'));
+        $res = $obj->save();
+        if($res){
+            return redirect()->back()->with(['msg'=>'Result make successfully']);
+        }else{
+            return redirect()->back()->with(['msgg'=>'Some Error are occurred! Try Again!']);
+        }
     }
     public function sum($num) { 
         $sum = 0; 
@@ -303,18 +320,24 @@ class Result extends Controller
         return $sum; 
     }
     
-
+    // ->orderBy('cname', 'asc')
     public function show_result(Request $r){
-        $obj = Results::leftJoin("games","result.game_id","games.id")
-        ->leftJoin("timing","result.time_id","timing.id")
-        ->leftJoin("catagory","result.catagory_id","catagory.id")
-        ->get(["result.*","games.game_name as gname","timing.baji","timing.start_time", "timing.end_time","catagory.name as cname"]);
-        return view("result/show_result")->with(['data'=>$obj]);
+        $games = Games::all();
+        return view("result/show_result")->with(['games'=>$games]);
     }
 
     public function del_result(Request $r){
         $obj = Results::find($r->id);
         $obj->delete();
         return redirect(url('/show_result'));
+    }
+    public function get_res(Request $r){
+        echo $r->gameid;
+        $obj = Results::leftJoin("games","result.game_id","games.id")
+        ->leftJoin("timing","result.time_id","timing.id")
+        ->where("games.id","=",$r->gameid)
+        ->get(["result.*","games.game_name as gname","timing.baji","timing.start_time", "timing.end_time"]);
+        $games = Games::all();
+        return view("result/fromto_result")->with(['data'=>$obj,'games'=>$games]);
     }
 }
