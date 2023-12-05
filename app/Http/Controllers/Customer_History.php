@@ -41,4 +41,21 @@ class Customer_History extends Controller
         // $obj4 = Payment::where("customer_id","=",$r->customer)->get();
         return view('customer_history/custo_histo')->with(["customer"=>$obj,"custo"=>$obj2,"play"=>$obj3]);
     }
+
+    public function direct_history(Request $r){
+        $date1 = '2023-10-10';   
+
+        $date2 = date('Y-m-d');  
+
+        $obj = Customer::all();
+        $obj2 = Customer::find($r->id);
+        $obj3 = History::leftJoin("games","history.game_id","=","games.id")
+        ->where("history.customer_id","=",$r->id)
+        ->whereBetween('history.date', [$date1, $date2])
+        ->get(["games.game_name as gname","history.*"]);
+        // $obj3 = Bill::where("customer_id","=",$r->customer)->get();
+        // print_r($obj3);
+        // $obj4 = Payment::where("customer_id","=",$r->customer)->get();
+        return view('customer_history/custo_histo')->with(["customer"=>$obj,"custo"=>$obj2,"play"=>$obj3]);
+    }
 }

@@ -68,7 +68,7 @@
                                                
                                                 <tr>
                                                     <td>{{$c->reg_date}}</td>
-                                                    <td>{{$c->beneficiary_name}}</td>
+                                                    <td><a href="{{url('/direct_history')}}/{{$c->id}}">{{$c->beneficiary_name}}</a></td>
                                                     <td>{{$c->mobile}}</td>
                                                     <td>{{$c->wallet_balance}}</td>
                                                     <td>{{$c->google_pay_no}}</td>

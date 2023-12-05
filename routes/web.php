@@ -123,6 +123,8 @@ Route::get("/clear_requests/{id}",[Requests::class,"clear_requests"]);
 
 Route::get("/customer_history",[Customer_History::class,"customer_history"]);
 Route::post("/fromcus",[Customer_History::class,"fromcus"]);
+Route::get("/direct_history/{id}",[Customer_History::class,"direct_history"]);
+
 
 
 Route::get("/kolkataff",[Game_Report::class,"kolkataff"]);
