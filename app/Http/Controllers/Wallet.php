@@ -42,6 +42,7 @@ class Wallet extends Controller
 
     public function show_wallet(){
         $obj = Wallets::leftJoin('customer','wallet.customer_id','customer.id')
+        ->orderBy('wallet.date', 'desc')
         ->get(["wallet.*","customer.beneficiary_name as name"]);
         return view("wallet/show_wallet")->with(["data"=>$obj]);
     }

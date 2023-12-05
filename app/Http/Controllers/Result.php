@@ -336,6 +336,7 @@ class Result extends Controller
         $obj = Results::leftJoin("games","result.game_id","games.id")
         ->leftJoin("timing","result.time_id","timing.id")
         ->where("games.id","=",$r->gameid)
+        ->orderBy('result.date', 'desc')
         ->get(["result.*","games.game_name as gname","timing.baji","timing.start_time", "timing.end_time"]);
         $games = Games::all();
         return view("result/fromto_result")->with(['data'=>$obj,'games'=>$games]);

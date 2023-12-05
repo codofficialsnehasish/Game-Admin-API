@@ -265,7 +265,8 @@ class Admin extends Controller
                 $custo->seen = 1;
                 $custo->update();
             }
-            $c = Customer::all();
+            // $c = Customer::all();
+            $c = Customer::orderBy('reg_date', 'desc')->get();
             return view("customer/showcustomer")->with(["customer"=>$c]);
         }
     }

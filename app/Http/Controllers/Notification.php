@@ -26,6 +26,7 @@ class Notification extends Controller
     public function show_notification(){
         $obj = Notifications::leftJoin("customer","notification.customer_id","customer.id")
         ->where("notification.seen","=",0)
+        ->orderBy('notification.date', 'desc')
         ->get(["notification.*","customer.beneficiary_name as cname"]);
         return view("notification/notification")->with(["data"=>$obj]);
     }

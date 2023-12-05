@@ -75,8 +75,9 @@ Route::get("/subcatagory",[Sub_catagory::class,"show_sub_catagory"]);
 
 //============================ Games API Routes ==============================
 
+Route::get("/all_games",[Game::class,"show_game_name"]);
 Route::get("/games",[Game::class,"show_game"]);
-// Route::get("/baji/{id?}",[Game::class,"show_timing"]);
+Route::get("/baji/{id?}",[Game::class,"show_timing"]);
 Route::get("/catagory",[Game::class,"show_catagory"]);
 Route::post("/play_details",[Game::class,"get_user_play_details"]);
 Route::get("/bid_history/{id?}",[Game::class,"bid_history"]);

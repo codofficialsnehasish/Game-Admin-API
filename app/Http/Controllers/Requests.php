@@ -9,6 +9,7 @@ class Requests extends Controller
 {
     public function show_requests(){
         $obj = Requestt::leftJoin("customer","request.phone","customer.mobile")
+        ->orderBy('request.date', 'desc')
         ->get(["request.*","customer.beneficiary_name as cname","customer.m_pin as pin","customer.password as password"]);
         return view("requests/show_requests")->with(["data"=>$obj]);
     }

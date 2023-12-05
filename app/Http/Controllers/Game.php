@@ -74,25 +74,18 @@ class Game extends Controller
         }
     }
 
-    // public function show_timing(Request $r){
-    //     $cs = CSession::find(1);
-    //     $ongame = On_Game::where("customer_id","=",$cs->customer_id)
-    //     ->where("date","=",date("Y-d-m"))  
-    //     ->get();
-    //     return $ongame;
-    //     if($r->id != ""){
-    //         if(Times::where("game_id","=",$r->id)->count() > 0){
-    //             $ongame->game_id = $r->id;
-    //             $ongame->update();
-    //             $time = Times::where("game_id","=",$r->id)->get();
-    //             return ["status"=>"true",'data' => $time];
-    //         }else{
-    //             return ["status"=>"false","error"=>"Not Avaliable"];
-    //         }
-    //     }else{
-    //         return ["status"=>"false","error"=>"Please put game id in url"];
-    //     }
-    // }
+    public function show_timing(Request $r){
+        if($r->id != ""){
+            if(Times::where("game_id","=",$r->id)->count() > 0){
+                $time = Times::where("game_id","=",$r->id)->get();
+                return ["status"=>"true",'data' => $time];
+            }else{
+                return ["status"=>"false","error"=>"Not Avaliable"];
+            }
+        }else{
+            return ["status"=>"false","error"=>"Please put game id in url"];
+        }
+    }
 
     public function del_game(Request $r){
         $game = Games::find($r->id);
@@ -113,6 +106,7 @@ class Game extends Controller
         ->leftJoin("games","on_game.game_id","games.id")
         ->leftJoin("timing","on_game.time_id","timing.id")
         ->leftJoin("catagory","on_game.catagory_id","catagory.id")
+        ->orderBy('on_game.date', 'desc')
         ->get(["on_game.*","customer.beneficiary_name as cname","games.game_name as gname","timing.baji","timing.start_time","timing.end_time","catagory.name as cata_name"]);
         return view("play_details/show_play_details")->with(['data' => $obj]);
     }
@@ -452,7 +446,7 @@ class Game extends Controller
             ->leftJoin("timing","on_game.time_id","timing.id")
             ->leftJoin("catagory","on_game.catagory_id","catagory.id")
             ->where("on_game.date","=",date("Y-m-d"))
-            ->get(["on_game.id","on_game.date","on_game.amount","on_game.customer_id","games.game_name as game_name","timing.baji as baji","timing.start_time", "timing.end_time","catagory.name as catagory_name"]);
+            ->get(["on_game.id","on_game.date","on_game.amount","on_game.customer_id","on_game.created_at as bid_time","games.game_name as game_name","timing.baji as baji","timing.start_time", "timing.end_time","catagory.name as catagory_name"]);
             if(count($obj) > 0){
                 return ["status"=>"True","data"=>$obj];
             }else{
@@ -471,15 +465,25 @@ class Game extends Controller
             $obj = On_Game::leftJoin("games","on_game.game_id","games.id")
             ->leftJoin("timing","on_game.time_id","timing.id")
             ->leftJoin("catagory","on_game.catagory_id","catagory.id")
-            ->where("on_game.date","=",date("Y-m-d"))
-            ->where("is_winner","=",1)
+            // ->where("on_game.date","=",date("Y-m-d"))
+            // ->where("is_winner","=",1)
             ->where("customer_id","=",$r->id)
             ->get(["on_game.id","on_game.date","on_game.amount","on_game.customer_id","on_game.is_winner","games.game_name as game_name","timing.baji as baji","timing.start_time", "timing.end_time","catagory.name as catagory_name"]);
+            // return $obj;
             if(count($obj) > 0){
                 return ["status"=>"True","data"=>$obj];
             }else{
                 return ["status"=>"False","error"=>"data not found"];
             }
+        }
+    }
+
+    public function show_game_name(){
+        $obj = Games::all();
+        if(count($obj) > 0){
+            return ["status"=>"True","games"=>$obj];
+        }else{
+            return ["status"=>"False","error"=>"data not found"];
         }
     }
 }
