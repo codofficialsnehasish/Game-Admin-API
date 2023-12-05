@@ -74,6 +74,36 @@ class Game extends Controller
         }
     }
 
+    public function edit_game(Request $r){
+        $obj = Games::find($r->id);
+        $time = Times::where("game_id","=",$obj->id)->get();
+        return view("game/all_games/edit_game")->with(['game'=>$obj, 'time'=>$time]);
+    }
+
+    public function update_game(Request $r){
+        $game = Games::find($r->game_id);
+        $time = Times::where("game_id","=",$game->id)->get();
+        foreach($time as $t){
+            // print($t);
+            $time = Times::find($t->id);
+            $time->delete();
+        }
+        $game->game_name = $r->outer_group[0]['name'];
+        $game->min_entry_fee = $r->outer_group[0]['min_entry'];
+        $game->max_entry_fee = $r->outer_group[0]['max_entry'];
+        for($i=0;$i<count($r->outer_group[0]['inner_group']); $i++){
+            $time = new Times();
+            $time->game_id = $game->id;
+            $time->baji = "Baji ".$r->outer_group[0]['inner_group'][$i]['baji'];
+            $time->start_time = self::convert12($r->outer_group[0]['inner_group'][$i]['st']);
+            $time->end_time = self::convert12($r->outer_group[0]['inner_group'][$i]['et']);
+            $time->save();
+        }
+        $game->update();
+        // print_r($r->outer_group[0]);
+        return redirect(url('/show_game'));
+    }
+
     public function show_timing(Request $r){
         if($r->id != ""){
             if(Times::where("game_id","=",$r->id)->count() > 0){
@@ -465,8 +495,8 @@ class Game extends Controller
             $obj = On_Game::leftJoin("games","on_game.game_id","games.id")
             ->leftJoin("timing","on_game.time_id","timing.id")
             ->leftJoin("catagory","on_game.catagory_id","catagory.id")
-            // ->where("on_game.date","=",date("Y-m-d"))
-            // ->where("is_winner","=",1)
+            ->where("on_game.date","=",date("Y-m-d"))
+            ->where("is_completed","=",1)
             ->where("customer_id","=",$r->id)
             ->get(["on_game.id","on_game.date","on_game.amount","on_game.customer_id","on_game.is_winner","games.game_name as game_name","timing.baji as baji","timing.start_time", "timing.end_time","catagory.name as catagory_name"]);
             // return $obj;
@@ -481,7 +511,7 @@ class Game extends Controller
     public function show_game_name(){
         $obj = Games::all();
         if(count($obj) > 0){
-            return ["status"=>"True","games"=>$obj];
+            return ["status"=>"True","game"=>$obj];
         }else{
             return ["status"=>"False","error"=>"data not found"];
         }

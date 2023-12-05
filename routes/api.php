@@ -9,6 +9,7 @@ use App\Http\Controllers\Sliders;
 use App\Http\Controllers\Catagory;
 use App\Http\Controllers\Sub_catagory;
 use App\Http\Controllers\Game;
+use App\Http\Controllers\Result;
 use App\Http\Controllers\Requests;
 use App\Http\Controllers\Notification;
 
@@ -98,3 +99,10 @@ Route::post("/get_request",[Requests::class,"get_request"]);
 Route::post("/add_fund",[Notification::class,"add_fund"]);
 
 //==========XXXX============ End of Notification API Routes ============XXXX============
+
+
+//============================ Today Result API Routes ==============================
+
+Route::get("/today_result",[Result::class,"today_result"]);
+
+//==========XXXX============ End of Today Result API Routes ============XXXX============

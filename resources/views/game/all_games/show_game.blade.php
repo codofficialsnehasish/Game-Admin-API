@@ -73,7 +73,7 @@
                                                     <td>{{$d->min_entry_fee}}</td>
                                                     <td>{{$d->max_entry_fee}}</td>
                                                     <td>
-                                                        <!-- <a class="btn btn-success" href="#" alt="edit"><i class="ti-check-box"></i></a> -->
+                                                        <a class="btn btn-success" href="{{url('/edit_game')}}/{{$d->id}}" alt="edit"><i class="ti-check-box"></i></a>
                                                         <a class="btn btn-danger" onclick="return confirm('Are you sure?')" href="{{url('/del_game')}}/{{$d->id}}"><i class="ti-trash"></i></a>
                                                     </td>
                                                 </tr>

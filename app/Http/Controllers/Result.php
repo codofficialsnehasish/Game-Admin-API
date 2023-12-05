@@ -74,7 +74,7 @@ class Result extends Controller
         // $obj->catagory_id = $r->catagory;
         // $obj->box_number = $r->boxnum;
         $obj->patti_number = $r->pattinum;
-        $obj->single = $this->sumOfDigits($r->pattinum);
+        $obj->single = abs($this->sum($r->pattinum) % 10);
         
         $res = On_Game::where("game_id","=",$r->game)
         ->where("time_id","=",$r->baji)
@@ -340,5 +340,19 @@ class Result extends Controller
         ->get(["result.*","games.game_name as gname","timing.baji","timing.start_time", "timing.end_time"]);
         $games = Games::all();
         return view("result/fromto_result")->with(['data'=>$obj,'games'=>$games]);
+    }
+
+    public function today_result(){
+        $obj = Results::leftJoin("games","result.game_id","games.id")
+        ->leftJoin("timing","result.time_id","timing.id")
+        ->where("result.date","=",date("d-m-Y"))
+        ->orderBy('result.date', 'desc')
+        ->get(["result.*","games.game_name as gname","timing.baji","timing.start_time", "timing.end_time"]);
+
+        if(count($obj) > 0){
+            return ["status"=>"True","result"=>$obj];
+        }else{
+            return ["status"=>"False","error"=>"data not found"];
+        }
     }
 }
