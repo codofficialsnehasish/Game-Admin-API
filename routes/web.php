@@ -91,6 +91,7 @@ Route::get("/edit_game/{id}",[Game::class,"edit_game"]);
 Route::post("/update_game",[Game::class,"update_game"]); 
 Route::get("/show_on_game",[Game::class,"show_on_game"]); 
 Route::get("/del_playdetails/{id}",[Game::class,"del_playdetails"]); 
+Route::get("/ischeck/{id}",[Game::class,"is_check"]); 
 
 
 

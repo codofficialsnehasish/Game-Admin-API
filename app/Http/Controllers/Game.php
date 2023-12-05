@@ -516,4 +516,17 @@ class Game extends Controller
             return ["status"=>"False","error"=>"data not found"];
         }
     }
+
+    public function is_check(Request $r){
+        $obj = On_Game::find($r->id);
+        $flag = 0;
+        if($obj->is_check == 0){
+            $obj->is_check = 1;
+            $flag = 1;
+        }else{
+            $obj->is_check = 0;
+        }
+        $obj->update();
+        return $flag;
+    }
 }
