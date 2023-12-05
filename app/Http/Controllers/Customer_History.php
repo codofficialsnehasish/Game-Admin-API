@@ -58,4 +58,10 @@ class Customer_History extends Controller
         // $obj4 = Payment::where("customer_id","=",$r->customer)->get();
         return view('customer_history/custo_histo')->with(["customer"=>$obj,"custo"=>$obj2,"play"=>$obj3]);
     }
+
+    public function clear_history(Request $r){
+        $obj = History::find($r->id);
+        $obj->delete();
+        return redirect()->back();
+    }
 }
