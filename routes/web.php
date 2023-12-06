@@ -12,6 +12,7 @@ use App\Http\Controllers\Customer_History;
 use App\Http\Controllers\Game_Report;
 use App\Http\Controllers\Notification;
 use App\Http\Controllers\Requests;
+use App\Http\Controllers\Rate_chart;
 
 
 //======================= Login Routes =====================
@@ -146,3 +147,11 @@ Route::get("/cancel_withdraw_fund/{id}",[Notification::class,"cancel_withdraw_fu
 Route::get("/get_noti",[Admin::class,"get_notification"]);
 Route::get("/get_req",[Admin::class,"get_request"]);
 Route::get("/notifi",[Admin::class,"get_notifi"]);
+
+
+//============================ Rate Chart ========================
+
+Route::get("/add_chart",[Rate_chart::class,"add_chart"]);
+Route::post("/post_chart",[Rate_chart::class,"post_chart"]);
+Route::get("/charts",[Rate_chart::class,"charts"]);
+Route::get("/del_chart/{id}",[Rate_chart::class,"del_chart"]);

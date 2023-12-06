@@ -12,6 +12,7 @@ use App\Http\Controllers\Game;
 use App\Http\Controllers\Result;
 use App\Http\Controllers\Requests;
 use App\Http\Controllers\Notification;
+use App\Http\Controllers\Rate_chart;
 
 
 
@@ -106,3 +107,6 @@ Route::post("/add_fund",[Notification::class,"add_fund"]);
 Route::get("/today_result",[Result::class,"today_result"]);
 
 //==========XXXX============ End of Today Result API Routes ============XXXX============
+
+Route::get("/chart",[Rate_chart::class,"charts"]);
+

@@ -122,10 +122,23 @@
                         <i class="ti-bookmark-alt"></i>
                         <span>KOLKATA FF</span>
                     </a>
-                </li><li>
+                </li>
+                <li>
                     <a href="{{url('/cmmmimbai')}}" class="waves-effect">
                         <i class="ti-bookmark-alt"></i>
                         <span>CMM Mumbai</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{url('/charts')}}" class="waves-effect">
+                        <i class="ti-bookmark-alt"></i>
+                        <span>Rate Chart</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{url('/cmmmimbai')}}" class="waves-effect">
+                        <i class="ti-bookmark-alt"></i>
+                        <span>How to Play</span>
                     </a>
                 </li>
             </ul>
