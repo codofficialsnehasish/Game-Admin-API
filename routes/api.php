@@ -13,6 +13,7 @@ use App\Http\Controllers\Result;
 use App\Http\Controllers\Requests;
 use App\Http\Controllers\Notification;
 use App\Http\Controllers\Rate_chart;
+use App\Http\Controllers\How_to_play;
 
 
 
@@ -109,4 +110,8 @@ Route::get("/today_result",[Result::class,"today_result"]);
 //==========XXXX============ End of Today Result API Routes ============XXXX============
 
 Route::get("/chart",[Rate_chart::class,"charts"]);
+
+
+Route::get("/how_to_play",[How_to_play::class,"content"]);
+
 

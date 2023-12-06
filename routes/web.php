@@ -13,6 +13,7 @@ use App\Http\Controllers\Game_Report;
 use App\Http\Controllers\Notification;
 use App\Http\Controllers\Requests;
 use App\Http\Controllers\Rate_chart;
+use App\Http\Controllers\How_to_play;
 
 
 //======================= Login Routes =====================
@@ -157,3 +158,13 @@ Route::get("/charts",[Rate_chart::class,"charts"]);
 Route::get("/del_chart/{id}",[Rate_chart::class,"del_chart"]);
 Route::get("/edit_chart/{id}",[Rate_chart::class,"edit_chart"]);
 Route::post("/update_chart",[Rate_chart::class,"update_chart"]);
+
+
+//============================ How to Play ========================
+
+Route::get("/how_to_play",[How_to_play::class,"content"]);
+Route::get("/add_content",[How_to_play::class,"add_content"]);
+Route::post("/submit_content",[How_to_play::class,"submit_content"]);
+Route::get("/edit_content/{id}",[How_to_play::class,"edit_content"]);
+Route::post("/update_content",[How_to_play::class,"update_content"]);
+Route::get("/del_content/{id}",[How_to_play::class,"del_content"]);

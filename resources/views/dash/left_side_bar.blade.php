@@ -136,7 +136,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{url('/cmmmimbai')}}" class="waves-effect">
+                    <a href="{{url('/how_to_play')}}" class="waves-effect">
                         <i class="fas fa-question-circle"></i>
                         <span>How to Play</span>
                     </a>
