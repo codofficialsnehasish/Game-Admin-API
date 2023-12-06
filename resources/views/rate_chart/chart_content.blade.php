@@ -1,4 +1,4 @@
-   <!-- adding header -->
+<!-- adding header -->
 @include("dash/header")
 <!-- end header -->
 
@@ -45,17 +45,23 @@
                             <div class="col-lg-6">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="card-title text-center">{{$nam->name}}</h4> 
-                                        <a class="btn btn-danger" onclick="return confirm('Are you sure?')" href="{{url('/del_chart')}}/{{$nam->id}}"><i class="ti-trash"></i></a> 
+                                        <div class="top-head d-flex justify-content-between">
+                                            <h4 class="card-title text-center" style="display: flex;align-items: center;">{{$nam->name}}</h4> 
+                                            <div class="action">
+                                                <a class="btn btn-outline-success" href="{{url('/edit_chart')}}/{{$nam->id}}">Edit</a>
+                                                <a class="btn btn-outline-danger" href="{{url('/del_chart')}}/{{$nam->id}}">Delete</a>
+                                            </div>
+                                        </div>
+                                        <!-- <a class="btn btn-danger" onclick="return confirm('Are you sure?')" href="{{url('/del_chart')}}/{{$nam->id}}"><i class="ti-trash"></i></a>  -->
                                         
                                         <div class="table-responsive">
                                             <table class="table mb-0">
 
                                                 <thead>
                                                     <tr>
-                                                        <th>First Name</th>
-                                                        <th>Last Name</th>
-                                                        <th>Username</th>
+                                                        <th>Type</th>
+                                                        <th>Play</th>
+                                                        <th>Winning</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>

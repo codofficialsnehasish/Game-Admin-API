@@ -155,3 +155,5 @@ Route::get("/add_chart",[Rate_chart::class,"add_chart"]);
 Route::post("/post_chart",[Rate_chart::class,"post_chart"]);
 Route::get("/charts",[Rate_chart::class,"charts"]);
 Route::get("/del_chart/{id}",[Rate_chart::class,"del_chart"]);
+Route::get("/edit_chart/{id}",[Rate_chart::class,"edit_chart"]);
+Route::post("/update_chart",[Rate_chart::class,"update_chart"]);

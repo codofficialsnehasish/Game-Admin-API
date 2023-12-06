@@ -131,13 +131,13 @@
                 </li>
                 <li>
                     <a href="{{url('/charts')}}" class="waves-effect">
-                        <i class="ti-bookmark-alt"></i>
+                        <i class="fas fa-chart-bar"></i>
                         <span>Rate Chart</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{url('/cmmmimbai')}}" class="waves-effect">
-                        <i class="ti-bookmark-alt"></i>
+                        <i class="fas fa-question-circle"></i>
                         <span>How to Play</span>
                     </a>
                 </li>

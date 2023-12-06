@@ -41,11 +41,36 @@ class Rate_chart extends Controller
     public function del_chart(Request $r){
         $Chart_name = Chart_name::find($r->id);
         $Rate = Rate::where("chart_name_id","=",$Chart_name->id);
-        foreach($Rate as $t){
-            $ti = Rate::find($t);
-            $ti->delete();
-        }
+        // foreach($Rate as $t){
+        //     $ti = Rate::find($t);
+        //     $ti->delete();
+        // }
+        $Rate->delete();
         $Chart_name->delete();
         return redirect()->back();
+    }
+
+    public function edit_chart(Request $r){
+        $Chart_name = Chart_name::find($r->id);
+        // print_r($Chart_name->id);
+        $rates = Rate::where("chart_name_id","=",$Chart_name->id)->get();
+        return view("rate_chart/chart_edit")->with(['cname'=>$Chart_name, 'rate'=>$rates]);
+    }
+    public function update_chart(Request $r){
+        // $rate = new Chart_name();
+        $rate = Chart_name::find($r->id);
+        $rate_chart = Rate::where("chart_name_id","=",$rate->id);
+        $rate->name = $r->outer_group[0]['name'];
+        $rate_chart->delete();
+        $rate->update();
+        for($i=0;$i<count($r->outer_group[0]['inner_group']); $i++){
+            $rate_c = new Rate();
+            $rate_c->chart_name_id = $rate->id;
+            $rate_c->type = $r->outer_group[0]['inner_group'][$i]['type'];
+            $rate_c->play = $r->outer_group[0]['inner_group'][$i]['play'];
+            $rate_c->winning = $r->outer_group[0]['inner_group'][$i]['win'];
+            $rate_c->save();
+        }
+        return redirect(url('/charts'));
     }
 }
