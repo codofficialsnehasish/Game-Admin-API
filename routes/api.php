@@ -20,35 +20,13 @@ use App\Http\Controllers\How_to_play;
 //============================ Customer API Routes ==============================
 
 Route::post("/register",[Admin::class,"addcustomer"]);
-// {
-//     "date" : "2023-10-26",
-//     "name" : "API testing",
-//     "phone" : 7031182870,
-//     "balance" : 0,
-//     "gpay" : 7031182870,
-//     "paytm" : 7031182870,
-//     "email" : "snehasish363@gmail.com",
-//     "mode" : "App"
-// }
-// {
-//     "name" : "Snehasish",
-//     "phone" : 7031182870,
-//     "password" : 1234,
-//     "confirm_password" : 1234,
-//     "m_pin" : 1234
-// }
-
 Route::get("/showcustomer/{id?}",[Admin::class,"showcustomer"]);
 Route::get("/customerdel/{id}",[Admin::class,"customerdel"]);
 Route::post("/update_customer",[Admin::class,"update_customer"]);
+Route::post("/referral",[Admin::class,"referral_code"]);
 
 
 Route::post("/login",[Admin::class,"app_login"]);
-// {
-//     "phone" : 703118280,
-//     "password" : 123,
-//     "m_pin" : ""
-// }
 
 
 //==========XXXX============ End of Customer API Routes ============XXXX============

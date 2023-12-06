@@ -315,6 +315,17 @@ class Admin extends Controller
         }
     }
 
+    public function referral_code(Request $r){
+        $custo = Customer::find($r->customer_id);
+        $custo->referral_code = $r->code;
+        $res = $custo->update();
+        if($res){
+            return ["ststus"=>"true","msg"=>"Accepted"];
+        }else{
+            return ["ststus"=>"true","msg"=>"Not Accepted"];
+        }
+    }
+
     //==========xxxxxxx======= End of Customer ===========xxxxxx=======
 
 

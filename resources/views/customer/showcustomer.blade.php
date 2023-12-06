@@ -49,6 +49,7 @@
                                                 <tr>
                                                     <th>Reg Date</th>
                                                     <th>Beneficiary Name</th>
+                                                    <th>Referral Code</th>
                                                     <th>Mobile</th>
                                                     <th>Wallet Balance</th>
                                                     <th>Google Pay No.</th>
@@ -69,6 +70,7 @@
                                                 <tr>
                                                     <td>{{$c->reg_date}}</td>
                                                     <td><a href="{{url('/direct_history')}}/{{$c->id}}">{{$c->beneficiary_name}}</a></td>
+                                                    <td>{{$c->referral_code}}</td>
                                                     <td>{{$c->mobile}}</td>
                                                     <td>{{$c->wallet_balance}}</td>
                                                     <td>{{$c->google_pay_no}}</td>
