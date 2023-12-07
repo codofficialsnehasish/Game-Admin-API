@@ -89,7 +89,7 @@
                                                     <td>{{$c->cata_name}}</td>
                                                     <td>{{$c->box_number}}</td>
                                                     <td>{{$c->amount}}</td>
-                                                    <td @if($c->is_winner == 1)style="color:green;font-size:20px" @endif>@if($c->is_winner == 1) Winner @else Not Win @endif</td>
+                                                    <td @if($c->is_winner == 1)style="padding:0;" @endif>@if($c->is_winner == 1) <img style="height: 57px;width: 70px;" src="{{ url('dashboard_assets/images/winner.gif') }}"/> @else Not Win @endif</td>
                                                     <!-- <td style="display:flex;justify-content:center;"> -->
                                                         <!-- <a class="btn btn-success" href="{{url('/edit_catagory')}}/{{$c->id}}" alt="edit"><i class="ti-check-box"></i></a> -->
                                                         <!-- <a class="btn btn-danger" onclick="return confirm('Are you sure?')" href="{{url('/clear_history')}}/{{$c->id}}">Clear <i class="ti-trash"></i></a> -->
