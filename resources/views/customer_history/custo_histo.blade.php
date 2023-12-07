@@ -59,24 +59,41 @@
                                         <table class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                             <thead>
                                                 <tr>
-                                                    <th>Date</th>
+                                                    <!-- <th>Date</th>
                                                     <th>Game</th>
                                                     <th>Pay On</th>
                                                     <th>Win</th>
-                                                    <th>Action</th>
+                                                    <th>Action</th> -->
+                                                    <td>Date</td>
+                                                    <!-- <th>Customer Name</th> -->
+                                                    <th>Game Name</th>
+                                                    <th>Time</th>
+                                                    <th>Catagory</th>
+                                                    <th>Digits</th>
+                                                    <th>Amount</th>
+                                                    <th>Is Winner</th>
+                                                    <!-- <th>Action</th> -->
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach($play as $c)
                                                 <tr>
-                                                    <td>{{$c->date}}</td>
+                                                    <!-- <td>{{$c->date}}</td>
                                                     <td>{{$c->gname}}</td>
                                                     <td>{{$c->payon}}</td>
-                                                    <td>{{$c->winamount}}</td>
-                                                    <td style="display:flex;justify-content:center;">
+                                                    <td>{{$c->winamount}}</td> -->
+                                                    <td>@php echo date("d-m-Y",strtotime($c->date)) @endphp</td>
+                                                    
+                                                    <td>{{$c->gname}}</td>
+                                                    <td>{{$c->baji}}&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;{{$c->start_time}}{{$c->end_time}}</td>
+                                                    <td>{{$c->cata_name}}</td>
+                                                    <td>{{$c->box_number}}</td>
+                                                    <td>{{$c->amount}}</td>
+                                                    <td @if($c->is_winner == 1)style="color:green;font-size:20px" @endif>@if($c->is_winner == 1) Winner @else Not Win @endif</td>
+                                                    <!-- <td style="display:flex;justify-content:center;"> -->
                                                         <!-- <a class="btn btn-success" href="{{url('/edit_catagory')}}/{{$c->id}}" alt="edit"><i class="ti-check-box"></i></a> -->
-                                                        <a class="btn btn-danger" onclick="return confirm('Are you sure?')" href="{{url('/clear_history')}}/{{$c->id}}">Clear <i class="ti-trash"></i></a>
-                                                    </td>
+                                                        <!-- <a class="btn btn-danger" onclick="return confirm('Are you sure?')" href="{{url('/clear_history')}}/{{$c->id}}">Clear <i class="ti-trash"></i></a> -->
+                                                    <!-- </td> -->
                                                 </tr>
                                                 @endforeach
                                             </tbody>

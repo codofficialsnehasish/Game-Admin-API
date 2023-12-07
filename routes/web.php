@@ -168,3 +168,6 @@ Route::post("/submit_content",[How_to_play::class,"submit_content"]);
 Route::get("/edit_content/{id}",[How_to_play::class,"edit_content"]);
 Route::post("/update_content",[How_to_play::class,"update_content"]);
 Route::get("/del_content/{id}",[How_to_play::class,"del_content"]);
+
+// Route::get("/test",[How_to_play::class,"assen"]);
+// Route::post("/submitassn",[How_to_play::class,"submitassn"]);

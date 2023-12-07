@@ -141,6 +141,12 @@
                         <span>How to Play</span>
                     </a>
                 </li>
+                <!-- <li>
+                    <a href="{{url('/test')}}" class="waves-effect">
+                        <i class="fas fa-question-circle"></i>
+                        <span>* Test case *</span>
+                    </a>
+                </li> -->
             </ul>
         </div>
         <!-- Sidebar -->

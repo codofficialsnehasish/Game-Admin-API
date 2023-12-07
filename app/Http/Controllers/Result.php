@@ -232,7 +232,7 @@ class Result extends Controller
                 $cata = Catagorys::find($result->catagory_id);
                 $ongame = On_Game::find($result->id);
                 $p = (string)$r->pattinum;
-                if (hasNoRepeatedCharacters($p)) {
+                if ($this->hasNoRepeatedCharacters($p)) {
                     // $patti_num = abs($this->sum($r->pattinum) % 10);
                     // $pay = explode(",",$ongame->amount);
                     $num = str_split($digit[0]);
@@ -271,7 +271,7 @@ class Result extends Controller
                 $cata = Catagorys::find($result->catagory_id);
                 $ongame = On_Game::find($result->id);
                 $p = (string)$r->pattinum;
-                if (hasNoRepeatedCharacters($p)) {
+                if ($this->hasNoRepeatedCharacters($p)) {
                     $num = str_split($digit[0]);
                     $result = $this->combinations($num, 3);
                     $c = 0;

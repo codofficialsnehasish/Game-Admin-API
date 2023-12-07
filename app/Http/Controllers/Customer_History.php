@@ -32,10 +32,18 @@ class Customer_History extends Controller
         // echo $r->customer;
         $obj = Customer::all();
         $obj2 = Customer::find($r->customer);
-        $obj3 = History::leftJoin("games","history.game_id","=","games.id")
-        ->where("history.customer_id","=",$r->customer)
-        ->whereBetween('history.date', [$date1, $date2])
-        ->get(["games.game_name as gname","history.*"]);
+        // $obj3 = History::leftJoin("games","history.game_id","=","games.id")
+        // ->where("history.customer_id","=",$r->customer)
+        // ->whereBetween('history.date', [$date1, $date2])
+        // ->get(["games.game_name as gname","history.*"]);
+        $obj3 = On_Game::leftJoin("customer","on_game.customer_id","customer.id")
+        ->leftJoin("games","on_game.game_id","games.id")
+        ->leftJoin("timing","on_game.time_id","timing.id")
+        ->leftJoin("catagory","on_game.catagory_id","catagory.id")
+        ->where("on_game.customer_id","=",$r->customer)
+        ->whereBetween('on_game.date', [$date1, $date2])
+        ->orderBy('on_game.date', 'desc')
+        ->get(["on_game.*","customer.beneficiary_name as cname","games.game_name as gname","timing.baji","timing.start_time","timing.end_time","catagory.name as cata_name"]);
         // $obj3 = Bill::where("customer_id","=",$r->customer)->get();
         // print_r($obj3);
         // $obj4 = Payment::where("customer_id","=",$r->customer)->get();
@@ -49,13 +57,19 @@ class Customer_History extends Controller
 
         $obj = Customer::all();
         $obj2 = Customer::find($r->id);
-        $obj3 = History::leftJoin("games","history.game_id","=","games.id")
-        ->where("history.customer_id","=",$r->id)
-        ->whereBetween('history.date', [$date1, $date2])
-        ->get(["games.game_name as gname","history.*"]);
-        // $obj3 = Bill::where("customer_id","=",$r->customer)->get();
-        // print_r($obj3);
-        // $obj4 = Payment::where("customer_id","=",$r->customer)->get();
+        // $obj3 = History::leftJoin("games","history.game_id","=","games.id")
+        // ->where("history.customer_id","=",$r->id)
+        // ->whereBetween('history.date', [$date1, $date2])
+        // ->get(["games.game_name as gname","history.*"]);
+
+        $obj3 = On_Game::leftJoin("customer","on_game.customer_id","customer.id")
+        ->leftJoin("games","on_game.game_id","games.id")
+        ->leftJoin("timing","on_game.time_id","timing.id")
+        ->leftJoin("catagory","on_game.catagory_id","catagory.id")
+        ->where("on_game.customer_id","=",$r->id)
+        ->orderBy('on_game.date', 'desc')
+        ->get(["on_game.*","customer.beneficiary_name as cname","games.game_name as gname","timing.baji","timing.start_time","timing.end_time","catagory.name as cata_name"]);
+
         return view('customer_history/custo_histo')->with(["customer"=>$obj,"custo"=>$obj2,"play"=>$obj3]);
     }
 

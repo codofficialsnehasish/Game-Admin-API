@@ -168,28 +168,62 @@ class Game extends Controller
         }
         return $flag;
     }
-    public function isAscending($digits) {
+    // public function isAscending($digits) {
+    //     $num = explode(",",$digits);
+    //     $flag = true;
+    //     foreach($num as $number){
+    //         $numberStr = (string)$number;
+    //         $length = strlen($numberStr);
+    //         for ($i = 0; $i < $length - 1; $i++) {
+    //             //echo "numberStr[$i] = ".$numberStr[$i]."< numberStr[$i + 1] = ".$numberStr[$i + 1]." <br>";
+    //             if ($numberStr[$i] < $numberStr[$i + 1] || ($i == $length - 2 && $numberStr[$length - 1] == 0)){
+    //                 $flag = true;
+    //             }else{ $flag = false;break;}
+    //         }
+    //         if($flag == false) break;
+    //     }
+    //     return $flag;
+    // }
+    function isSortedArray($array) {
+        $length = count($array);
+        // Iterate through the array and compare adjacent elements
+        for ($i = 0; $i < $length - 1; $i++) {
+            // Compare the current and next elements
+            if ($array[$i] > $array[$i + 1]) {
+                return false;
+            }
+        }
+        // If the loop completes without returning false, the array is sorted
+        return true;
+    }
+    
+    
+    function stringToArrayReplaceZero($inputString) {
+        // Convert the string to an array of characters
+        $charArray = str_split($inputString);
+    
+        // Check each element and replace '0' with '10'
+        foreach ($charArray as $index => $char) {
+            if ($char === '0') {
+                $charArray[$index] = '10';
+            }
+        }
+    
+        return $charArray;
+    }
+    
+    function isAscending($digits) {
         $num = explode(",",$digits);
         $flag = true;
         foreach($num as $number){
-            $numberStr = (string)$number;
-            $length = strlen($numberStr);
-            for ($i = 0; $i < $length - 1; $i++) {
-                //echo "numberStr[$i] = ".$numberStr[$i]."< numberStr[$i + 1] = ".$numberStr[$i + 1]." <br>";
-                if ($numberStr[$i] < $numberStr[$i + 1] || ($i == $length - 2 && $numberStr[$length - 1] == 0)){
-                    $flag = true;
-                }else{ $flag = false;break;}
+            $resultArray = $this->stringToArrayReplaceZero($number);
+            $flag = $this->isSortedArray($resultArray) ? true : false;
+            if($flag == false){
+                break;
             }
-            if($flag == false) break;
         }
         return $flag;
     }
-    // $exampleNumber = 12445;
-    // if (isAscending($exampleNumber)) {
-    //     echo "$exampleNumber is ascending.";
-    // } else {
-    //     echo "$exampleNumber is not ascending.";
-    // }
 
     public function generateCombinations($arr, $data, $start, $end, $index, &$result) {
         if ($index == count($data)) {

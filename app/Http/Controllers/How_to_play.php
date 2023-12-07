@@ -41,4 +41,33 @@ class How_to_play extends Controller
         $obj->delete();
         return redirect(url('/how_to_play'));
     }
+
+
+    // public function assen(){
+    //     return view("form")->with(["data"=>"input please"]);
+    // }
+    // function isAscending($number) {
+    //     // Convert the number to a string to iterate through each digit
+    //     $numberStr = (string)$number;
+        
+    //     // If the number contains 0, treat it as a big number
+    //     if (strpos($numberStr, '0') !== false) {
+    //         return true;
+    //     }
+    
+    //     // Iterate through each digit to check if it's in ascending order
+    //     $length = strlen($numberStr);
+    //     for ($i = 0; $i < $length - 1; $i++) {
+    //         if ($numberStr[$i] > $numberStr[$i + 1]) {
+    //             return false;
+    //         }
+    //     }
+    
+    //     return true;
+    // }
+    // public function submitassn(Request $r){
+    //     $ans = "$r->num is " . ($this->isAscending($r->num) ? "ascending" : "not ascending");
+    //     // return redirect()->back()->with(["data"=>"not ascending"]);
+    //     return view("form")->with(["data"=>$ans]);
+    // }
 }
