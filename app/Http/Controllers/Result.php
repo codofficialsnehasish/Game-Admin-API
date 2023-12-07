@@ -98,37 +98,45 @@ class Result extends Controller
             // print_r($jodi);
             if(count($jodi) > 0){
                 foreach($jodi as $j){
-                $custo = Customer::find($j->customer_id);
-                $digit = explode(",",$j->box_number);
-                $jodi = On_Game::find($j->id);
-                $box = explode(",",$j->box_number);
-                foreach($box as $b){
-                    // print($b);
-                    $sp_data = str_split($b);
-                    if($sp_data[1] == abs($this->sum($r->pattinum) % 10)){
-                        $custo->wallet_balance += $jodi->amount * $cata->payment;
-                        $custo->update();
-                        $jodi->winn_amount = $jodi->amount * $cata->payment;
+                    $custo = Customer::find($j->customer_id);
+                    $digit = explode(",",$j->box_number);
+                    $jodi = On_Game::find($j->id);
+                    $box = explode(",",$j->box_number);
+                    $is_winn = false;
+                    foreach($box as $b){
+                        // print($b);
+
+                        $sp_data = str_split($b);
+                        if($sp_data[1] == abs($this->sum($r->pattinum) % 10)){
+                            $custo->wallet_balance += $jodi->amount * $cata->payment;
+                            $custo->update();
+                            $jodi->winn_amount = $jodi->amount * $cata->payment;
+                            $jodi->is_completed = 1;
+                            $jodi->is_winner = 1;
+                            $is_winn = true;
+                            $jodi->update();
+                            
+                            $data = History::where("customer_id","=",$j->customer_id)
+                            ->where("date","=",date("Y-m-d"))
+                            ->where("game_id","=",$r->game)
+                            ->get("id");
+                            $objs = History::find($data[0]->id);
+                            $objs->winamount += $jodi->amount * $cata->payment;
+                            $objs->update();
+                        }else{
+                            $jodi->is_completed = 1;
+                            $jodi->is_winner = 0;
+                            $jodi->previous_win = 0;
+                            $jodi->update();
+                        }
+                    }
+                    if($is_winn){
                         $jodi->is_completed = 1;
                         $jodi->is_winner = 1;
-                        $jodi->update();
-                        
-                        $data = History::where("customer_id","=",$j->customer_id)
-                        ->where("date","=",date("Y-m-d"))
-                        ->where("game_id","=",$r->game)
-                        ->get("id");
-                        $objs = History::find($data[0]->id);
-                        $objs->winamount += $jodi->amount * $cata->payment;
-                        $objs->update();
-                    }else{
-                        $jodi->is_completed = 1;
-                        $jodi->is_winner = 0;
-                        $jodi->previous_win = 0;
                         $jodi->update();
                     }
                 }
             }
-        }
 
         //================== for jodi ==================
 
