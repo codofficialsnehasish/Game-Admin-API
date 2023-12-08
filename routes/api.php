@@ -14,6 +14,7 @@ use App\Http\Controllers\Requests;
 use App\Http\Controllers\Notification;
 use App\Http\Controllers\Rate_chart;
 use App\Http\Controllers\How_to_play;
+use App\Http\Controllers\Settings;
 
 
 
@@ -91,5 +92,7 @@ Route::get("/chart",[Rate_chart::class,"charts"]);
 
 
 Route::get("/how_to_play",[How_to_play::class,"content"]);
+Route::get("/click_add_wallet",[Settings::class,"on_click_add_wallet"]);
+Route::get("/on_click_withdraw_wallet",[Settings::class,"on_click_withdraw_wallet"]);
 
 

@@ -24,4 +24,14 @@ class Settings extends Controller
         $obj->update();
         return redirect(url('/content'));
     }
+
+    public function on_click_add_wallet(){
+        $obj = General_settings::find(1);
+        return ["massage"=>$obj->wallet_add_txt,"phone"=>$obj->contact_phone];
+    }
+
+    public function on_click_withdraw_wallet(){
+        $obj = General_settings::find(1);
+        return ["massage"=>$obj->wallet_withdraw_txt,"phone"=>$obj->contact_phone];
+    }
 }

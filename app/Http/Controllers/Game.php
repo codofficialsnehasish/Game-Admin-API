@@ -510,7 +510,7 @@ class Game extends Controller
             ->leftJoin("timing","on_game.time_id","timing.id")
             ->leftJoin("catagory","on_game.catagory_id","catagory.id")
             ->where("on_game.date","=",date("Y-m-d"))
-            ->get(["on_game.id","on_game.date","on_game.amount","on_game.customer_id","on_game.created_at as bid_time","games.game_name as game_name","timing.baji as baji","timing.start_time", "timing.end_time","catagory.name as catagory_name"]);
+            ->get(["on_game.id","on_game.date","on_game.box_number","on_game.amount","on_game.cutting_amount","on_game.customer_id","on_game.created_at as bid_time","games.game_name as game_name","timing.baji as baji","timing.start_time", "timing.end_time","catagory.name as catagory_name"]);
             if(count($obj) > 0){
                 return ["status"=>"True","data"=>$obj];
             }else{
