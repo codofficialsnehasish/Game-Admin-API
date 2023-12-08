@@ -8,6 +8,7 @@ use App\Models\Games;
 use App\Models\Times;
 use App\Models\On_Game;
 use App\Models\Catagorys;
+use App\Models\Results;
 use App\Models\Customer;
 use App\Models\History;
 
@@ -108,7 +109,11 @@ class Game extends Controller
         if($r->id != ""){
             if(Times::where("game_id","=",$r->id)->count() > 0){
                 $time = Times::where("game_id","=",$r->id)->get();
-                return ["status"=>"true",'data' => $time];
+                $res = Times::leftJoin("result","timing.id","result.time_id")
+                    ->where("result.date","=",date("d-m-Y"))
+                    ->where("timing.game_id","=",$r->id)
+                    ->get(["timing.*","result.*"]);
+                return ["status"=>"true",'data' => $time,'result'=>$res];
             }else{
                 return ["status"=>"false","error"=>"Not Avaliable"];
             }
