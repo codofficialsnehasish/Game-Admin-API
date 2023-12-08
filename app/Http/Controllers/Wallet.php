@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Customer;
 use App\Models\Wallets;
+use App\Models\Fund_text;
 
 class Wallet extends Controller
 {
@@ -45,5 +46,14 @@ class Wallet extends Controller
         ->orderBy('wallet.date', 'desc')
         ->get(["wallet.*","customer.beneficiary_name as name"]);
         return view("wallet/show_wallet")->with(["data"=>$obj]);
+    }
+
+    public function app_text_format(){
+        $obj = Fund_text::all();
+        return view("wallet/format_content")->with(["data"=>$obj]);
+    }
+    public function add_edit_text_format(){
+        $obj = Fund_text::find(1);
+        return view("wallet/format_text")->with(["data"=>$obj]);
     }
 }

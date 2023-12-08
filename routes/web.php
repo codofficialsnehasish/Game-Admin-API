@@ -14,6 +14,7 @@ use App\Http\Controllers\Notification;
 use App\Http\Controllers\Requests;
 use App\Http\Controllers\Rate_chart;
 use App\Http\Controllers\How_to_play;
+use App\Http\Controllers\Settings;
 
 
 //======================= Login Routes =====================
@@ -106,6 +107,7 @@ Route::post("/post_wallet",[Wallet::class,"post_wallet"]);
 Route::get("/show_wallet",[Wallet::class,"show_wallet"]); 
 
 
+
 //============================ Result Routes ========================
 
 Route::get("/add_result",[Result::class,"add_result"]); 
@@ -171,3 +173,9 @@ Route::get("/del_content/{id}",[How_to_play::class,"del_content"]);
 
 // Route::get("/test",[How_to_play::class,"assen"]);
 // Route::post("/submitassn",[How_to_play::class,"submitassn"]);
+
+
+//============================ How to Play ========================
+
+Route::get("/content",[Settings::class,"content"]);
+Route::post("/add_content",[Settings::class,"add_content"]);
