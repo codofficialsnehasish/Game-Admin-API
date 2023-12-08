@@ -187,6 +187,7 @@ class Result extends Controller
                     foreach($jodi2 as $j){
                         $jodi2 = On_Game::find($j->id);
                         $box = explode(",",$j->box_number);
+                        $is_winn = false;
                         foreach($box as $b){
                             $sp_data = str_split($b);
                             $n = $this->sum($r->pattinum);
@@ -195,6 +196,7 @@ class Result extends Controller
                                 echo abs($this->sum($r->pattinum) % 10);
                                 echo "<br>";
                                 $jodi2->previous_win = 1;
+                                $is_winn = true;
                                 $jodi2->update();
                             }else{
                                 $jodi2->is_completed = 1;
@@ -202,6 +204,11 @@ class Result extends Controller
                                 $jodi2->previous_win = 0;
                                 $jodi2->update();
                             }
+                        }
+                        if($is_winn){
+                            $jodi2->previous_win = 1;
+                            $jodi2->is_completed = 0;
+                            $jodi2->update();
                         }
                     }
                 }
