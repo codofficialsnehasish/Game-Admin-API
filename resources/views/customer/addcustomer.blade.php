@@ -96,6 +96,13 @@
                                                         </div>
                                                     </div>
                                                     <div class="mb-3">
+                                                        <label class="form-label" for="phone_pay">Phone Pay Number</label>
+                                                        <div>
+                                                            <input type="checkbox" id="check3" name="check3" onclick="copyValue();" /><b style="margin:10px;color:green;">Same as Phone Number</b>
+                                                            <input data-parsley-type="number" type="text" name="phone_pay" id="phone_pay" class="form-control" placeholder="Enter Paytm number">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-3">
                                                         <label class="form-label" for="pass">Password</label>
                                                         <div>
                                                             <input type="password" name="password" id="pass" class="form-control" required placeholder="Enter Password">
@@ -158,6 +165,13 @@
                         }
                         else{
                             document.getElementById('paytm').value = "";
+                        } 
+                        if(document.getElementById('check3').checked){
+                            let text1 = document.getElementById('phone').value;        
+                            document.getElementById('phone_pay').value = text1;
+                        }
+                        else{
+                            document.getElementById('phone_pay').value = "";
                         } 
                     }
                 </script>

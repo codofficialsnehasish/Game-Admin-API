@@ -54,6 +54,7 @@
                                                     <th>Wallet Balance</th>
                                                     <th>Google Pay No.</th>
                                                     <th>Paytm No.</th>
+                                                    <th>Phone Pay No.</th>
                                                     <th>Email</th>
                                                     <th>Bank Name</th>
                                                     <th>IFSC Code</th>
@@ -75,6 +76,7 @@
                                                     <td>{{$c->wallet_balance}}</td>
                                                     <td>{{$c->google_pay_no}}</td>
                                                     <td>{{$c->paytm_no}}</td>
+                                                    <td>{{$c->phone_pay}}</td>
                                                     <td>{{$c->email}}</td>
                                                     <td>{{$c->bank_name}}</td>
                                                     <td>{{$c->ifsc_code}}</td>

@@ -77,7 +77,7 @@ Route::post("/get_request",[Requests::class,"get_request"]);
 
 //============================ Notification API Routes ==============================
 
-Route::post("/add_fund",[Notification::class,"add_fund"]);
+Route::post("/fund",[Notification::class,"fund"]);
 
 //==========XXXX============ End of Notification API Routes ============XXXX============
 

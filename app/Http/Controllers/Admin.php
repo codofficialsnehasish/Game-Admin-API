@@ -198,6 +198,7 @@ class Admin extends Controller
         $customer->wallet_balance = $r->balance;
         $customer->google_pay_no = $r->gpay;
         $customer->paytm_no = $r->paytm;
+        $customer->phone_pay = $r->phone_pay;
         $customer->email = $r->email;
         // if($r->password == $r->confirm_password){
         //     $customer->password = bcrypt($r->password);
@@ -284,6 +285,7 @@ class Admin extends Controller
         $obj->wallet_balance = $r->balance ? $r->balance : $obj->wallet_balance;
         $obj->google_pay_no = $r->gpay ? $r->gpay : $obj->google_pay_no;
         $obj->paytm_no = $r->paytm ? $r->paytm : $obj->paytm_no;
+        $obj->phone_pay = $r->phone_pay ? $r->phone_pay : $obj->phone_pay;
         $obj->email = $r->email ? $r->email : $obj->email;
         $obj->bank_name = $r->bank_name ? $r->bank_name : $obj->bank_name;
         $obj->ifsc_code = $r->ifsc_code ? $r->ifsc_code : $obj->ifsc_code;

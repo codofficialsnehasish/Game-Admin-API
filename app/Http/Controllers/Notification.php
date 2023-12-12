@@ -9,12 +9,13 @@ use App\Models\Wallets;
 
 class Notification extends Controller
 {
-    public function add_fund(Request $r){
+    public function fund(Request $r){
         $obj = new Notifications();
         $obj->date = date("d-m-Y");
         $obj->customer_id = $r->customer_id;
         $obj->amount = $r->amount;
         $obj->which_for = $r->which_for;
+        $obj->mode = $r->mode;
         $res = $obj->save();
         if($res){
             return ["status"=>"true","massage"=>"Successfully Submitted"];
