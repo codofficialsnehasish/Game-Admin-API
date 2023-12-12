@@ -93,7 +93,6 @@
                         <span>Wallet</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{url('/app_text_format')}}">Format Text</a></li>
                         <li><a href="{{url('/add_money')}}">Credit Money (add)</a></li>
                         <li><a href="{{url('/cut_money')}}">Debit Money (cut)</a></li>
                         <li><a href="{{url('/show_wallet')}}">Wallet History</a></li>

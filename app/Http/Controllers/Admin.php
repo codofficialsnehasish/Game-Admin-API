@@ -12,6 +12,8 @@ use App\Models\On_Game;
 use App\Models\Notifications;
 use App\Models\Games;
 use App\Models\Requestt;
+use App\Models\Wallets;
+use App\Models\Results;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Auth;
@@ -138,10 +140,12 @@ class Admin extends Controller
     //============================Dashboard======================
 
     public function dashboard(){
-        $customer = Customer::all()->count();
-        $games = Games::all()->count();
+        $wallet = Wallets::all()->count();
         $req = Requestt::all()->count();
         $slider = Slider::all()->count();
+        $result = Results::where("date","=",date("d-m-Y"))->count();
+        $play_details = On_Game::where("date","=",date("Y-m-d"))->count();
+        $notification = Notifications::where("seen","=",0)->count();
 
         // $payingCash = DB::table('on_game')
         // ->select(DB::raw('time_id'), DB::raw('SUM(cutting_amount) as sum_paying_cash'))
@@ -163,7 +167,7 @@ class Admin extends Controller
         ->where('date',"=", date("Y-m-d"))
         ->sum('winn_amount');
 
-        return view("dashboard")->with(["customer"=>$customer,"games"=>$games,"requests"=>$req,"slider"=>$slider,"payingCash"=>$payingCash,"winCash"=>$winCash]);
+        return view("dashboard")->with(["wallet"=>$wallet,"result"=>$result,"requests"=>$req,"slider"=>$slider,"payingCash"=>$payingCash,"winCash"=>$winCash,"play_details"=>$play_details,"notification"=>$notification]);
     }
 
     //==========xxxxxxx=======End of Dashboard===========xxxxxx=======
