@@ -268,6 +268,7 @@ class Game extends Controller
             else{ 
                 $obj->customer_id = $r->customer_id;
                 $obj->time_id = $r->time_id;
+                $obj->date = date('Y-m-d');
                 $obj->game_id = $game_id;
                 $obj->catagory_id = $r->catagory_id;
                 // $c = count(explode(",",$r->digits));
@@ -313,6 +314,7 @@ class Game extends Controller
             else{
                 $obj->customer_id = $r->customer_id;
                 $obj->time_id = $r->time_id;
+                $obj->date = date('Y-m-d');
                 $obj->game_id = $game_id;
                 $obj->catagory_id = $r->catagory_id;
                 $c = count(explode(",",$r->digits));
@@ -361,6 +363,7 @@ class Game extends Controller
             else{
                 $obj->customer_id = $r->customer_id;
                 $obj->time_id = $r->time_id;
+                $obj->date = date('Y-m-d');
                 $obj->game_id = $game_id;
                 $obj->catagory_id = $r->catagory_id;
                 $c = count(explode(",",$r->digits));
@@ -411,6 +414,7 @@ class Game extends Controller
                 if(count($num) == 4){
                     $obj->customer_id = $r->customer_id;
                     $obj->time_id = $r->time_id;
+                    $obj->date = date('Y-m-d');
                     $obj->game_id = $game_id;
                     $obj->catagory_id = $r->catagory_id;
                     // $c = count($this->combinations($num, 3));
@@ -463,6 +467,7 @@ class Game extends Controller
                 if(count($num) == 5){
                     $obj->customer_id = $r->customer_id;
                     $obj->time_id = $r->time_id;
+                    $obj->date = date('Y-m-d');
                     $obj->game_id = $game_id;
                     $obj->catagory_id = $r->catagory_id;
                     $obj->box_number = $r->digits;
