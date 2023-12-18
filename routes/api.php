@@ -96,3 +96,8 @@ Route::get("/click_add_wallet",[Settings::class,"on_click_add_wallet"]);
 Route::get("/on_click_withdraw_wallet",[Settings::class,"on_click_withdraw_wallet"]);
 
 
+Route::get("/todays-result",[Result::class,"todays_result"]); 
+
+
+
+

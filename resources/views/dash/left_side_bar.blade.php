@@ -75,6 +75,7 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{url('/add_result')}}">Add Result</a></li>
                         <li><a href="{{url('/show_result')}}">All Resultes</a></li>
+                        <li><a href="{{url('/todays-result')}}">Todays Resultes</a></li>
                     </ul>
                 </li>
                 <li>

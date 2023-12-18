@@ -10,6 +10,7 @@ use App\Models\Results;
 use App\Models\On_Game;
 use App\Models\Customer;
 use App\Models\History;
+use App\Models\Todays_result;
 
 class Result extends Controller
 {
@@ -357,17 +358,86 @@ class Result extends Controller
         return view("result/fromto_result")->with(['data'=>$obj,'games'=>$games]);
     }
 
-    public function today_result(){
-        $obj = Results::leftJoin("games","result.game_id","games.id")
-        ->leftJoin("timing","result.time_id","timing.id")
-        ->where("result.date","=",date("d-m-Y"))
-        ->orderBy('result.date', 'desc')
-        ->get(["result.*","games.game_name as gname","timing.baji","timing.start_time", "timing.end_time"]);
+    // public function today_result(){
+    //     $obj = Results::leftJoin("games","result.game_id","games.id")
+    //     ->leftJoin("timing","result.time_id","timing.id")
+    //     ->where("result.date","=",date("d-m-Y"))
+    //     ->orderBy('result.date', 'desc')
+    //     ->get(["result.*","games.game_name as gname","timing.baji","timing.start_time", "timing.end_time"]);
 
-        if(count($obj) > 0){
-            return ["status"=>"True","result"=>$obj];
+    //     if(count($obj) > 0){
+    //         return ["status"=>"True","result"=>$obj];
+    //     }else{
+    //         return ["status"=>"False","error"=>"data not found"];
+    //     }
+    // }
+
+
+
+
+    // Todays Result
+    public function todays_result(Request $r){
+        $obj = Todays_result::all();
+        if($r->is('api/*')){ 
+            return ["status"=>"true",'data' => $obj];
         }else{
-            return ["status"=>"False","error"=>"data not found"];
+            return view("result/todays_result_content")->with(['data'=>$obj]);
         }
+    }
+    public function add_todays_result(){
+        return view("result/add_today_result");
+    }
+    public function post_todays_result(Request $r){
+        $images = new Todays_result();
+        $img = $r->file("file");
+        if(isset($img)){
+            $img_name = time().$img->getClientOriginalName();
+            $img->move(public_path("files/todays_result"),$img_name);
+        }else{
+            $img_name = "Not provided";
+        }
+        $images->image = $img_name;
+        // $images->is_visible = $r->is_visible;
+        $images->file_path = env('APP_URL')."files/todays_result/".$img_name;
+        $images->save();
+        $res = redirect()->back();
+        if($res){
+            return redirect()->back()->with(['msg'=>'Image Insert successfully']);
+        }else{
+            return redirect()->back()->with(['msgg'=>'Some Error are occurred! Try Again!']);
+        }
+    }
+
+    public function del_res_today(Request $r){
+        $obj = Todays_result::find($r->id);
+        if($obj->image != "Not provided"){
+            unlink("files/todays_result/".$obj->image);
+        }
+        $obj->delete();
+        return redirect()->back();
+    }
+
+    public function edit_res_today(Request $r){
+        $obj = Todays_result::find($r->id);
+        return view("result/edit_today_result")->with(['data'=>$obj]);
+    }
+
+    public function update_res_today(Request $r){
+        $slider = Todays_result::find($r->id);
+        $img = $r->file("file");
+        if(isset($img)){
+            if($slider->image != "Not provided"){
+                unlink("files/todays_result/".$slider->image);
+            }
+            $img_name = time().$img->getClientOriginalName();
+            $img->move("files/todays_result",$img_name);
+        }else{
+            $img_name = $slider->image;
+        }
+        $slider->image = $img_name;
+        // $slider->is_visible = $r->is_visible;
+        $slider->file_path = env('APP_URL')."files/todays_result/".$img_name;
+        $slider->update();
+        return redirect(url('/todays-result'));
     }
 }

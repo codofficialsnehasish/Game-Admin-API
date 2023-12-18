@@ -118,6 +118,16 @@ Route::get("/del_result/{id}",[Result::class,"del_result"]);
 Route::post("/get_res",[Result::class,"get_res"]); 
 
 
+//============================ Todays Result ==========================
+Route::get("/todays-result",[Result::class,"todays_result"]); 
+Route::get("/add-todays-result",[Result::class,"add_todays_result"]);
+Route::post("/post-todays-result",[Result::class,"post_todays_result"]);
+Route::get("/del-todays-result/{id}",[Result::class,"del_res_today"]);
+Route::get("/edit-todays-result/{id}",[Result::class,"edit_res_today"]);
+Route::post("/update-todays-result",[Result::class,"update_res_today"]);
+
+
+
 //============================ Requests Routes ========================
 
 Route::get("/show_requests",[Requests::class,"show_requests"]);
