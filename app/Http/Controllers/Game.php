@@ -189,7 +189,7 @@ class Game extends Controller
     //     }
     //     return $flag;
     // }
-    function isSortedArray($array) {
+    public function isSortedArray($array) {
         $length = count($array);
         // Iterate through the array and compare adjacent elements
         for ($i = 0; $i < $length - 1; $i++) {
@@ -203,7 +203,7 @@ class Game extends Controller
     }
     
     
-    function stringToArrayReplaceZero($inputString) {
+    public function stringToArrayReplaceZero($inputString) {
         // Convert the string to an array of characters
         $charArray = str_split($inputString);
     
@@ -216,13 +216,34 @@ class Game extends Controller
     
         return $charArray;
     }
-    
-    function isAscending($digits) {
+
+    public function count_digit($number){
+        return strlen((string) $number);
+    }
+    public function check_two($digits){
+        $num = explode(",",$digits);
+        foreach($num as $n){
+            if(strlen((string) $n) > 2 || strlen((string) $n) < 2){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public function isAscending($digits, $cata) {
         $num = explode(",",$digits);
         $flag = true;
         foreach($num as $number){
-            $resultArray = $this->stringToArrayReplaceZero($number);
-            $flag = $this->isSortedArray($resultArray) ? true : false;
+            if($cata == 3 && ($this->count_digit($number) < 3 || $this->count_digit($number) > 3)){
+                return false;
+            }elseif($cata == 4 && ($this->count_digit($number) < 4 || $this->count_digit($number) > 4)){
+                return false;
+            }elseif($cata == 5 && ($this->count_digit($number) < 5 || $this->count_digit($number) > 5)){
+                return false;
+            }else{
+                $resultArray = $this->stringToArrayReplaceZero($number);
+                $flag = $this->isSortedArray($resultArray) ? true : false;
+            }
             if($flag == false){
                 break;
             }
@@ -262,7 +283,8 @@ class Game extends Controller
             if($game->min_entry_fee != "" && $r->amount == "" || $this->check_min_balance($r->amount, $game)){
                 return ["status"=>"False","error"=>"Mininum entry fee is $game->min_entry_fee"];
             }
-            elseif($customer->wallet_balance == "" || $this->check_have_balance($r->amount,$customer)){
+            // elseif($customer->wallet_balance == "" || $this->check_have_balance($r->amount,$customer)){
+            elseif($customer->wallet_balance == "" || $this->check_have_balance(abs(array_sum(explode(",",$r->amount))),$customer)){
                 return ["status"=>"False","error"=>"Your Wallet balance is too low"];
             }
             else{ 
@@ -308,8 +330,11 @@ class Game extends Controller
             if($game->min_entry_fee != "" && $r->amount == "" || $this->check_min_balance($r->amount, $game)){
                 return ["status"=>"False","error"=>"Mininum entry fee is $game->min_entry_fee"];
             }
-            elseif($customer->wallet_balance == "" || $this->check_have_balance($r->amount,$customer)){
+            elseif($customer->wallet_balance == "" || $this->check_have_balance((count(explode(",",$r->digits)) * $r->amount),$customer)){
                 return ["status"=>"False","error"=>"Your Wallet balance is too low"];
+            }
+            elseif(!$this->check_two($r->digits)){
+                return ["status"=>"False","error"=>"Digit not accepted"];
             }
             else{
                 $obj->customer_id = $r->customer_id;
@@ -354,10 +379,10 @@ class Game extends Controller
             if($game->min_entry_fee != "" && $r->amount == "" || $this->check_min_balance($r->amount, $game)){
                 return ["status"=>"False","error"=>"Mininum entry fee is $game->min_entry_fee"];
             }
-            elseif(!$this->isAscending($r->digits))    {
+            elseif(!$this->isAscending($r->digits, $r->catagory_id)){
                 return ["status"=>"False","error"=>"Digit not accepted"];
             }
-            elseif($customer->wallet_balance == "" || $this->check_have_balance($r->amount,$customer)){
+            elseif($customer->wallet_balance == "" || $this->check_have_balance((count(explode(",",$r->digits)) * $r->amount),$customer)){
                 return ["status"=>"False","error"=>"Your Wallet balance is too low"];
             }
             else{
@@ -403,26 +428,27 @@ class Game extends Controller
             if($game->min_entry_fee != "" && $r->amount == "" || $this->check_min_balance($r->amount, $game)){
                 return ["status"=>"False","error"=>"Mininum entry fee is $game->min_entry_fee"];
             }
-            elseif(!$this->isAscending($r->digits))    {
+            elseif(!$this->isAscending($r->digits,$r->catagory_id)){
                 return ["status"=>"False","error"=>"Digit not accepted"];
             }
-            elseif($customer->wallet_balance == "" || $this->check_have_balance($r->amount,$customer)){
+            elseif($customer->wallet_balance == "" || $this->check_have_balance((4 * $r->amount),$customer)){
                 return ["status"=>"False","error"=>"Your Wallet balance is too low"];
             }
             else{
-                $num = str_split($r->digits);
-                if(count($num) == 4){
+                // $num = str_split($r->digits);
+                // if(count($num) == 4){
                     $obj->customer_id = $r->customer_id;
                     $obj->time_id = $r->time_id;
                     $obj->date = date('Y-m-d');
                     $obj->game_id = $game_id;
                     $obj->catagory_id = $r->catagory_id;
+                    $c = count(explode(",",$r->digits));
                     // $c = count($this->combinations($num, 3));
                     $obj->box_number = $r->digits;
                     // $sum_amount = abs(array_sum(explode(",",$r->amount)));
                     $obj->amount = $r->amount;
-                    $customer->wallet_balance -= 4 * $r->amount;
-                    $obj->cutting_amount = 4 * $r->amount;
+                    $customer->wallet_balance -= $c*(4 * $r->amount);
+                    $obj->cutting_amount = $c*(4 * $r->amount);
                     $customer->update();
                     $res = $obj->save();
                     $history = History::where("customer_id","=",$r->customer_id)
@@ -444,9 +470,9 @@ class Game extends Controller
                     $objs->payon += 4 * $r->amount;
                     $objs->save();
                 }
-                }else{
-                    return ["error"=>"Wrong Entry, Check digit length"];
-                }
+                // }else{
+                //     return ["error"=>"Wrong Entry, Check digit length"];
+                // }
             }
         }elseif($r->catagory_id == 5){ //for 5 digit cp catagory
             $obj = new On_Game();
@@ -456,25 +482,26 @@ class Game extends Controller
             if($game->min_entry_fee != "" && $r->amount == "" || $this->check_min_balance($r->amount, $game)){
                 return ["status"=>"False","error"=>"Mininum entry fee is $game->min_entry_fee"];
             }
-            elseif(!$this->isAscending($r->digits))    {
+            elseif(!$this->isAscending($r->digits,$r->catagory_id))    {
                 return ["status"=>"False","error"=>"Digit not accepted"];
             }
-            elseif($customer->wallet_balance == "" || $this->check_have_balance($r->amount,$customer)){
+            elseif($customer->wallet_balance == "" || $this->check_have_balance((10 *$r->amount),$customer)){
                 return ["status"=>"False","error"=>"Your Wallet balance is too low"];
             }
             else{
-                $num = str_split($r->digits);
-                if(count($num) == 5){
+                // $num = str_split($r->digits);
+                // if(count($num) == 5){
                     $obj->customer_id = $r->customer_id;
                     $obj->time_id = $r->time_id;
                     $obj->date = date('Y-m-d');
                     $obj->game_id = $game_id;
                     $obj->catagory_id = $r->catagory_id;
+                    $c = count(explode(",",$r->digits));
                     $obj->box_number = $r->digits;
                     // $sum_amount = abs(array_sum(explode(",",$r->amount)));
                     $obj->amount = $r->amount;
-                    $customer->wallet_balance -= 10 * $r->amount;
-                    $obj->cutting_amount = 10 * $r->amount;
+                    $customer->wallet_balance -= $c * (10 * $r->amount);
+                    $obj->cutting_amount = $c * (10 * $r->amount);
                     // $customer->wallet_balance -= $sum_amount;
                     $customer->update();
                     $res = $obj->save();
@@ -497,9 +524,9 @@ class Game extends Controller
                     $objs->payon += 10 * $r->amount;
                     $objs->save();
                 }
-                }else{
-                    return ["error"=>"Wrong Entry, Check digit length"];
-                }
+                // }else{
+                //     return ["error"=>"Wrong Entry, Check digit length"];
+                // }
             }
         }
         if($res){
