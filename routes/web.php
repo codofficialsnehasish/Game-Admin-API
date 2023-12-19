@@ -15,6 +15,7 @@ use App\Http\Controllers\Requests;
 use App\Http\Controllers\Rate_chart;
 use App\Http\Controllers\How_to_play;
 use App\Http\Controllers\Settings;
+use App\Http\Controllers\Delete_all;
 
 
 //======================= Login Routes =====================
@@ -189,3 +190,9 @@ Route::get("/del_content/{id}",[How_to_play::class,"del_content"]);
 
 Route::get("/content",[Settings::class,"content"]);
 Route::post("/add_content",[Settings::class,"add_content"]);
+
+
+
+Route::post("/del-wallet",[Delete_all::class,"del_wallet"]);
+Route::post("/del-ongame",[Delete_all::class,"del_ongame"]);
+Route::post("/del-result",[Delete_all::class,"del_result"]);

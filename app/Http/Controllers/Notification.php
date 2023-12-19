@@ -40,6 +40,7 @@ class Notification extends Controller
         $obj2->date = date('d-m-Y');
         $obj2->customer_id = $obj->customer_id;
         $obj2->amount = $obj->amount;
+        $obj2->status = "Credited";
         $custo->update();
         $obj2->save();
         $obj->seen = 1;
@@ -67,6 +68,12 @@ class Notification extends Controller
         $custo = Customer::find($obj->customer_id);
         $custo->wallet_balance -= $obj->amount;
         $custo->update();
+        $obj2 = new Wallets();
+        $obj2->date = date('d-m-Y');
+        $obj2->customer_id = $obj->customer_id;
+        $obj2->amount = $obj->amount;
+        $obj2->status = "Debited";
+        $obj2->save();
         $obj->seen = 1;
         $obj->update();
 

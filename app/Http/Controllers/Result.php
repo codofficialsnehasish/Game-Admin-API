@@ -194,8 +194,8 @@ class Result extends Controller
                             $n = $this->sum($r->pattinum);
                             
                             if($sp_data[0] == abs($this->sum($r->pattinum) % 10)){
-                                echo abs($this->sum($r->pattinum) % 10);
-                                echo "<br>";
+                                // echo abs($this->sum($r->pattinum) % 10);
+                                // echo "<br>";
                                 $jodi2->previous_win = 1;
                                 $is_winn = true;
                                 $jodi2->update();
@@ -348,7 +348,7 @@ class Result extends Controller
         return redirect(url('/show_result'));
     }
     public function get_res(Request $r){
-        echo $r->gameid;
+        // echo $r->gameid;
         $obj = Results::leftJoin("games","result.game_id","games.id")
         ->leftJoin("timing","result.time_id","timing.id")
         ->where("games.id","=",$r->gameid)

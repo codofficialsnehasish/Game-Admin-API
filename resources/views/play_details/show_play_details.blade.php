@@ -38,7 +38,8 @@
                             </div>
                         </div>
                         <!-- end page title -->
-                        
+                        <form action="{{url('/del-ongame')}}" method="post">
+                            @csrf
                         <!-- show data -->
                         <div class="row">
                             <div class="col-12">
@@ -57,7 +58,8 @@
                                                     <th>Digits</th>
                                                     <th>Amount</th>
                                                     <th>Is Winner</th>
-                                                    <th>Action</th>
+                                                    <!-- <th>Action</th> -->
+                                                    <th id="delete"><input type="submit" onclick="return confirm('Are you sure ?')" class="btn btn-outline-danger" value="Delete"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -74,10 +76,11 @@
                                                     <td>{{$d->box_number}}</td>
                                                     <td>{{$d->amount}}</td>
                                                     <td @if($d->is_winner == 1)style="padding:0;" @endif>@if($d->is_winner == 1) <img style="height: 57px;width: 70px;" src="{{ url('dashboard_assets/images/winner.gif') }}"/> @else Not Win @endif</td>
-                                                    <td style="display:flex;justify-content:center;">
+                                                    <!-- <td style="display:flex;justify-content:center;"> -->
                                                         <!-- <a class="btn btn-success" href="{{url('/edit_catagory')}}/{{$d->id}}" alt="edit"><i class="ti-check-box"></i></a> -->
-                                                        <a class="btn btn-danger" onclick="return confirm('Are you sure?')" href="{{url('/del_playdetails')}}/{{$d->id}}"><i class="ti-trash"></i></a>
-                                                    </td>
+                                                        <!-- <a class="btn btn-danger" onclick="return confirm('Are you sure?')" href="{{url('/del_playdetails')}}/{{$d->id}}"><i class="ti-trash"></i></a> -->
+                                                    <!-- </td> -->
+                                                    <td style="display:flex;justify-content:center;"><input type="checkbox"  name="arr[]" value="{{$d->id}}"></td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
@@ -87,7 +90,7 @@
                             </div> <!-- end col -->
                         </div>
                         <!-- end show data -->
-                        
+                        </form>
                     </div> <!-- container-fluid -->
                 </div>
                 <!-- End Page-content -->
