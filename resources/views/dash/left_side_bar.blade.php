@@ -79,6 +79,12 @@
                     </ul>
                 </li>
                 <li>
+                    <a href="{{url('/content')}}" class=" waves-effect">
+                        <i class="ti-calendar"></i>
+                        <span>Single Catagory Data</span>
+                    </a>
+                </li>
+                <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="far fa-file-image"></i>
                         <span>Slider</span>

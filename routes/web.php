@@ -16,6 +16,7 @@ use App\Http\Controllers\Rate_chart;
 use App\Http\Controllers\How_to_play;
 use App\Http\Controllers\Settings;
 use App\Http\Controllers\Delete_all;
+use App\Http\Controllers\Single_digit_payment;
 
 
 //======================= Login Routes =====================
@@ -196,3 +197,9 @@ Route::post("/add_content",[Settings::class,"add_content"]);
 Route::post("/del-wallet",[Delete_all::class,"del_wallet"]);
 Route::post("/del-ongame",[Delete_all::class,"del_ongame"]);
 Route::post("/del-result",[Delete_all::class,"del_result"]);
+
+
+
+
+Route::get("/single-catagory-report/{id}",[Single_digit_payment::class,"single_cata"]);
+Route::get("/content",[Single_digit_payment::class,"content"]);
