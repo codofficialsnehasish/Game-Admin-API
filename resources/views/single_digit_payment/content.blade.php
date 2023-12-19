@@ -71,23 +71,6 @@
                             <div class="col-lg-6">
                                 <div class="card">
                                     <div class="card-body" id="table_data">
-                                        <!-- <h4 class="card-title">Striped rows</h4>   
-                                        <div class="table-responsive">
-                                            <table class="table table-striped mb-0">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Box Number</th>
-                                                        <th>Total Amount</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>Otto</td>
-                                                        <td>@mdo</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div> -->
                                     </div>
                                 </div>
                             </div>
