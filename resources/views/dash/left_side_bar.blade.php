@@ -13,7 +13,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{url('/content')}}" class="waves-effect">
+                    <a href="{{url('/contents')}}" class="waves-effect">
                         <i class="ti-settings"></i>
                         <!-- <span class="badge rounded-pill bg-primary float-end">2</span> -->
                         <span>Settings</span>

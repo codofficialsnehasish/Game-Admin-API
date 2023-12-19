@@ -189,7 +189,7 @@ Route::get("/del_content/{id}",[How_to_play::class,"del_content"]);
 
 //============================ How to Play ========================
 
-Route::get("/content",[Settings::class,"content"]);
+Route::get("/contents",[Settings::class,"content"]);
 Route::post("/add_content",[Settings::class,"add_content"]);
 
 

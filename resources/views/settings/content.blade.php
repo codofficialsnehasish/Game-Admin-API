@@ -2,6 +2,12 @@
     .wizard>.actions {
         display:none;
     }
+    form#form-horizontal .actions ul li:nth-child(3) {
+        display: none !important;  
+    }
+    /* .form-horizontal .actions ul li:nth-child(3) {
+        display: none;  
+    } */
 </style>
 <!-- adding header -->
 @include("dash/header")
@@ -31,7 +37,7 @@
                                         <li class="breadcrumb-item active" aria-current="page">Settings</li>
                                     </ol>
                                 </div>
-                                <div class="col-md-4">
+                                <!-- <div class="col-md-4">
                                     <div class="float-end d-none d-md-block">
                                         <div class="dropdown">
                                         <a href="{{url('/add_edit_text_format')}}" class="btn btn-primary  dropdown-toggle" aria-expanded="false">
@@ -39,7 +45,7 @@
                                         </a>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <!-- end page title -->
@@ -48,7 +54,7 @@
                             <div class="col-sm-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <form id="form-horizontal" class="form-horizontal form-wizard-wrapper" action="{{url('/add_content')}}" method="post" enctype="multipart/form-data">
+                                        <form id="form-horizontal" class="form-horizontal form-wizard-wrapper classcatchadad" action="{{url('/add_content')}}" method="post" enctype="multipart/form-data">
                                             @csrf
                                             <h3>Contact Details</h3>
                                             <fieldset>

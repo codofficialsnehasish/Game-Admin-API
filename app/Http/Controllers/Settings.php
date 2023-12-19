@@ -22,7 +22,7 @@ class Settings extends Controller
         $obj->wallet_add_txt = $r->wt_text;
         $obj->wallet_withdraw_txt = $r->with_text;
         $obj->update();
-        return redirect(url('/content'));
+        return redirect(url('/contents'));
     }
 
     public function on_click_add_wallet(){

@@ -43,8 +43,8 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <!-- <h4 class="card-title">Example</h4> -->
-                                        <form class="custom-validation" method="post" action="{{url('/get_res')}}">
-                                            @csrf
+                                        <!-- <form class="custom-validation" method="post" action="">
+                                            @csrf -->
                                             <div data-repeater-list="group-a">
                                                 <div data-repeater-item class="row">
                                                     <div class="md-3"> <!--col-lg-4 -->
@@ -64,7 +64,7 @@
                                                 </div>
                                             </div>
                                             <!-- <input data-repeater-create type="button" class="btn btn-success mt-2 mt-sm-0" value="Add"/> -->
-                                        </form>
+                                        <!-- </form> -->
                                     </div>
                                 </div>
                             </div>
