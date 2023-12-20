@@ -71,7 +71,7 @@
                                                                             </div>    
                                                                         </div>
                                                                         <div class="col-md-3 col-sm-8 d-flex">
-                                                                            <input type="number" name="baji" id="timeInput" class="inner form-control" placeholder="Enetr baji number" required/>
+                                                                            <input type="text" name="baji" id="timeInput" class="inner form-control" placeholder="Enetr baji number" required/>
                                                                         </div>
                                                                         <div class="col-md-3 col-sm-8">
                                                                             <input type="time" name="st" id="timeInput" class="inner form-control" required/>
