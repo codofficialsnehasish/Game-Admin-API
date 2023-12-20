@@ -19,29 +19,6 @@
                         <span>Settings</span>
                     </a>
                 </li>
-                <!-- <li>
-                    <a href="{{url('/register')}}" class=" waves-effect">
-                        <i class="ti-calendar"></i>
-                        <span>Add User</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{url('/showuser')}}" class=" waves-effect">
-                        <i class="ti-calendar"></i>
-                        <span>Show User</span>
-                    </a>
-                </li> -->
-
-                <!-- <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="ti-user"></i>
-                        <span>Users</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{url('/register')}}">Add User</a></li>
-                        <li><a href="{{url('/showuser')}}">Show User</a></li>
-                    </ul>
-                </li> -->
                 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -111,13 +88,13 @@
                         <span>Play Details</span>
                     </a>
                 </li>
-                <li>
+                <!-- <li>
                     <a href="{{url('/show_requests')}}" class="waves-effect">
                         <i class="mdi mdi-frequently-asked-questions"></i>
                         <span class="badge rounded-pill bg-danger float-end" id="req"></span>
                         <span>Forgot Password Requests</span>
                     </a>
-                </li>
+                </li> -->
                 <li>
                     <a href="{{url('/show_notification')}}" class="waves-effect">
                         <i class="mdi mdi-frequently-asked-questions"></i>
@@ -179,16 +156,16 @@
                 $("#custo").html(resp);
             }
         });
-        $.ajax({
-            url:'/get_req',
-            type:'GET',
-            data:{},
-            success:function(resp){
-                // alert(resp);
-                // console.log(resp);
-                $("#req").html(resp);
-            }
-        });
+        // $.ajax({
+        //     url:'/get_req',
+        //     type:'GET',
+        //     data:{},
+        //     success:function(resp){
+        //         // alert(resp);
+        //         // console.log(resp);
+        //         $("#req").html(resp);
+        //     }
+        // });
         $.ajax({
             url:'/notifi',
             type:'GET',

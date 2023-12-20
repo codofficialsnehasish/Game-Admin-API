@@ -70,7 +70,8 @@ Route::get("/win_history/{id?}",[Game::class,"win_history"]);
 
 //============================ Request API Routes ==============================
 
-Route::post("/get_request",[Requests::class,"get_request"]);
+Route::post("/get-request",[Requests::class,"get_request"]);
+Route::post("/forget-password",[Requests::class,"request_submit"]);
 
 //==========XXXX============ End of Request API Routes ============XXXX============
 
@@ -97,6 +98,8 @@ Route::get("/on_click_withdraw_wallet",[Settings::class,"on_click_withdraw_walle
 
 
 Route::get("/todays-result",[Result::class,"todays_result"]); 
+
+Route::get("/contact-us",[Settings::class,"contact_us"]);
 
 
 

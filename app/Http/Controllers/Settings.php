@@ -34,4 +34,9 @@ class Settings extends Controller
         $obj = General_settings::find(1);
         return ["massage"=>$obj->wallet_withdraw_txt,"phone"=>$obj->contact_phone];
     }
+
+    public function contact_us(){
+        $not = General_settings::find(1);
+        return ["Status"=>'true',"data"=>['phone'=>$not->contact_phone,'email'=>$not->contact_email]];
+    }
 }
