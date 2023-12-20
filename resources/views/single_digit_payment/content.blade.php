@@ -56,11 +56,17 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="col-lg-2 col-sm-4 align-self-center d-flex mt-5" style="width: 100%;justify-content: center;">
+                                                    <div class="md-3 mt-3">
+                                                        <label for="baji" class="form-label">Baji</label>
+                                                        <select class="form-select" id="baji" name="baji" onchange="res(this.value)" required>
+                                                            <option selected value="">Choose Baji</option>
+                                                        </select>
+                                                    </div>
+                                                    <!-- <div class="col-lg-2 col-sm-4 align-self-center d-flex mt-5" style="width: 100%;justify-content: center;">
                                                         <div class="d-grid">
                                                             <input type="submit" class="btn btn-primary" value="View Data"/>
                                                         </div>    
-                                                    </div> 
+                                                    </div>  -->
                                                 </div>
                                             </div>
                                             <!-- <input data-repeater-create type="button" class="btn btn-success mt-2 mt-sm-0" value="Add"/> -->
@@ -82,6 +88,23 @@
 
                 <script>
                     function tab(id){
+                        // alert(id);
+                        $("#baji").html('');
+                        $.ajax({
+                            url:'/get_baji/'+id,
+                            type:'GET',
+                            data: {},
+                            success:function(resp){
+                                $(resp).each(function(i,j) {
+                                    // console.log(j);
+                                    $("#baji").append("<option value="+j.id+">"+j.baji+" &nbsp;&nbsp;&nbsp;&nbsp;"+j.start_time +" - "+ j.end_time+"</option>");
+                                });
+                                che();
+                            }
+                        });
+                    }
+
+                    function res(id){
                         $("#table_data").html('');
                         $.ajax({
                             url:'/single-catagory-report/'+id,
